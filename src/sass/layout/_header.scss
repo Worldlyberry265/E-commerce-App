@@ -1,0 +1,103 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: $primary-backgound-color;
+  //   background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 10;
+  //   padding: 0 2rem;
+  //   border-bottom: 0.1px solid black;
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    padding: 0rem 4rem;
+    // height: 100%;
+    cursor: pointer;
+    &--icon {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    &:hover .header__menu {
+      visibility: visible;
+      transform: scale(1);
+    }
+  }
+
+  &__menu {
+    list-style-type: none;
+    position: absolute;
+    background-color: $secondary-background-color;
+    color: $secondary-on-color;
+    padding: 1rem 2rem;
+    visibility: hidden;
+    transform: scale(0.8);
+    top: 100%;
+    transition: transform 0.1s ease-in-out;
+
+    &--item {
+      font-size: 1.5rem;
+      padding: 1rem 0;
+
+      &:hover {
+        color: $secondary-hover-text-pastel-pink;
+      }
+    }
+  }
+
+  // &__nav {
+  //   padding: 1rem 4rem;
+  //   gap: 2rem;
+  //   display: flex;
+  //   align-items: center;
+
+  //   &--item {
+  //     fill: white;
+  //     //   color: red;
+  //     width: 3rem;
+  //     height: 3rem;
+  //     cursor: pointer;
+  //     transition: all 1s;
+
+  //     stroke: transparent;
+  //     stroke-width: 1.5rem;
+  //     &-1 {
+  //       &:hover {
+  //         fill: $selected-color;
+  //         stroke: white;
+  //         transform: scale(1.1);
+  //       }
+  //     }
+  //   }
+  // }
+
+  &__nav{
+    @include nav-bar;
+  }
+
+  &__search {
+    align-self: center;
+    color: $secondary-on-color;
+    font-size: 1.5rem;
+    letter-spacing: 0.3em;
+    padding: 0.7rem 2rem;
+    outline: none;
+    border: none;
+    background-color: $secondary-background-color;
+    border-radius: 10rem;
+    text-align: center;
+    // transition: all 0.2s;
+
+    &::placeholder {
+      color: $secondary-on-color;
+      opacity: 0.8;
+    }
+
+    // &:focus {
+    //   box-shadow: 0 0 10px rgba(178, 178, 178, .5);
+    // }
+  }
+}
