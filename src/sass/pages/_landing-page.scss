@@ -104,34 +104,13 @@
       }
     }
   }
-
-  &__products{
-    &--container {
-        width: 50vw;
-        margin: 5rem auto;
-        display: flex;
-        justify-content: center;
-        gap: 5rem;
-    }
-  }
-}
+} 
 
 .section-advised-products {
   position: relative;
 }
 
-.product-frames__container {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
 
-
-
-
-}
 
 
 .section-categories {

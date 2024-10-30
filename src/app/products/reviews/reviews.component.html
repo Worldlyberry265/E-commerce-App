@@ -1,0 +1,11 @@
+
+    <span class="review-count"> {{stars() | addDecimal }}  &nbsp;</span>
+    @for (star of starsCount; track $index) {
+        <i class="fa-solid fa-star stars-icon shining-star"></i>
+    }
+    <!-- .299/.71/.75 bcz 3.8 - 3 is returning .7999 -->
+    @if (RemainingStarCount >= .299 && RemainingStarCount <= .71) {
+        <i class="fa-solid fa-star-half-stroke shining-star"></i>
+    } @else if(RemainingStarCount >= .75) { 
+        <i class="fa-solid fa-star stars-icon shining-star"></i>
+    }
