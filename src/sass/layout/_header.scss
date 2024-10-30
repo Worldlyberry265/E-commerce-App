@@ -1,22 +1,22 @@
+
+
 .header {
   display: flex;
   justify-content: space-between;
-  background-color: $primary-backgound-color;
-  //   background-color: white;
-  position: fixed;
+  background-color: $background;
+  position: sticky;
   top: 0;
+
   width: 100vw;
   z-index: 10;
-  //   padding: 0 2rem;
-  //   border-bottom: 0.1px solid black;
 
   &__profile {
     display: flex;
     align-items: center;
     padding: 0rem 4rem;
-    // height: 100%;
     cursor: pointer;
     &--icon {
+      fill: $primary-dark;
       width: 4rem;
       height: 4rem;
     }
@@ -30,8 +30,8 @@
   &__menu {
     list-style-type: none;
     position: absolute;
-    background-color: $secondary-background-color;
-    color: $secondary-on-color;
+    background-color: $divider;
+    color: $text-secondary;
     padding: 1rem 2rem;
     visibility: hidden;
     transform: scale(0.8);
@@ -43,39 +43,34 @@
       padding: 1rem 0;
 
       &:hover {
-        color: $secondary-hover-text-pastel-pink;
+        color: $text-default;
       }
     }
   }
 
-  // &__nav {
-  //   padding: 1rem 4rem;
-  //   gap: 2rem;
-  //   display: flex;
-  //   align-items: center;
-
-  //   &--item {
-  //     fill: white;
-  //     //   color: red;
-  //     width: 3rem;
-  //     height: 3rem;
-  //     cursor: pointer;
-  //     transition: all 1s;
-
-  //     stroke: transparent;
-  //     stroke-width: 1.5rem;
-  //     &-1 {
-  //       &:hover {
-  //         fill: $selected-color;
-  //         stroke: white;
-  //         transform: scale(1.1);
-  //       }
-  //     }
-  //   }
-  // }
-
-  &__nav{
-    @include nav-bar;
+  &__nav {
+    padding: 1rem 4rem;
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+  
+    &--item {
+      // fill: white;
+      fill: $primary-dark;
+      //   color: red;
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+      transition: all 1s;
+  
+      stroke: transparent;
+      stroke-width: 1.5rem;
+      &:hover {
+        fill: $selected-color;
+        stroke: white;
+        transform: scale(1.1);
+      }
+    }
   }
 
   &__search {
@@ -86,7 +81,7 @@
     padding: 0.7rem 2rem;
     outline: none;
     border: none;
-    background-color: $secondary-background-color;
+    background-color: $divider;
     border-radius: 10rem;
     text-align: center;
     // transition: all 0.2s;

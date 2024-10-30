@@ -1,0 +1,31 @@
+.categories {
+  &__menu {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 0 3rem;
+    height: 30rem;
+    gap: 2rem;
+    background-color: $primary;
+
+    &--icon {
+      text-align: center;
+      fill: white;
+      color: $text-secondary;
+      font-size: 5rem;
+    }
+
+    &--name {
+      font-size: 2rem;
+      text-transform: uppercase;
+      color: $text-soft-cyan;
+    }
+  }
+}

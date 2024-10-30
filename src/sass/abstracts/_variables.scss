@@ -1,7 +1,7 @@
 //  Primary Colors
 $primary-backgound-color: #861b85; // Main magenta-violet primary color
-// $primary-on-color: #FFFFFF; // Color for text/icons on primary color
-$primary-on-color: #161215;
+$primary-on-color: #FFFFFF; // Color for text/icons on primary color
+// $primary-on-color: #161215;
 
 $secondary-hover-text-lavender: #D9C2DB;
 $secondary-hover-text-pastel-pink: #f198d9;
@@ -34,23 +34,24 @@ $error-color: #F44336; // Red
 
 
 
-// !!!!!!!!!!NEW NOT GOOD COLORS!!!!!!!!!!!
-// Secondary Colors
-// $secondary-color: #4D1A76; // Dark violet, supporting accent color
-// $secondary-on-color: #FFFFFF; // Text/icons on secondary color
+$primary: #007BFF;           // Primary color
+$primary-dark: #0056b3;     // Primary color (dark)
+$accent: #118ea1;            // Accent color
+$secondary-accent: #177ab8;
+$tertiary-accent: #3f97cd;
+$warn: #dc3545;              // Warn color
 
-// // Background Colors
-// $background-color-light: #FFFFFF; // Light theme background
-// $background-color-dark: #121212; // Dark theme black background
-// $background-on-color-light: #000000; // Text on light background
-// $background-on-color-dark: #E0E0E0; // Text on dark background
+// Background Colors
+$background: #F8F9FA;       // Background color
+$card-background: #FFFFFF;   // Card background color
+$divider: #CED4DA;           // Divider color
 
-// // Surface Colors
-// $surface-color-light: #FFFFFF; // Light theme surface color for containers
-// $surface-color-dark: #1D1D1D; // Dark theme surface color for containers
-// $surface-on-color-light: #000000; // Text on light surface
-// $surface-on-color-dark: #E0E0E0; // Text on dark surface
+// Text Colors
+$text-default: #212529;      // Default text color
+$text-secondary: #6C757D;  
 
-// // Error Colors
-// $error-color: #B3261E; // Error state color
-// $error-on-color: #FFFFFF; // Text on error color
+$text-primary: #343A40;   // Dark Gray
+$text-secondary: #F8F9FA; // Light Gray
+$text-on-primary: #FFFFFF; // White for primary background
+$text-muted: #0056b3;      // Muted Blue
+$text-soft-cyan: #A0D8E6;  // Soft Cyan

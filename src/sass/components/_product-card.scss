@@ -64,18 +64,38 @@
     width: 100%;
     margin-left: 2rem;
     box-sizing: border-box;
-    @include nav-bar;
+    padding: 1rem 4rem;
     padding-left: 2rem;
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &--item {
-      stroke: $primary-backgound-color;
-      stroke-width: 1.5rem;
+      // fill: white;
+      // fill: $primary-dark;
+      fill: $tertiary-accent;
+      //   color: red;
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+      transition: all 1s;
+
+      // stroke: transparent;
+      // stroke-width: 1.5rem;
+
       &.active {
         fill: red; // active color
       }
+      &:hover {
+        // fill: $primary-dark;
+        // stroke: white;
+        // stroke-width: 1.5rem;
+        transform: scale(1.1);
+      }
       &:active {
         fill: red;
-        // transform: scale(0.8);
+        transform: scale(0.1);
       }
     }
   }
