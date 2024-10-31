@@ -1,24 +1,26 @@
 <section class="section-introduction">
-  <img
-    src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-    alt="Intro img 1"
-    class="introduction__img introduction__img-1"
-  />
-  <img
-    src="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"
-    alt="Intro img 2"
-    class="introduction__img introduction__img-2"
-  />
-  <img
-    src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg"
-    alt="Intro img 3"
-    class="introduction__img introduction__img-3"
-  />
-  <img
-    src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
-    alt="Intro img 4"
-    class="introduction__img introduction__img-4"
-  />
+  <div class="introduction__img-container">
+    <img
+      src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+      alt="Intro img 1"
+      class="introduction__img introduction__img-1"
+    />
+    <img
+      src="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"
+      alt="Intro img 2"
+      class="introduction__img introduction__img-2"
+    />
+    <img
+      src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg"
+      alt="Intro img 3"
+      class="introduction__img introduction__img-3"
+    />
+    <img
+      src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
+      alt="Intro img 4"
+      class="introduction__img introduction__img-4"
+    />
+  </div>
 
   <div class="introduction__text">
     <h1 class="introduction__text--title">
@@ -40,7 +42,7 @@
   </div>
 </section>
 
-<header appHeader class="header"></header>
+<header appHeader class="main-header"></header>
 
 <section class="section-weather u-margin-top-medium">
   <span class="weather__icon--container">
@@ -111,59 +113,9 @@
   </div>
 
   <div class="product-frames__container">
-    <div class="product__frame">
-      <figure class="product__frame--figure">
-        <img
-          src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg"
-          alt="Person on a tour"
-          class="product__frame--img"
-        />
-        <figcaption class="product__frame--caption">
-          <span class="product__frame--caption-stars"> 4.5 ★ </span>
-          <span class="product__frame--caption-review-count">
-            200+ reviews
-          </span>
-        </figcaption>
-      </figure>
-      <div class="product__frame--text">
-        <h3 class="heading-tertiary u-margin-top-small u-margin-bottom-small">
-          I had the best week ever with my family
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis ex sit
-          quasi unde dolore quos temporibus provident aperiam inventore sint
-          dicta nesciunt quo, accusantium repudiandae fuga, commodi, magni et.
-          Aliquid..
-        </p>
-      </div>
-    </div>
+    <div appProductFrame class="product__frame"></div>
 
-    <div class="product__frame">
-      <figure class="product__frame--figure">
-        <img
-          src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg"
-          alt="Person on a tour"
-          class="product__frame--img"
-        />
-        <figcaption class="product__frame--caption">
-          <span class="product__frame--caption-stars"> 4.5 ★★★★★ </span>
-          <span class="product__frame--caption-review-count">
-            200+ reviews
-          </span>
-        </figcaption>
-      </figure>
-      <div class="product__frame--text">
-        <h3 class="heading-tertiary u-margin-top-small u-margin-bottom-small">
-          I had the best week ever with my family
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis ex sit
-          quasi unde dolore quos temporibus provident aperiam inventore sint
-          dicta nesciunt quo, accusantium repudiandae fuga, commodi, magni et.
-          Aliquid..
-        </p>
-      </div>
-    </div>
+    <div appProductFrame class="product__frame"></div>
   </div>
 </section>
 
@@ -200,6 +152,8 @@
   </menu>
 
   <ul class="product-cards__container">
+    <li [productId]="1" appProductCard class="product-card"></li>
+    <li [productId]="2" appProductCard class="product-card"></li>
     <li appProductCard class="product-card"></li>
     <li appProductCard class="product-card"></li>
     <li appProductCard class="product-card"></li>
@@ -219,8 +173,5 @@
     <li appProductCard class="product-card"></li>
     <li appProductCard class="product-card"></li>
     <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-
   </ul>
 </section>

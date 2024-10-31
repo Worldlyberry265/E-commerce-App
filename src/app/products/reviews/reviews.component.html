@@ -1,5 +1,5 @@
 
-    <span class="review-count"> {{stars() | addDecimal }}  &nbsp;</span>
+    <span class="stars-count"> {{stars() | addDecimal }}  &nbsp;</span>
     @for (star of starsCount; track $index) {
         <i class="fa-solid fa-star stars-icon shining-star"></i>
     }
@@ -9,3 +9,4 @@
     } @else if(RemainingStarCount >= .75) { 
         <i class="fa-solid fa-star stars-icon shining-star"></i>
     }
+    <span class="reviews-count"> {{ reviewsCount() }} + reviews </span>

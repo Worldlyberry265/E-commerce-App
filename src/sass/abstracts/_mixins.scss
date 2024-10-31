@@ -5,3 +5,15 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+
+// 1em = 16px //default browser's font-size
+
+@mixin respond($breakpoint) {
+    
+    @if $breakpoint == mobile { 
+        @media (max-width: 28.125em) { @content }; //450px
+    }
+
+}

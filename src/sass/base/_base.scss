@@ -7,16 +7,21 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5%; // 100% = 16px, 62.5% = 1rem = 10px 
   scrollbar-width: none;
   height: 100%;
+  // width: 100lvw;
+
+
+  @include respond(mobile) {
+    font-size: 45%; //1 rem = 7.2px
+  }
+
 }
 
 body {
   // background-color: $primary-backgound-color;
 }
-
-
 
 /* Hide scrollbar for Chrome, Safari, and Opera */
 ::-webkit-scrollbar {

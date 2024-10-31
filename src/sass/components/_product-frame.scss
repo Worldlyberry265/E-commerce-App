@@ -1,86 +1,83 @@
 .product-frames__container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.product__frame {
+  cursor: pointer;
+  width: 50%;
+  // margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba(black, 0.1); // 3 in Y direction 6 for blur
+  background-color: rgba(white, 0.6);
+  border-radius: 3px;
+  padding: 6rem;
+  padding-left: 9rem;
+  font-size: 2rem;
+  transform: skewX(-12deg);
+
+  &--figure {
+    width: 15rem;
+    height: 15rem;
+    float: left;
+    transform: translateX(-3rem) skewX(12deg);
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  &--img {
+    height: 100%;
+    // width: 100%;
+    transform: translateX(-4rem) scale(1.1);
+    backface-visibility: hidden;
+    transition: all 0.8s;
+    object-fit: contain;
+  }
+
+  &--text {
+    transform: skewX(12deg);
+  }
+
+  &--caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    // color: white;
+    // text-transform: uppercase;
+    font-size: 1.7rem;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.5s;
+    backface-visibility: hidden;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
+
+    &-stars {
+      color: gold;
+      fill: gold;
+    }
+
+    &-review-count {
+      color: white;
+    }
   }
-  
-.product__frame {
 
-    width: 50%;
-    // margin: 0 auto;
-    box-shadow: 0 3rem 6rem rgba(black, .1); // 3 in Y direction 6 for blur
-    background-color: rgba(white, .6);
-    border-radius: 3px;
-    padding: 6rem;
-    padding-left: 9rem;
-    font-size: 2rem;
-    transform: skewX(-12deg);
+  &:hover &--caption {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 
-    &--figure {
-        width: 15rem;
-        height: 15rem;
-        float: left;
-        transform: translateX(-3rem) skewX(12deg);
-        position: relative;
-        overflow: hidden;
-        border-radius: 50%;
+  &:hover &--img {
+    transform: translateX(-4rem) scale(0.9);
+    filter: blur(3px) brightness(80%);
+  }
 
-    }
-
-    &--img {
-        height: 100%;
-        // width: 100%;
-        transform: translateX(-4rem) scale(1.1);
-        backface-visibility: hidden;
-        transition: all .8s;
-        object-fit: contain;
-    }
-
-    &--text {
-        transform: skewX(12deg);
-
-    }
-
-    &--caption {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, 20%);
-        // color: white;
-        // text-transform: uppercase;
-        font-size: 1.7rem;
-        text-align: center;
-        opacity: 0;
-        transition: all .5s;
-        backface-visibility: hidden;
-        display: flex;
-        flex-direction: column;
-
-        &-stars {
-            color: gold;
-            fill: gold;
-        }
-
-        &-review-count {
-            color: white;
-        }
-    }
-
-    &:hover &--caption {
-        opacity: 1;
-        transform: translate(-50%, -50%)
-    }
-
-    &:hover &--img {
-        transform: translateX(-4rem) scale(.9);
-        filter: blur(3px) brightness(80%);
-    }
-
-    &-2 {
-        // top: 240%;
-    }
-
+  &-2 {
+    // top: 240%;
+  }
 }

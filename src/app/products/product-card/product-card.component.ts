@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, input } from '@angular/core';
 import { ReviewsComponent } from '../reviews/reviews.component';
 
 @Component({
@@ -10,12 +10,11 @@ import { ReviewsComponent } from '../reviews/reviews.component';
 })
 export class ProductCardComponent implements AfterViewInit{
 
-  
+  productId = input<number>(1);
 
   ngAfterViewInit(): void {
-    const heart = document.getElementById('heart-svg');
-    const cart = document.getElementById('cart-svg2');
-
+    const heart = document.getElementById(`heart-svg-${this.productId()}`);
+    const cart = document.getElementById(`cart-svg-${this.productId()}`);
 
     if (heart) {
       heart.addEventListener('click', function () {

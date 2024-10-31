@@ -4,11 +4,12 @@ import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from '../header/header.component';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
 import { AddDecimalPipe } from '../products/reviews/add-decimal-pipe/add-decimal.pipe';
+import { ProductFrameComponent } from '../products/product-frame/product-frame.component';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [MatCardModule, HeaderComponent, MatButtonModule, ProductCardComponent, AddDecimalPipe],
+  imports: [MatCardModule, HeaderComponent, MatButtonModule, ProductCardComponent, AddDecimalPipe,ProductFrameComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

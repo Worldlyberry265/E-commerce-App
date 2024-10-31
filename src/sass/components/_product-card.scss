@@ -1,6 +1,6 @@
 .product-cards__container {
       margin: 0 auto;
-      padding: 5rem 0rem;
+      padding: 5rem 0 0 0;
       display: flex;
       justify-content: space-evenly;
       // width: fit;
@@ -14,7 +14,7 @@
 
 
 .product-card {
-  
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -113,8 +113,7 @@
         }
 
         &-cart {
-          // fill: $success-color;
-          fill: black;
+          fill: $success-color;
         }
       }
       &:hover {

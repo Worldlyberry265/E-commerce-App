@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { ReviewsComponent } from '../reviews/reviews.component';
 
 @Component({
-  selector: 'app-product-frame',
+  selector: 'div[appProductFrame]',
   standalone: true,
-  imports: [],
+  imports: [ReviewsComponent],
   templateUrl: './product-frame.component.html',
   styleUrl: './product-frame.component.scss'
 })

@@ -1,6 +1,4 @@
-
-
-.header {
+.main-header {
   display: flex;
   justify-content: space-between;
   background-color: $background;
@@ -41,6 +39,13 @@
     &--item {
       font-size: 1.5rem;
       padding: 1rem 0;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      
+      i {
+        font-size: 2rem;
+      }
 
       &:hover {
         color: $text-default;

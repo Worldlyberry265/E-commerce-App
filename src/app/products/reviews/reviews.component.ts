@@ -10,7 +10,8 @@ import { AddDecimalPipe } from '../reviews/add-decimal-pipe/add-decimal.pipe';
 })
 export class ReviewsComponent {
 
-  stars = input.required<number>({ alias: 'appReview' });
+  stars = input.required<number>();
+  reviewsCount = input.required<number>();
   RemainingStarCount = 0;
 
   get starsCount(): number[] {
