@@ -19,6 +19,13 @@
   font-size: 2rem;
   transform: skewX(-12deg);
 
+  @include respond(mobile) {
+    transform: skewX(0);
+    padding: 1rem 6rem;
+    font-size: 1.7rem;
+    // box-shadow: 0 3rem 6rem rgba(black, 0.2);
+  }
+
   &--figure {
     width: 15rem;
     height: 15rem;
@@ -27,6 +34,13 @@
     position: relative;
     overflow: hidden;
     border-radius: 50%;
+
+    @include respond(mobile) {
+      transform: skewX(0);
+      width: 10rem;
+      height: 10rem;
+      margin-right: 2rem;
+    }
   }
 
   &--img {
@@ -36,10 +50,24 @@
     backface-visibility: hidden;
     transition: all 0.8s;
     object-fit: contain;
+
+    &-active {
+      @include respond(mobile) {
+        transform: translateX(-4rem) scale(0.9);
+        filter: blur(3px) brightness(80%);
+      }
+    }
   }
 
   &--text {
     transform: skewX(12deg);
+    
+    &-title {
+      margin-top: 1.5rem;
+    }
+    @include respond(mobile) {
+      transform: skewX(0);
+    }
   }
 
   &--caption {
@@ -65,16 +93,27 @@
     &-review-count {
       color: white;
     }
+
+    &-active {
+      @include respond(mobile) {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
   }
 
-  &:hover &--caption {
-    opacity: 1;
-    transform: translate(-50%, -50%);
+  @include respond(tablet) {
+    &:hover &--caption {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
   }
 
-  &:hover &--img {
-    transform: translateX(-4rem) scale(0.9);
-    filter: blur(3px) brightness(80%);
+  @include respond(tablet) {
+    &:hover &--img {
+      transform: translateX(-4rem) scale(0.9);
+      filter: blur(3px) brightness(80%);
+    }
   }
 
   &-2 {

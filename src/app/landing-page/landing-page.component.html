@@ -1,103 +1,69 @@
 <section class="section-introduction">
-  <div class="introduction__img-container">
-    <img
-      src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-      alt="Intro img 1"
-      class="introduction__img introduction__img-1"
-    />
-    <img
-      src="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"
-      alt="Intro img 2"
-      class="introduction__img introduction__img-2"
-    />
-    <img
-      src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg"
-      alt="Intro img 3"
-      class="introduction__img introduction__img-3"
-    />
-    <img
-      src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
-      alt="Intro img 4"
-      class="introduction__img introduction__img-4"
-    />
-  </div>
+    <div class="introduction__img-container">
+        <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="Intro img 1" class="introduction__img introduction__img-1" />
+        <img src="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg" alt="Intro img 2" class="introduction__img introduction__img-2" />
+        <img src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" alt="Intro img 3" class="introduction__img introduction__img-3" />
+        <img src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg" alt="Intro img 4" class="introduction__img introduction__img-4" />
+    </div>
 
-  <div class="introduction__text">
-    <h1 class="introduction__text--title">
-      From clothing to electronics to jewellery, we’ve got you covered!
-    </h1>
-    <p class="introduction__text--subtitle">
-      Explore our extensive range of high-quality products designed for every
-      style and occasion. Refresh your wardrobe, upgrade your gadgets, or find
-      the perfect sparkle for any moment. Shop confidently with quality, style,
-      and value in every item!
-    </p>
+    <div class="introduction__text">
+        <h1 class="introduction__text--title">
+            From clothing to electronics to jewellery, we’ve got you covered!
+        </h1>
+        <p class="introduction__text--subtitle">
+            Explore our extensive range of high-quality products designed for every style and occasion. Refresh your wardrobe, upgrade your gadgets, or find the perfect sparkle for any moment. Shop confidently with quality, style, and value in every item!
+        </p>
 
-    <nav class="introduction__nav">
-      <button class="btn-nav">Women's Clothing</button>
-      <button class="btn-nav">Men's Clothing</button
-      ><button class="btn-nav">Jewellery</button>
-      <button class="btn-nav">Electronics</button>
-    </nav>
-  </div>
+        <nav class="introduction__nav">
+            <button class="btn-nav">Women's Clothing</button>
+            <button class="btn-nav">Men's Clothing</button><button class="btn-nav">Jewellery</button>
+            <button class="btn-nav">Electronics</button>
+        </nav>
+    </div>
 </section>
 
 <header appHeader class="main-header"></header>
 
 <section class="section-weather u-margin-top-medium">
-  <span class="weather__icon--container">
-    @if (Weather >= 0 && Weather <3) {
-    <ng-container>
-      <svg
-        class="weather__icon--svg-sunny"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 30 30"
-      >
+    <span class="weather__icon--container">
+    @if (Weather >= 0 && Weather <3) { <ng-container>
+      <svg class="weather__icon--svg-sunny" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
         <path
-          d="M 14.984375 0.98632812 A 1.0001 1.0001 0 0 0 14 2 L 14 5 A 1.0001 1.0001 0 1 0 16 5 L 16 2 A 1.0001 1.0001 0 0 0 14.984375 0.98632812 z M 5.796875 4.7988281 A 1.0001 1.0001 0 0 0 5.1015625 6.515625 L 7.2226562 8.6367188 A 1.0001 1.0001 0 1 0 8.6367188 7.2226562 L 6.515625 5.1015625 A 1.0001 1.0001 0 0 0 5.796875 4.7988281 z M 24.171875 4.7988281 A 1.0001 1.0001 0 0 0 23.484375 5.1015625 L 21.363281 7.2226562 A 1.0001 1.0001 0 1 0 22.777344 8.6367188 L 24.898438 6.515625 A 1.0001 1.0001 0 0 0 24.171875 4.7988281 z M 15 8 A 7 7 0 0 0 8 15 A 7 7 0 0 0 15 22 A 7 7 0 0 0 22 15 A 7 7 0 0 0 15 8 z M 2 14 A 1.0001 1.0001 0 1 0 2 16 L 5 16 A 1.0001 1.0001 0 1 0 5 14 L 2 14 z M 25 14 A 1.0001 1.0001 0 1 0 25 16 L 28 16 A 1.0001 1.0001 0 1 0 28 14 L 25 14 z M 7.9101562 21.060547 A 1.0001 1.0001 0 0 0 7.2226562 21.363281 L 5.1015625 23.484375 A 1.0001 1.0001 0 1 0 6.515625 24.898438 L 8.6367188 22.777344 A 1.0001 1.0001 0 0 0 7.9101562 21.060547 z M 22.060547 21.060547 A 1.0001 1.0001 0 0 0 21.363281 22.777344 L 23.484375 24.898438 A 1.0001 1.0001 0 1 0 24.898438 23.484375 L 22.777344 21.363281 A 1.0001 1.0001 0 0 0 22.060547 21.060547 z M 14.984375 23.986328 A 1.0001 1.0001 0 0 0 14 25 L 14 28 A 1.0001 1.0001 0 1 0 16 28 L 16 25 A 1.0001 1.0001 0 0 0 14.984375 23.986328 z"
-        ></path>
+          d="M 14.984375 0.98632812 A 1.0001 1.0001 0 0 0 14 2 L 14 5 A 1.0001 1.0001 0 1 0 16 5 L 16 2 A 1.0001 1.0001 0 0 0 14.984375 0.98632812 z M 5.796875 4.7988281 A 1.0001 1.0001 0 0 0 5.1015625 6.515625 L 7.2226562 8.6367188 A 1.0001 1.0001 0 1 0 8.6367188 7.2226562 L 6.515625 5.1015625 A 1.0001 1.0001 0 0 0 5.796875 4.7988281 z M 24.171875 4.7988281 A 1.0001 1.0001 0 0 0 23.484375 5.1015625 L 21.363281 7.2226562 A 1.0001 1.0001 0 1 0 22.777344 8.6367188 L 24.898438 6.515625 A 1.0001 1.0001 0 0 0 24.171875 4.7988281 z M 15 8 A 7 7 0 0 0 8 15 A 7 7 0 0 0 15 22 A 7 7 0 0 0 22 15 A 7 7 0 0 0 15 8 z M 2 14 A 1.0001 1.0001 0 1 0 2 16 L 5 16 A 1.0001 1.0001 0 1 0 5 14 L 2 14 z M 25 14 A 1.0001 1.0001 0 1 0 25 16 L 28 16 A 1.0001 1.0001 0 1 0 28 14 L 25 14 z M 7.9101562 21.060547 A 1.0001 1.0001 0 0 0 7.2226562 21.363281 L 5.1015625 23.484375 A 1.0001 1.0001 0 1 0 6.515625 24.898438 L 8.6367188 22.777344 A 1.0001 1.0001 0 0 0 7.9101562 21.060547 z M 22.060547 21.060547 A 1.0001 1.0001 0 0 0 21.363281 22.777344 L 23.484375 24.898438 A 1.0001 1.0001 0 1 0 24.898438 23.484375 L 22.777344 21.363281 A 1.0001 1.0001 0 0 0 22.060547 21.060547 z M 14.984375 23.986328 A 1.0001 1.0001 0 0 0 14 25 L 14 28 A 1.0001 1.0001 0 1 0 16 28 L 16 25 A 1.0001 1.0001 0 0 0 14.984375 23.986328 z">
+        </path>
       </svg>
       <p class="main-title">
         The Weather shows that you're having a sunny/cloudy week, so maybe
         you're looking a Tshirt?
       </p>
-    </ng-container>
-    } @else if (Weather >= 3 && Weather <6 ) {
-    <ng-container>
-      <svg
-        class="weather__icon--svg-drizzle"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-      >
-        <path
-          d="M96 320c-53 0-96-43-96-96c0-42.5 27.6-78.6 65.9-91.2C64.7 126.1 64 119.1 64 112C64 50.1 114.1 0 176 0c43.1 0 80.5 24.3 99.2 60c14.7-17.1 36.5-28 60.8-28c44.2 0 80 35.8 80 80c0 5.5-.6 10.8-1.6 16c.5 0 1.1 0 1.6 0c53 0 96 43 96 96s-43 96-96 96L96 320zm-6.8 52c1.3-2.5 3.9-4 6.8-4s5.4 1.5 6.8 4l35.1 64.6c4.1 7.5 6.2 15.8 6.2 24.3l0 3c0 26.5-21.5 48-48 48s-48-21.5-48-48l0-3c0-8.5 2.1-16.9 6.2-24.3L89.2 372zm160 0c1.3-2.5 3.9-4 6.8-4s5.4 1.5 6.8 4l35.1 64.6c4.1 7.5 6.2 15.8 6.2 24.3l0 3c0 26.5-21.5 48-48 48s-48-21.5-48-48l0-3c0-8.5 2.1-16.9 6.2-24.3L249.2 372zm124.9 64.6L409.2 372c1.3-2.5 3.9-4 6.8-4s5.4 1.5 6.8 4l35.1 64.6c4.1 7.5 6.2 15.8 6.2 24.3l0 3c0 26.5-21.5 48-48 48s-48-21.5-48-48l0-3c0-8.5 2.1-16.9 6.2-24.3z"
-        />
-      </svg>
-      <p class="weather__text">
-        The Weather shows that you're having a foggy/cloudy week with a chance
-        of little rain, so maybe you're looking a light Jacket?
-      </p>
-    </ng-container>
-    } @else if (Weather >= 6 && Weather <8) {
-    <ng-container>
-      <svg
-        class="weather__icon--svg-thunder"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-      >
-        <path
-          d="M0 224c0 53 43 96 96 96l47.2 0L290 202.5c17.6-14.1 42.6-14 60.2 .2s22.8 38.6 12.8 58.8L333.7 320l18.3 0 64 0c53 0 96-43 96-96s-43-96-96-96c-.5 0-1.1 0-1.6 0c1.1-5.2 1.6-10.5 1.6-16c0-44.2-35.8-80-80-80c-24.3 0-46.1 10.9-60.8 28C256.5 24.3 219.1 0 176 0C114.1 0 64 50.1 64 112c0 7.1 .7 14.1 1.9 20.8C27.6 145.4 0 181.5 0 224zm330.1 3.6c-5.8-4.7-14.2-4.7-20.1-.1l-160 128c-5.3 4.2-7.4 11.4-5.1 17.8s8.3 10.7 15.1 10.7l70.1 0L177.7 488.8c-3.4 6.7-1.6 14.9 4.3 19.6s14.2 4.7 20.1 .1l160-128c5.3-4.2 7.4-11.4 5.1-17.8s-8.3-10.7-15.1-10.7l-70.1 0 52.4-104.8c3.4-6.7 1.6-14.9-4.2-19.6z"
-        />
-      </svg>
-      <p class="weather__text">
-        It seems you're having a Rainy weather with a chance of thunder or even
-        snow, so maybe you're in need of a Jacket?
-      </p>
-    </ng-container>
-    }
+      </ng-container>
+      } @else if (Weather >= 3 && Weather <6 ) { <ng-container>
+        <svg class="weather__icon--svg-drizzle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path
+            d="M96 320c-53 0-96-43-96-96c0-42.5 27.6-78.6 65.9-91.2C64.7 126.1 64 119.1 64 112C64 50.1 114.1 0 176 0c43.1 0 80.5 24.3 99.2 60c14.7-17.1 36.5-28 60.8-28c44.2 0 80 35.8 80 80c0 5.5-.6 10.8-1.6 16c.5 0 1.1 0 1.6 0c53 0 96 43 96 96s-43 96-96 96L96 320zm-6.8 52c1.3-2.5 3.9-4 6.8-4s5.4 1.5 6.8 4l35.1 64.6c4.1 7.5 6.2 15.8 6.2 24.3l0 3c0 26.5-21.5 48-48 48s-48-21.5-48-48l0-3c0-8.5 2.1-16.9 6.2-24.3L89.2 372zm160 0c1.3-2.5 3.9-4 6.8-4s5.4 1.5 6.8 4l35.1 64.6c4.1 7.5 6.2 15.8 6.2 24.3l0 3c0 26.5-21.5 48-48 48s-48-21.5-48-48l0-3c0-8.5 2.1-16.9 6.2-24.3L249.2 372zm124.9 64.6L409.2 372c1.3-2.5 3.9-4 6.8-4s5.4 1.5 6.8 4l35.1 64.6c4.1 7.5 6.2 15.8 6.2 24.3l0 3c0 26.5-21.5 48-48 48s-48-21.5-48-48l0-3c0-8.5 2.1-16.9 6.2-24.3z" />
+        </svg>
+        <p class="weather__text">
+          The Weather shows that you're having a foggy/cloudy week with a chance
+          of little rain, so maybe you're looking a light Jacket?
+        </p>
+        </ng-container>
+        } @else if (Weather >= 6 && Weather <8) { <ng-container>
+          <svg class="weather__icon--svg-thunder" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path
+              d="M0 224c0 53 43 96 96 96l47.2 0L290 202.5c17.6-14.1 42.6-14 60.2 .2s22.8 38.6 12.8 58.8L333.7 320l18.3 0 64 0c53 0 96-43 96-96s-43-96-96-96c-.5 0-1.1 0-1.6 0c1.1-5.2 1.6-10.5 1.6-16c0-44.2-35.8-80-80-80c-24.3 0-46.1 10.9-60.8 28C256.5 24.3 219.1 0 176 0C114.1 0 64 50.1 64 112c0 7.1 .7 14.1 1.9 20.8C27.6 145.4 0 181.5 0 224zm330.1 3.6c-5.8-4.7-14.2-4.7-20.1-.1l-160 128c-5.3 4.2-7.4 11.4-5.1 17.8s8.3 10.7 15.1 10.7l70.1 0L177.7 488.8c-3.4 6.7-1.6 14.9 4.3 19.6s14.2 4.7 20.1 .1l160-128c5.3-4.2 7.4-11.4 5.1-17.8s-8.3-10.7-15.1-10.7l-70.1 0 52.4-104.8c3.4-6.7 1.6-14.9-4.2-19.6z" />
+          </svg>
+          <p class="weather__text">
+            It seems you're having a Rainy weather with a chance of thunder or even
+            snow, so maybe you're in need of a Jacket?
+          </p>
+          </ng-container>
+          }
   </span>
 </section>
 
+
+
+<!-- THE WIDTH IS GETTING 105VW INSTEAD OF 100VW -->
 <section class="section-advised-products u-margin-top-medium">
   <div class="bg-video">
     <video
@@ -106,19 +72,21 @@
       [autoplay]="true"
       [muted]="true"
       [loop]="true"
+      playsinline
     >
+    <!-- playsinline allow the video to autoplay instead of automatically playing it full screen-->
       <source src="Cloth-Factory.mp4" type="video/mp4" />
-      <!-- <source src="../../../public/Cloth-Factory.mp4" type="video/mp4"> -->
     </video>
   </div>
 
   <div class="product-frames__container">
     <div appProductFrame class="product__frame"></div>
-
     <div appProductFrame class="product__frame"></div>
   </div>
 </section>
 
+
+<!-- THE SCREEN IS SHAKING WHEN I UNCOMMENT THEM -->
 <section class="section-categories u-margin-top-medium">
   <p class="main-title">
     You can Look to our categories if you're looking for somehting else
@@ -127,27 +95,27 @@
   <menu class="categories__menu u-margin-top-medium">
     <div class="categories__item">
       <span class="categories__item--icon">
-        <i class="fa-solid fa-bolt"></i>
-      </span>
-      <p class="categories__item--name">Electronics</p>
-    </div>
-    <div class="categories__item">
-      <span class="categories__item--icon">
         <i class="fa-solid fa-shirt"></i>
       </span>
       <p class="categories__item--name">Men's Clothing</p>
     </div>
     <div class="categories__item">
       <span class="categories__item--icon">
-        <i class="fa-solid fa-person-dress"></i>
+        <i class="fa-solid fa-bolt"></i>
       </span>
-      <p class="categories__item--name">Women's Clothing</p>
+      <p class="categories__item--name u-margin-top-small">Electronics</p>
     </div>
     <div class="categories__item">
       <span class="categories__item--icon">
         <i class="fa-regular fa-gem"></i>
       </span>
-      <p class="categories__item--name">Jewellery</p>
+      <p class="categories__item--name u-margin-top-small">Jewellery</p>
+    </div>
+    <div class="categories__item">
+      <span class="categories__item--icon">
+        <i class="fa-solid fa-person-dress"></i>
+      </span>
+      <p class="categories__item--name">Women's Clothing</p>
     </div>
   </menu>
 
@@ -174,4 +142,16 @@
     <li appProductCard class="product-card"></li>
     <li appProductCard class="product-card"></li>
   </ul>
+
+
+
+
+
+
+
+
+
+
+
+
 </section>

@@ -1,145 +1,134 @@
 .section-introduction {
-
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-
+    // width: 100vw;
+    height: 100vh;
+    position: relative;
+    @include respond(mobile) {
+        height: auto;
+    }
 }
 
 .introduction {
-  &__img {
-    width: 20rem;
-    height: 20rem;
-    object-fit: contain;
-    position: absolute;
-    background-color: transparent;
-    mix-blend-mode: multiply;
-    // z-index: 3;   
-  
-    &-1 {
-      left: 10%;
-      top: 20%;
-    }
-    &-2 {
-      left: 20%;
-      top: 30%;
-    }
-    &-3 {
-      left: 30%;
-      top: 40%;
-    }
-    &-4 {
-      left: 40%;
-      top: 50%;
-    }
-
-    &-container {
-      @include respond(mobile) {
-        display: flex;
-        gap: 0;
-        justify-content: center;
-        align-items: center;
-        // margin: 0 auto;
-        margin-top: 25rem;
-
-        &>* {
-          position: relative;
-          left: auto;
-          top: auto;
-          width: 15rem;
-          height: 15rem;
+    &__img {
+        width: 20rem;
+        height: 20rem;
+        object-fit: contain;
+        position: absolute;
+        background-color: transparent;
+        mix-blend-mode: multiply;
+        // z-index: 3;   
+        &-1 {
+            left: 10%;
+            top: 20%;
         }
-      }
+        &-2 {
+            left: 20%;
+            top: 30%;
+        }
+        &-3 {
+            left: 30%;
+            top: 40%;
+        }
+        &-4 {
+            left: 40%;
+            top: 50%;
+        }
+        &-container {
+            @include respond(mobile) {
+                display: flex;
+                flex-wrap: wrap;
+                // gap: 2rem;
+                row-gap: 2rem;
+                column-gap: 0rem;
+                justify-content: center;
+                margin: 0 auto;
+                margin-top: 10rem;
+                &>* {
+                    flex: 0 0 calc(50% - 2rem);
+                    position: relative;
+                    left: auto;
+                    top: auto;
+                    width: 15rem;
+                    height: 15rem;
+                }
+            }
+        }
     }
-  }
-
-  &__text {
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    padding: 0 10rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-
-    @include respond(mobile) {
-      position: relative;
-      left: auto;
-      top: auto;
-      align-items: center;
-      justify-content: center;      
-      padding: 0 2rem;
+    &__text {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        padding: 0 10rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        @include respond(mobile) {
+            position: relative;
+            text-align: center;
+            left: auto;
+            top: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2rem;
+        }
+        &--title {
+            font-size: 3rem;
+            font-weight: normal;
+        }
+        &--subtitle {
+            font-size: 2rem;
+            font-weight: 100;
+        }
     }
-
-    &--title{
-      font-size: 3rem;
-      font-weight: normal;
+    &__nav {
+        display: flex;
+        gap: 2rem;
     }
-
-    &--subtitle {
-      font-size: 2rem;
-      font-weight: 100;
-    }
-  }
-
-  &__nav {
-    display: flex;
-    gap: 2rem;
-  }
-
 }
 
-
 .section-weather {
-  position: relative;
-
-  // margin-top: 10rem;
-  // background-color: $surface-on-color-dark;
+    position: relative;
+    // margin-top: 10rem;
+    // background-color: $surface-on-color-dark;
 }
 
 .weather {
-  // &__text {
-  // }
-  &__icon {
-    &--container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3rem;
-      padding-top: 2rem;
+    // &__text {
+    // }
+    &__icon {
+        &--container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            padding-top: 2rem;
+        }
+        &--svg {
+            &-sunny {
+                width: 10rem;
+                height: 10rem;
+                fill: gold;
+                animation: shine 2s infinite ease-in-out;
+            }
+            &-drizzle {
+                width: 10rem;
+                height: 10rem;
+                fill: #355279;
+                animation: shine 2s infinite ease-in-out;
+            }
+            &-thunder {
+                width: 10rem;
+                height: 10rem;
+                fill: #6487b5;
+                animation: shine 2s infinite ease-in-out;
+            }
+        }
     }
-
-    &--svg {
-      &-sunny {
-        width: 10rem;
-        height: 10rem;
-        fill: gold;
-        animation: shine 2s infinite ease-in-out;
-      }
-      &-drizzle {
-        width: 10rem;
-        height: 10rem;
-        fill: #355279;
-        animation: shine 2s infinite ease-in-out;
-      }
-      &-thunder {
-        width: 10rem;
-        height: 10rem;
-        fill: #6487b5;
-        animation: shine 2s infinite ease-in-out;
-      }
-    }
-  }
-} 
+}
 
 .section-advised-products {
-  position: relative;
+    position: relative;
 }
-
-
-
 
 .section-categories {
-  // margin-bottom: 15rem;
+    // margin-bottom: 15rem;
 }
-

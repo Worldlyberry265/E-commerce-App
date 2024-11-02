@@ -13,8 +13,11 @@ body {
     font-style: italic;
     font-weight: 700;
     word-spacing: .5rem;
-    display: flex;
-    justify-content: center;
-    // text-shadow: 1px 1px 2px gray;
-    // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    @include respond(mobile) {
+      font-size: 2rem;
+      text-align: center;
+      padding: 0 3rem;
+    }
   }

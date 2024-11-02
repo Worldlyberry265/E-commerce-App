@@ -1,15 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
 import { AddDecimalPipe } from '../products/reviews/add-decimal-pipe/add-decimal.pipe';
 import { ProductFrameComponent } from '../products/product-frame/product-frame.component';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [MatCardModule, HeaderComponent, MatButtonModule, ProductCardComponent, AddDecimalPipe,ProductFrameComponent],
+  imports: [HeaderComponent, ProductCardComponent, AddDecimalPipe,ProductFrameComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -80,5 +80,24 @@ export class LandingPageComponent implements AfterViewInit {
   // }
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
 }
 

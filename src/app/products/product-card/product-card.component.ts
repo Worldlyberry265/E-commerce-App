@@ -10,7 +10,7 @@ import { ReviewsComponent } from '../reviews/reviews.component';
 })
 export class ProductCardComponent implements AfterViewInit{
 
-  productId = input<number>(1);
+  productId = input<number>(0);
 
   ngAfterViewInit(): void {
     const heart = document.getElementById(`heart-svg-${this.productId()}`);

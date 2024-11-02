@@ -9,8 +9,6 @@
 html {
   font-size: 62.5%; // 100% = 16px, 62.5% = 1rem = 10px 
   scrollbar-width: none;
-  height: 100%;
-  // width: 100lvw;
 
 
   @include respond(mobile) {
