@@ -56,4 +56,30 @@
       transform: translateY(-1rem);
     }
   }
+
+  &__search {
+
+    &--container {
+      display: none;
+      margin-top: 2rem;
+      @include respond(mobile) {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: center;
+      }
+    }
+
+    &--input {
+      font-size: 2rem !important;
+    }
+
+    &--list {
+      list-style: none;
+    }
+
+    &--item {
+
+    }
+  }
 }

@@ -16,7 +16,9 @@ export class HeaderComponent {
   readonly dialog = inject(MatDialog);
 
   openDialog() {
-    const dialogRef = this.dialog.open(PreviewComponent);
+    const dialogRef = this.dialog.open(PreviewComponent, {
+      panelClass: 'preview'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

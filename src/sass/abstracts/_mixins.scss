@@ -17,7 +17,7 @@
         @media (max-width: 28.125em) { @content }; //450px
     }
     
-    @if $breakpoint == tablet { // TRUE
+    @if $breakpoint == desktop { // TRUE
         @media (min-width: 37.5em) { @content }; // 600
     }
 

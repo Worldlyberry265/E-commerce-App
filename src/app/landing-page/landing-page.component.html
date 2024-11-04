@@ -1,31 +1,37 @@
 <section class="section-introduction">
-    <div class="introduction__img-container">
-        <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="Intro img 1" class="introduction__img introduction__img-1" />
-        <img src="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg" alt="Intro img 2" class="introduction__img introduction__img-2" />
-        <img src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" alt="Intro img 3" class="introduction__img introduction__img-3" />
-        <img src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg" alt="Intro img 4" class="introduction__img introduction__img-4" />
-    </div>
+  <div class="introduction__img-container">
+    <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="Intro img 1"
+      class="introduction__img introduction__img-1" />
+    <img src="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg" alt="Intro img 2"
+      class="introduction__img introduction__img-2" />
+    <img src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" alt="Intro img 3"
+      class="introduction__img introduction__img-3" />
+    <img src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg" alt="Intro img 4"
+      class="introduction__img introduction__img-4" />
+  </div>
 
-    <div class="introduction__text">
-        <h1 class="introduction__text--title">
-            From clothing to electronics to jewellery, we’ve got you covered!
-        </h1>
-        <p class="introduction__text--subtitle">
-            Explore our extensive range of high-quality products designed for every style and occasion. Refresh your wardrobe, upgrade your gadgets, or find the perfect sparkle for any moment. Shop confidently with quality, style, and value in every item!
-        </p>
+  <div class="introduction__text">
+    <h1 class="introduction__text--title">
+      From clothing to electronics to jewellery, we’ve got you covered!
+    </h1>
+    <p class="introduction__text--subtitle">
+      Explore our extensive range of high-quality products designed for every style and occasion. Refresh your wardrobe,
+      upgrade your gadgets, or find the perfect sparkle for any moment. Shop confidently with quality, style, and value
+      in every item!
+    </p>
 
-        <nav class="introduction__nav">
-            <button class="btn-nav">Women's Clothing</button>
-            <button class="btn-nav">Men's Clothing</button><button class="btn-nav">Jewellery</button>
-            <button class="btn-nav">Electronics</button>
-        </nav>
-    </div>
+    <nav class="introduction__nav">
+      <button class="btn-nav">Women's Clothing</button>
+      <button class="btn-nav">Men's Clothing</button><button class="btn-nav">Jewellery</button>
+      <button class="btn-nav">Electronics</button>
+    </nav>
+  </div>
 </section>
 
 <header appHeader class="main-header"></header>
 
 <section class="section-weather u-margin-top-medium">
-    <span class="weather__icon--container">
+  <span class="weather__icon--container">
     @if (Weather >= 0 && Weather <3) { <ng-container>
       <svg class="weather__icon--svg-sunny" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
         <path
@@ -66,20 +72,15 @@
 <!-- THE WIDTH IS GETTING 105VW INSTEAD OF 100VW -->
 <section class="section-advised-products u-margin-top-medium">
   <div class="bg-video">
-    <video
-      id="landing-video"
-      class="bg-video__content"
-      [autoplay]="true"
-      [muted]="true"
-      [loop]="true"
-      playsinline
-    >
-    <!-- playsinline allow the video to autoplay instead of automatically playing it full screen-->
+    <video id="landing-video" class="bg-video__content" [autoplay]="true" [muted]="true" [loop]="true" playsinline>
+      <!-- playsinline allow the video to autoplay instead of automatically playing it full screen-->
       <source src="Cloth-Factory.mp4" type="video/mp4" />
     </video>
   </div>
 
   <div class="product-frames__container">
+    <!-- <div [appProductFrame]="1" class="product__frame"></div>
+    <div [appProductFrame]="2" class="product__frame"></div> -->
     <div appProductFrame class="product__frame"></div>
     <div appProductFrame class="product__frame"></div>
   </div>
@@ -119,28 +120,44 @@
     </div>
   </menu>
 
+  <div class="categories__search--container">
+    <input type="text" [(ngModel)]="searchedProduct" class="main-header__search categories__search--input" (keyup)="onSearchProduct($event)" placeholder="Enter an item Id" />
+
+    <!-- @if (foundProducts().length > 0) { -->
+    @if (foundProducts().length > 0) {
+    <ul class="categories__search--list">
+      @for (product of foundProducts(); track $index) {
+      <li class="main-header__search categories__search--item u-margin-top-small" (click)="selectProduct(product)">
+        {{ product }}
+      </li>
+    }
+    </ul>
+    }
+  </div>
+
+
   <ul class="product-cards__container">
-    <li [productId]="1" appProductCard class="product-card"></li>
-    <li [productId]="2" appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
-    <li appProductCard class="product-card"></li>
+    <li [appProductCard]="1" class="product-card"></li>
+    <li [appProductCard]="2" class="product-card"></li>
+    <li [appProductCard]="3" class="product-card"></li>
+    <li [appProductCard]="4" class="product-card"></li>
+    <li [appProductCard]="5" class="product-card"></li>
+    <li [appProductCard]="6" class="product-card"></li>
+    <li [appProductCard]="7" class="product-card"></li>
+    <li [appProductCard]="8" class="product-card"></li>
+    <li [appProductCard]="9" class="product-card"></li>
+    <li [appProductCard]="10" class="product-card"></li>
+    <li [appProductCard]="11" class="product-card"></li>
+    <li [appProductCard]="12" class="product-card"></li>
+    <li [appProductCard]="13" class="product-card"></li>
+    <li [appProductCard]="14" class="product-card"></li>
+    <li [appProductCard]="15" class="product-card"></li>
+    <li [appProductCard]="16" class="product-card"></li>
+    <li [appProductCard]="17" class="product-card"></li>
+    <li [appProductCard]="18" class="product-card"></li>
+    <li [appProductCard]="19" class="product-card"></li>
+    <li [appProductCard]="20" class="product-card"></li>
+    <li [appProductCard]="21" class="product-card"></li>
   </ul>
 
 

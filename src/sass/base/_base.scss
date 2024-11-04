@@ -4,6 +4,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;  // To remove the background color on elements when clicked
 }
 
 html {

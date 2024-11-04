@@ -16,6 +16,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -156,7 +157,23 @@ body ::selection {
   transform: scaleY(1.1);
   transform: translateY(-1rem);
 }
-
+.categories__search--container {
+  display: none;
+  margin-top: 2rem;
+}
+@media (max-width: 28.125em) {
+  .categories__search--container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.categories__search--input {
+  font-size: 2rem !important;
+}
+.categories__search--list {
+  list-style: none;
+}
 .mobile-navigation {
   display: none;
 }
@@ -213,31 +230,18 @@ body ::selection {
   width: 100%;
 }
 .mobile-navigation__item {
-  margin: 1rem;
-}
-.mobile-navigation__link:link, .mobile-navigation__link:visited {
   display: flex;
   justify-content: center;
-  align-items: center;
   font-size: 3rem;
   font-weight: 300;
-  padding: 1rem 2rem;
+  padding: 1.5rem 0rem;
   color: white;
-  text-decoration: none;
   text-transform: uppercase;
-  background-image: linear-gradient(120deg, transparent 0%, transparent 50%, #ffffff 50%);
-  background-size: 220%;
-  transition: all 0.4s;
 }
-.mobile-navigation__link:link span, .mobile-navigation__link:visited span {
+.mobile-navigation__item span {
   margin-right: 1.5rem;
-  display: inline-block;
   display: flex;
-}
-.mobile-navigation__link:hover, .mobile-navigation__link:active {
-  background-position: 100%;
-  color: #007BFF;
-  transform: translateX(1rem);
+  align-items: center;
 }
 .mobile-navigation__checkbox:checked ~ .mobile-navigation__background {
   transform: scale(80);
@@ -287,11 +291,97 @@ body ::selection {
   transform: rotate(-135deg);
 }
 
+.disable-display {
+  display: none;
+  visibility: hidden;
+}
+
+.preview {
+  max-width: fit-content !important;
+}
+@media (max-width: 28.125em) {
+  .preview mat-dialog-content {
+    padding: 0 4vw !important;
+  }
+}
+.preview__title {
+  font-size: 3rem !important;
+  font-weight: 500 !important;
+}
+.preview__content {
+  display: grid;
+  grid-template-columns: 10rem 20rem 12rem 4rem;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 4rem;
+}
+@media (max-width: 28.125em) {
+  .preview__content {
+    grid-template-columns: 20vw 40vw 20vw 10vw;
+    column-gap: 0rem;
+    padding: 0rem !important;
+    row-gap: 0.5rem;
+  }
+}
+.preview__content--titles {
+  padding-top: 1rem;
+  font-size: 2rem;
+}
+.preview__content--item--img {
+  width: 100%;
+  height: 8rem;
+  object-fit: fill;
+  margin-top: -3rem;
+}
+@media (max-width: 28.125em) {
+  .preview__content--item--img {
+    height: 7rem;
+    padding: 1rem 1rem 1rem 1rem;
+  }
+}
+.preview__content--item--name {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.preview__content--item--quantity-field {
+  width: 100%;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preview__content--item--quantity-field div {
+  display: flex;
+  gap: 1rem;
+}
+.preview__content--item--quantity-field i {
+  cursor: pointer;
+  color: #007BFF;
+}
+.preview__content--item--delete-btn {
+  font-size: 3rem;
+  cursor: pointer;
+  justify-self: end;
+  color: #b73a3a;
+  transition: all 1s;
+}
+.preview__content--item--delete-btn:hover {
+  transform: scale(0.9);
+}
+.preview__content--item--delete-btn:active {
+  transform: scale(0.1);
+}
+.preview__content--item--border {
+  grid-column: 1/-1; /* Span across all columns */
+  border-bottom: 2px dashed #CED4DA; /* Adjust color and thickness */
+}
+.preview__button {
+  font-size: 2rem !important;
+}
+
 .product-cards__container {
-  margin: 0 auto;
   padding: 5rem 0 0 0;
   display: flex;
-  justify-content: space-evenly;
   gap: 5rem;
   list-style-type: none;
   scroll-behavior: smooth;
@@ -312,19 +402,26 @@ body ::selection {
   box-shadow: 0 0 35px rgba(140, 152, 164, 0.25);
 }
 .product-card:first-child {
-  margin-left: 10rem;
+  margin-left: 5rem;
 }
 .product-card:last-child {
-  margin-right: 10rem;
+  margin-right: 5rem;
 }
-.product-card:hover {
-  box-shadow: 0 0 35px rgba(140, 152, 164, 0.75);
-  transform: translateY(-1rem);
+@media (min-width: 37.5em) {
+  .product-card:hover {
+    box-shadow: 0 0 35px rgba(140, 152, 164, 0.75);
+    transform: translateY(-1rem);
+  }
 }
 .product-card__img {
   height: 20rem;
   object-fit: contain;
   border-radius: 3rem;
+}
+@media (max-width: 28.125em) {
+  .product-card__img {
+    height: 15rem;
+  }
 }
 .product-card__caption {
   font-size: 1.7rem;
@@ -346,7 +443,7 @@ body ::selection {
   width: 3rem;
   height: 3rem;
   cursor: pointer;
-  transition: all 1s;
+  transition: all 0.5s;
 }
 .product-card__nav--item-active-heart {
   fill: red;
@@ -354,12 +451,20 @@ body ::selection {
 .product-card__nav--item-active-cart {
   fill: #4CAF50;
 }
-.product-card__nav--item:hover {
-  transform: scale(1.1);
-}
-.product-card__nav--item:active {
-  fill: red;
-  transform: scale(0.1);
+@media (min-width: 37.5em) {
+  .product-card__nav--item:hover {
+    transform: scale(1.1);
+  }
+  .product-card__nav--item-heart:active {
+    fill: red;
+    transition: all 0.1s;
+    transform: scale(0.8);
+  }
+  .product-card__nav--item-cart:active {
+    transition: all 0.1s;
+    transform: scale(0.8);
+    fill: #4CAF50;
+  }
 }
 
 .product-frames__container {
@@ -377,15 +482,14 @@ body ::selection {
   box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 3px;
-  padding: 6rem;
-  padding-left: 9rem;
+  padding: 6rem 6rem 6rem 9rem;
   font-size: 2rem;
   transform: skewX(-12deg);
 }
 @media (max-width: 28.125em) {
   .product__frame {
     transform: skewX(0);
-    padding: 1rem 6rem;
+    padding: 3rem 6rem;
     font-size: 1.7rem;
   }
 }
@@ -612,14 +716,13 @@ body ::selection {
   width: 3rem;
   height: 3rem;
   cursor: pointer;
-  transition: all 1s;
+  transition: all 0.5s;
   stroke: transparent;
   stroke-width: 1.5rem;
 }
 .main-header__nav--item:hover {
-  fill: #ffabf3;
   stroke: white;
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 @media (max-width: 28.125em) {
   .main-header__nav {

@@ -40,7 +40,6 @@
         opacity: 0;
         width: 0;
         transform: translateX(-20rem);
-
     }
     &__list {
         position: absolute;
@@ -52,35 +51,55 @@
         width: 100%;
     }
     &__item {
-        margin: 1rem;
+        // margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+        // text-align: center;
+        font-size: 3rem;
+        font-weight: 300;
+        padding: 1.5rem 0rem;
+        color: white;
+        // text-decoration: none;
+        text-transform: uppercase;
+        // background-image: linear-gradient( 120deg, transparent 0%, transparent 50%, #ffffff 50%);
+        // background-size: 220%;
+        // transition: all 0.4s;
+        span {
+            margin-right: 1.5rem;
+            display: flex;
+            align-items: center;
+            // display: inline-block;
+            // display: flex;
+        }
     }
     &__link {
         &:link,
         &:visited {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-            font-weight: 300;
-            padding: 1rem 2rem;
-            color: white;
-            text-decoration: none;
-            text-transform: uppercase;
-            background-image: linear-gradient( 120deg, transparent 0%, transparent 50%, #ffffff 50%);
-            background-size: 220%;
-            transition: all 0.4s;
-            span {
-                margin-right: 1.5rem;
-                display: inline-block;
-                display: flex;
-            }
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+            // font-size: 3rem;
+            // font-weight: 300;
+            // padding: 1rem 2rem;
+            // color: white;
+            // text-decoration: none;
+            // text-transform: uppercase;
+            // // background-image: linear-gradient( 120deg, transparent 0%, transparent 50%, #ffffff 50%);
+            // // background-size: 220%;
+            // transition: all 0.4s;
+            // span {
+            //     margin-right: 1.5rem;
+            //     display: inline-block;
+            //     display: flex;
+            // }
         }
-        &:hover,
-        &:active {
-            background-position: 100%;
-            color: $primary;
-            transform: translateX(1rem);
-        }
+        // &:hover,
+        // &:active {
+        //     background-position: 100%;
+        //     color: $primary;
+        //     transform: translateX(1rem);
+        // }
     }
     //FUNCIONALITY
     &__checkbox:checked~&__background {
@@ -90,7 +109,6 @@
         opacity: 1;
         width: 100%;
         transform: translateX(0rem);
-
     }
     //ICON
     &__icon {
@@ -135,4 +153,9 @@
         top: 0;
         transform: rotate( -135deg); // it should be -45 deg, but -180 (which is the same but opposit direction) + 45 = 135
     }
+}
+
+.disable-display {
+    display: none;
+    visibility: hidden;
 }

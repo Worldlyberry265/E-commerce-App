@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AddDecimalPipe } from '../reviews/add-decimal-pipe/add-decimal.pipe';
 
 @Component({
@@ -6,7 +6,8 @@ import { AddDecimalPipe } from '../reviews/add-decimal-pipe/add-decimal.pipe';
   standalone: true,
   imports: [AddDecimalPipe],
   templateUrl: './reviews.component.html',
-  styleUrl: './reviews.component.scss'
+  styleUrl: './reviews.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReviewsComponent {
 

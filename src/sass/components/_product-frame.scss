@@ -14,14 +14,13 @@
   box-shadow: 0 3rem 6rem rgba(black, 0.1); // 3 in Y direction 6 for blur
   background-color: rgba(white, 0.6);
   border-radius: 3px;
-  padding: 6rem;
-  padding-left: 9rem;
+  padding: 6rem 6rem 6rem 9rem;
   font-size: 2rem;
   transform: skewX(-12deg);
 
   @include respond(mobile) {
     transform: skewX(0);
-    padding: 1rem 6rem;
+    padding: 3rem 6rem;
     font-size: 1.7rem;
     // box-shadow: 0 3rem 6rem rgba(black, 0.2);
   }
@@ -102,14 +101,14 @@
     }
   }
 
-  @include respond(tablet) {
+  @include respond(desktop) {
     &:hover &--caption {
       opacity: 1;
       transform: translate(-50%, -50%);
     }
   }
 
-  @include respond(tablet) {
+  @include respond(desktop) {
     &:hover &--img {
       transform: translateX(-4rem) scale(0.9);
       filter: blur(3px) brightness(80%);

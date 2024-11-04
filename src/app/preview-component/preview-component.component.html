@@ -1,15 +1,325 @@
-<h2 mat-dialog-title>Install Angular</h2>
+<h2 mat-dialog-title class="preview__title">Shopping Cart</h2>
 <mat-dialog-content class="mat-typography">
-  
-    <div class="kart">
-        <div class="kart-titles">
-            <span>Product</span>
-            <span>Quantity</span>
+
+    @if (false) {
+
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Quantity</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <div class="preview__content--item--quantity-field">
+            <span>{{ numb() }}</span>
+            <div>
+                <i (click)="decrementQuantity()" class="fa-solid fa-circle-minus"></i>
+                <i (click)="incrementQuantity()" class="fa-solid fa-circle-plus"></i>
+            </div>
         </div>
+
+        <i class="fa-solid fa-trash preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
     </div>
+    }
+    @if (true) {
+
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+    <div class="preview__content">
+        <span class="preview__content--titles">&nbsp;</span>
+        <span class="preview__content--titles">Product</span>
+        <span class="preview__content--titles">Category</span>
+        <span class="preview__content--titles">&nbsp;</span>
+
+        <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            alt="Item Img">
+
+        <span class="preview__content--item--name">Product Name</span>
+
+
+        <span class="preview__content--item--name">Categoory Name</span>
+
+
+        <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
+
+        <div class="preview__content--item--border"></div>
+    </div>
+
+    }
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+    <button class="preview__button" mat-button mat-dialog-close>Close</button>
+    <button class="preview__button" mat-button [mat-dialog-close]="true" cdkFocusInitial>Go To Payment</button>
 </mat-dialog-actions>

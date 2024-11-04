@@ -1,18 +1,15 @@
 import { AfterViewInit, Component, input } from '@angular/core';
-import { ReviewsComponent } from '../reviews/reviews.component';
-import { ProductNavComponent } from '../product-nav/product-nav.component';
 
 @Component({
-  selector: 'li[appProductCard]',
+  selector: 'nav[appProductNav]',
   standalone: true,
-  imports: [ReviewsComponent, ProductNavComponent],
-  templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.scss'
+  imports: [],
+  templateUrl: './product-nav.component.html',
+  styleUrl: './product-nav.component.scss'
 })
-export class ProductCardComponent implements AfterViewInit{
+export class ProductNavComponent implements AfterViewInit {
 
-  Id = input.required<number>({alias: 'appProductCard'});
-
+  Id = input.required<string>({alias: 'appProductNav'});
 
   ngAfterViewInit(): void {
     const heart = document.getElementById(`heart-svg-${this.Id()}`);
