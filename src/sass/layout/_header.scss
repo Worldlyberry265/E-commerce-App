@@ -58,6 +58,10 @@
       gap: 2rem;
       align-items: center;
 
+      &-active {
+        color: $text-default;
+      }
+
       i {
         font-size: 2rem;
       }

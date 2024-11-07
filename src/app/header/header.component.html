@@ -5,7 +5,13 @@
   </svg>
 
   <ul class="main-header__menu">
-    <li class="main-header__menu--item">
+    <li class="main-header__menu--item" routerLink="/homepage" fragment="sectionIntroduction" routerLinkActive="main-header__menu--item-active">
+      <i class="fa-solid fa-house"></i>
+      <span>
+        Home Page
+      </span>
+    </li>
+    <li class="main-header__menu--item" routerLink="/login" fragment="logContainer" routerLinkActive="main-header__menu--item-active">
       <i class="fa-solid fa-right-to-bracket"></i>
       <span>
         Sign In
@@ -17,13 +23,13 @@
         Sign Out
       </span>
     </li>
-    <li class="main-header__menu--item">
+    <li class="main-header__menu--item" routerLink="/resetpassword" fragment="logContainer" routerLinkActive="main-header__menu--item-active">
       <i class="fa-solid fa-user-gear"></i>
       <span>
         Edit Profile
       </span>
     </li>
-    <li class="main-header__menu--item">
+    <li class="main-header__menu--item" routerLink="/register" fragment="logContainer" routerLinkActive="main-header__menu--item-active">
       <i class="fa-solid fa-user-plus"></i>
       <span>
         Create Account
@@ -32,7 +38,9 @@
   </ul>
 </div>
 
-<input type="text" class="main-header__search" placeholder="Enter an item Id" />
+@if (displaySearchInput) {
+  <input type="text" class="main-header__search" placeholder="Enter an item Id" />
+}
 
 <nav class="main-header__nav">
   <svg (click)="openDialog()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="main-header__nav--item">

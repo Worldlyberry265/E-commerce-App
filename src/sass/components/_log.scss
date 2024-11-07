@@ -1,0 +1,192 @@
+.log {
+  &__container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    word-spacing: 0.5rem;
+    text-wrap: nowrap;
+    font-weight: 500;
+  }
+
+  &__form {
+    width: 27.5rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 2rem;
+    padding: 4rem;
+    box-shadow: $box-shadow-light;
+    // flex: 0 0 20%;
+
+    &--field {
+      height: 6.5rem !important;
+
+      i {
+        cursor: pointer;
+        font-size: 2rem;
+        margin-right: 1rem;
+        // z-index: 3;
+      }
+    }
+    &--input {
+      font-size: 1.5rem !important;
+    }
+
+    &--label {
+      font-size: 1.5rem !important;
+    }
+
+    &--error {
+      font-size: 1.2rem !important;
+      // text-wrap: nowrap;
+      line-height: 1.5rem !important;
+      margin-left: -1.5rem;
+      // margin-bottom: 1rem;
+    }
+
+    &--alternative-text {
+      text-align: center;
+      font-size: 1.6rem;
+
+      &--container {
+        display: flex;
+        align-items: center;
+
+        hr {
+          width: 100%;
+          margin-top: 0.25rem;
+        }
+
+        span {
+          font-size: 1.5rem;
+          text-wrap: nowrap;
+          margin: 0 1rem;
+        }
+      }
+    }
+
+    &--text {
+      font-size: 1.2rem;
+      text-align: center;
+
+      a {
+        text-decoration: none;
+        color:$link-color;
+      }
+    }
+
+    &--reset-link {
+      color:  $link-color;
+      font-size: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      padding: 1rem 0;
+      margin: -1rem 0;
+      border-radius: .5rem;
+
+      &:hover {
+        box-shadow: inset  0 0 3.5rem rgba($text-soft-cyan, 0.4);
+      }
+    }
+  }
+
+  &__links {
+    &--nav {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      //   align-items: center;
+      //   font-size: 2.5rem;
+      height: 100%;
+
+      span {
+        cursor: pointer;
+        display: flex;
+        // align-items: center;
+        color: black;
+        padding: 2rem;
+        // margin: 1rem;
+        box-sizing: border-box;
+        border: 1px solid $divider;
+
+        svg {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+
+        &:last-child {
+          fill: #4267b2;
+        }
+
+        &:hover {
+          //   border: 1px solid $primary;
+          box-shadow: $box-shadow-light inset;
+        }
+      }
+    }
+  }
+
+  &__divider {
+    border: 1px dotted $divider;
+    height: 40%;
+  }
+
+  &__phrase {
+    flex: 0 0 20%;
+
+    i {
+      color: $primary;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 4rem;
+      font-size: 8rem;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 2rem;
+      font-weight: 300;
+      text-align: justify;
+    }
+  }
+
+  &__buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  &__button {
+    border-radius: 0.5rem !important;
+    font-size: 2rem !important;
+    padding: 2rem !important;
+    font-weight: normal !important;
+    width: 100%;
+    // margin-top: -1rem;
+  }
+}
+.form__container {
+  position: relative;
+  overflow: hidden;
+  margin-right: -3rem; // to counter the form padding and to have equal gaps on the log container
+
+  &--background {
+    width: 41.5rem;
+    height: 100vh;
+  }
+}
+
+.form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
