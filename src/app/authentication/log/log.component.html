@@ -2,17 +2,16 @@
 
 <div class="log__container" id="logContainer">
 
-    <!-- @if (formType) { -->
 
-    <div class="form__container">
-        <div class="form__container--background"></div>
+    <div class="log__form__container">
+        <div class="log__form__container--background"></div>
 
-        <form [@form-1-Animation]="getForm1Animation()" class="log__form form">
+        <form [@form-1-Animation]="getForm1Animation" class="log__form">
             <h6 class="log__title">Sign in or create an account</h6>
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Email</mat-label>
-                <input class="log__form--input" type="email" name="email" matInput [formControl]="emailFormControl" autocomplete="off"
-                    placeholder="Ex: pat@example.com" required>
+                <input #inputField class="log__form--input" type="email" name="email" matInput [formControl]="emailFormControl"
+                    autocomplete="off" placeholder="Ex: pat@example.com" autofocus required [value]="emailFormControl.value">
 
                 @if (emailFormControl.hasError('required')) {
                 <mat-error class="log__form--error">Please enter an email.</mat-error>
@@ -24,11 +23,13 @@
                 } @else if (emailFormControl.hasError('noConsecutiveHyphens')) {
                 <mat-error class="log__form--error">The email can't have consecutive hyphens as such -- .</mat-error>
                 } @else if (emailFormControl.hasError('minLengthBeforeAt')) {
-                <mat-error class="log__form--error">The email should have at least 6 characters before the
+                <mat-error class="log__form--error">The email should be between 6 and 30 characters before the
                     '&#64;'.</mat-error>
                 } @else if (emailFormControl.hasError('validDomainStructure')) {
                 <mat-error class="log__form--error">The email should have a valid domain structure after
                     '&#64;'.</mat-error>
+                } @else if (emailFormControl.hasError('hasDesiredLength')) {
+                <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
                 }
 
             </mat-form-field>
@@ -36,7 +37,7 @@
 
             <!-- <nav class="log__buttons-container"> -->
             <button [disabled]="emailFormControl.invalid" (click)="signingWithEmail()" mat-flat-button type="button"
-                class="log__button">Continue with email </button>
+                type="submit" class="log__button">Continue with email </button>
 
             <div class="log__form--alternative-text--container">
                 <hr>
@@ -83,24 +84,14 @@
                 </a>
             </p>
             <p class="log__form--text">All rights reserved.</p>
-
-
-            <!-- <button mat-flat-button type="button" (click)="changeLog()" class="log__button"> {{ log ===
-                'Register' ? 'Login' :
-                'Register'}} </button> -->
-
-            <!-- <button type="button" class="signup__btn" routerLink="/forget-password">Forgot Password</button> -->
-            <!-- </nav> -->
         </form>
 
+        <form [@form-2-Animation]="getForm2Animation2" [@form-1-Animation]="getForm2Animation1"
+            class="log__form" (ngSubmit)="onSubmitForm()">
 
 
-
-        <form [@form-2-Animation]="getForm2Animation2()" [@form-1-Animation]="getForm2Animation1()"
-            class="log__form form" (ngSubmit)="onSubmitForm()" #signupForm="ngForm">
-
-
-            <h6 class="log__title">{{ emailNotFound ? 'Confirm' : 'Enter' }} your password</h6>
+            <h6 class="log__title">{{ emailNotFound ? 'To create a new account, confirm' : 'Enter' }} your password
+            </h6>
 
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Enter Your Password</mat-label>
@@ -118,36 +109,35 @@
                 } @else if (passwordFormControl.hasError('noConsecutiveHyphens')) {
                 <mat-error class="log__form--error">The password can't have consecutive hyphens as such -- .</mat-error>
                 } @else if (passwordFormControl.hasError('containsMixedCharacters')) {
-                <mat-error class="log__form--error">It should at least have 1 small letter, 1 capital letter, 1 special character, and 1 number</mat-error>
+                <mat-error class="log__form--error">It should at least have 1 small letter, 1 capital letter, 1 special
+                    character, and 1 number</mat-error>
+                } @else if (passwordFormControl.hasError('hasDesiredLength')) {
+                <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
                 }
             </mat-form-field>
 
-            
+
             @if (emailNotFound) {
-                <mat-form-field class="log__form--field">
-                    <mat-label class="log__form--label">Enter Your Password</mat-label>
-                    <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Enter Your Password*"
-                        [formControl]="passwordFormControl" matInput name="password" class="log__form--input" required>
-    
-                    <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"
-                        (click)="togglePasswordVisibility()"></i>
-    
-                    @if (passwordFormControl.hasError('required')) {
-                    <mat-error class="log__form--error">Please enter a password</mat-error>
-                    } @else if (passwordFormControl.hasError('noSpecialCharacters')) {
-                    <mat-error class="log__form--error">The password can have only these types of special characters
-                        !&#64;#$%^*-_.</mat-error>
-                    } @else if (passwordFormControl.hasError('noConsecutiveHyphens')) {
-                    <mat-error class="log__form--error">The password can't have consecutive hyphens as such -- .</mat-error>
-                    } @else if (passwordFormControl.hasError('containsMixedCharacters')) {
-                    <mat-error class="log__form--error">The password should at least have 1 small letter, 1 capital letter, 1 special character, and 1 number</mat-error>
-                    }
-                </mat-form-field>
+            <mat-form-field class="log__form--field">
+                <mat-label class="log__form--label">Confirm Your Password</mat-label>
+                <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Confirm Your Password*"
+                    [formControl]="passwordConfirmationFormControl" matInput name="Confirmedpassword"
+                    class="log__form--input" required>
+
+                <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"
+                    (click)="togglePasswordVisibility()"></i>
+
+                @if (passwordConfirmationFormControl.hasError('passwordMismatch')) {
+                <mat-error class="log__form--error">Please match the password</mat-error>
+                }
+            </mat-form-field>
             }
 
 
-            <!-- <nav class="log__buttons-container"> -->
-            <button mat-flat-button type="submit" class="log__button"> Login </button>
+            <button
+                [disabled]="(passwordConfirmationFormControl.invalid && emailNotFound) || passwordFormControl.invalid"
+                mat-flat-button type="submit" class="log__button"> Login
+            </button>
 
             <hr>
             @if (!emailNotFound) {
@@ -167,42 +157,41 @@
             </p>
             <p class="log__form--text">All rights reserved.</p>
 
-
-            <!-- <button mat-flat-button type="button" (click)="changeLog()" class="log__button"> {{ log ===
-                            'Register' ? 'Login' :
-                            'Register'}} </button> -->
-
-            <!-- <button type="button" class="signup__btn" routerLink="/forget-password">Forgot Password</button> -->
-            <!-- </nav> -->
-
-
         </form>
 
-        <form [@form-2-Animation]="getForm3Animation2()" [@form-3-Animation]="getForm3Animation3()"
-            class="log__form form" (ngSubmit)="onSubmitForm()" #signupForm="ngForm">
+        <form [@form-2-Animation]="getForm3Animation2" [@form-3-Animation]="getForm3Animation3"
+            class="log__form">
 
             <h6 class="log__title">Reset Password</h6>
 
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Email</mat-label>
-                <input class="log__form--input" type="email" name="email" [(ngModel)]="email" matInput
-                    placeholder="Ex: pat@example.com" required>
-                <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-                    <mat-error>Please enter a valid email address</mat-error>
-                    }
-                    @if (emailFormControl.hasError('required')) {
-                        <mat-error>Email is <strong>required</strong></mat-error>
-                        } -->
+                <input class="log__form--input" type="email" name="email" matInput [formControl]="emailFormControl" [value]="emailFormControl.value" 
+                    autocomplete="off" placeholder="Ex: pat@example.com" required>
+
+                @if (emailFormControl.hasError('required')) {
+                <mat-error class="log__form--error">Please enter an email.</mat-error>
+                } @else if (emailFormControl.hasError('startsWithLetter')) {
+                <mat-error class="log__form--error">The email should start with a letter.</mat-error>
+                } @else if (emailFormControl.hasError('noSpecialCharacters')) {
+                <mat-error class="log__form--error">The email can have only these types of special characters
+                    !&#64;#$%^*-_.</mat-error>
+                } @else if (emailFormControl.hasError('noConsecutiveHyphens')) {
+                <mat-error class="log__form--error">The email can't have consecutive hyphens as such -- .</mat-error>
+                } @else if (emailFormControl.hasError('minLengthBeforeAt')) {
+                <mat-error class="log__form--error">The email should be between 6 and 30 characters before the
+                    '&#64;'.</mat-error>
+                } @else if (emailFormControl.hasError('validDomainStructure')) {
+                <mat-error class="log__form--error">The email should have a valid domain structure after
+                    '&#64;'.</mat-error>
+                } @else if (emailFormControl.hasError('hasDesiredLength')) {
+                <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
+                }
+
             </mat-form-field>
 
-            <button mat-flat-button type="submit" class="log__button"> Send Reset Link </button>
-            <hr>
+            <button (click)="onToLogin()" [disabled]="emailFormControl.invalid" mat-flat-button type="submit" class="log__button"> Send Reset Link </button>
 
-            <!-- <p (click)="onResetPassword()" class="log__form--reset-link">Login</p> -->
-            <p (click)="onToLogin()" class="log__form--reset-link">Login</p>
-
-
-            <!-- <nav class="log__buttons-container"> -->
             <hr>
 
             <p class="log__form--text">By signing in or creating an account, you agree with our
@@ -216,18 +205,8 @@
             </p>
             <p class="log__form--text">All rights reserved.</p>
 
-
-            <!-- <button mat-flat-button type="button" (click)="changeLog()" class="log__button"> {{ log ===
-                'Register' ? 'Login' :
-                'Register'}} </button> -->
-
-            <!-- <button type="button" class="signup__btn" routerLink="/forget-password">Forgot Password</button> -->
-            <!-- </nav> -->
         </form>
     </div>
-
-    <!-- } -->
-    <!-- </div> -->
 
     <div class="log__divider"></div>
 
@@ -241,8 +220,3 @@
         </p>
     </div>
 </div>
-
-
-
-<!-- [disabled]="!signupForm.valid"
-[disabled]="!signupForm.valid" -->

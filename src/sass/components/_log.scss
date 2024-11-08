@@ -5,16 +5,41 @@
     justify-content: center;
     align-items: center;
     gap: 5rem;
+
+    @include respond(mobile) {
+      flex-direction: column;
+      height: 70vh;
+      padding-top: 7vh;
+    }
   }
 
   &__title {
     font-size: 2rem;
     word-spacing: 0.5rem;
-    text-wrap: nowrap;
     font-weight: 500;
   }
 
   &__form {
+
+  
+
+    &__container {
+      position: relative;
+      overflow: hidden;
+      margin-right: -3rem; // to counter the form padding and to have equal gaps on the log container
+
+      @include respond(mobile) {
+        margin-right: 0;
+      }
+    
+      &--background {
+        width: 41.5rem;
+        height: 100vh;
+        
+       
+      }
+    }
+
     width: 27.5rem !important;
     display: flex;
     flex-direction: column;
@@ -23,6 +48,15 @@
     padding: 4rem;
     box-shadow: $box-shadow-light;
     // flex: 0 0 20%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+
+    @include respond(mobile) {
+      width: 70vw !important;
+    }
 
     &--field {
       height: 6.5rem !important;
@@ -35,7 +69,8 @@
       }
     }
     &--input {
-      font-size: 1.5rem !important;
+      font-size: 1.6rem !important;
+
     }
 
     &--label {
@@ -135,10 +170,18 @@
   &__divider {
     border: 1px dotted $divider;
     height: 40%;
+
+    @include respond(mobile) {
+      display: none;
+    }
   }
 
   &__phrase {
     flex: 0 0 20%;
+
+    @include respond(mobile) {
+      display: none;
+    }
 
     i {
       color: $primary;
@@ -172,21 +215,4 @@
     width: 100%;
     // margin-top: -1rem;
   }
-}
-.form__container {
-  position: relative;
-  overflow: hidden;
-  margin-right: -3rem; // to counter the form padding and to have equal gaps on the log container
-
-  &--background {
-    width: 41.5rem;
-    height: 100vh;
-  }
-}
-
-.form {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }

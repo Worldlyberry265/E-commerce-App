@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HeaderComponent } from '../../header/header.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { minLengthBeforeAt, noConsecutiveHyphens, startsWithLetter, validDomainStructure } from './log-validators/email-validators';
-import { containsMixedCharacters } from './log-validators/password-validators';
-import { noSpecialCharacters } from './log-validators/combined-validators';
+import { containsMixedCharacters, passwordMatchValidator } from './log-validators/password-validators';
+import { hasDesiredLength, noSpecialCharacters } from './log-validators/combined-validators';
 
 @Component({
   selector: 'app-log',
@@ -30,7 +30,7 @@ import { noSpecialCharacters } from './log-validators/combined-validators';
       state('2', style({
         left: '-50%', // Move the form out of view
         opacity: 0,  // Reduced opacity
-        display: 'none'
+        // display: 'none'
       })),
       // Transition from state '1' to '2' and vice versa
       transition('1 <=> 2', [
@@ -43,7 +43,7 @@ import { noSpecialCharacters } from './log-validators/combined-validators';
       state('1', style({
         left: '150%', // Position the form centrally
         opacity: 0,   // Full opacity
-        display: 'none'
+        // display: 'none'
       })),
       // Define the second state (formType '2')
       state('2', style({
@@ -68,7 +68,7 @@ import { noSpecialCharacters } from './log-validators/combined-validators';
       state('1', style({
         left: '150%', // Position the form centrally
         opacity: 0,   // Full opacity
-        display: 'none'
+        // display: 'none'
       })),
       // Define the second state (formType '2')
       state('2', style({
@@ -84,7 +84,7 @@ import { noSpecialCharacters } from './log-validators/combined-validators';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LogComponent implements OnInit {
+export class LogComponent {
 
   // didnt use email validator because i implemented a more restricted ones
   emailFormControl = new FormControl('', [
@@ -94,13 +94,20 @@ export class LogComponent implements OnInit {
     noConsecutiveHyphens(),
     minLengthBeforeAt(),
     validDomainStructure(),
+    hasDesiredLength()
   ]);
   passwordFormControl = new FormControl('', [
     Validators.required,
     noSpecialCharacters(),
     noConsecutiveHyphens(),
     containsMixedCharacters(),
+    hasDesiredLength()
   ]);
+  passwordConfirmationFormControl = new FormControl('', [
+    passwordMatchValidator(this.passwordFormControl)
+  ]);
+
+
 
   // starts with letter then at least 5 letters/numbers/._- then @ then letters then  one or more of(. then at least 2 letters) for domains like lau.edu.lb
   // It also cant have -- double hyphens in the whole string to prevent the chances of sql injections
@@ -121,14 +128,15 @@ export class LogComponent implements OnInit {
   resetPassword: '1' | '2' = '1'; // To move from 2nd password form to 3rd reset form
   resetting: '1' | '2' = '2'; // to move from 3rd reset form to 1st login form
 
+  dummyEmails = ["dummy1@icloud.com", "dummy2@icloud.com", "dummy3@icloud.com"]
+
   showPass = signal(false);
 
-  ngOnInit(): void {
+  constructor(private router: Router) {
   }
-  constructor () {
 
-  }
   onSubmitForm() {
+    this.router.navigate(['/homepage']);
   }
 
   togglePasswordVisibility() {
@@ -136,6 +144,15 @@ export class LogComponent implements OnInit {
   }
 
   signingWithEmail() {
+    let found = false;
+    this.dummyEmails.forEach((email) => {
+      if (email === this.emailFormControl.value) {
+        found = true;
+      }
+    });
+    if (found) {
+      this.emailNotFound = !this.emailNotFound;
+    }
     this.formType = this.formType === '1' ? '2' : '1';
   }
 
@@ -147,7 +164,7 @@ export class LogComponent implements OnInit {
     this.resetting = this.resetting === '1' ? '2' : '1';
   }
 
-  getForm1Animation(): '1' | '2' {
+  get getForm1Animation(): '1' | '2' {
 
     // if any of these variables changes, the getter triggers
     if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '2') {
@@ -163,7 +180,7 @@ export class LogComponent implements OnInit {
     }
   }
 
-  getForm2Animation2(): '1' | '2' | '3' { // formtype is the triggerer here
+  get getForm2Animation2(): '1' | '2' | '3' { // formtype is the triggerer here
     if (this.formType == '2' && this.resetPassword == '1') {
       return '2';
     } else if (this.formType == '1' && this.resetPassword == '2' && this.resetting == '1') {
@@ -177,7 +194,7 @@ export class LogComponent implements OnInit {
     }
   }
 
-  getForm2Animation1(): '1' | '2' { // resetpassword is the triggerer here
+  get getForm2Animation1(): '1' | '2' { // resetpassword is the triggerer here
     if (this.formType == '2' && this.resetPassword == '2' && this.resetting == '1') {
       return '2';
     } else if (this.formType == '1' && this.resetPassword == '2' && this.resetting == '1') {
@@ -192,23 +209,26 @@ export class LogComponent implements OnInit {
       return '2';
     }
   }
-  getForm3Animation2(): '1' | '2' {
+  get getForm3Animation2(): '1' | '2' {
     if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '1') {
       return '2';
     } else if (this.resetPassword == '1') {
       return '1';
-    } else {
+    } else if (this.formType === '2' && this.resetPassword === '2' && this.resetting == '2') {
       return '2';
+    } else {
+      return '1'
     }
   }
 
-  getForm3Animation3(): '1' | '2' {
+ get getForm3Animation3(): '1' | '2' {
     if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '1') {
       return '2';
-    } else if (this.resetting == '1') {
+    }
+    else if (this.resetting == '1') {
       return '1';
     } else {
-      return '2';
+      return '1';
     }
   }
 }

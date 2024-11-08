@@ -13,6 +13,10 @@
 
     box-shadow: 0 -35px 35px rgba(140, 152, 164, 0.25);
 
+    @include respond(mobile) {
+        box-shadow: none;
+    }
+
 }
 
 

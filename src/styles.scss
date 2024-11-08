@@ -181,10 +181,16 @@ body ::selection {
   align-items: center;
   gap: 5rem;
 }
+@media (max-width: 28.125em) {
+  .log__container {
+    flex-direction: column;
+    height: 70vh;
+    padding-top: 7vh;
+  }
+}
 .log__title {
   font-size: 2rem;
   word-spacing: 0.5rem;
-  text-wrap: nowrap;
   font-weight: 500;
 }
 .log__form {
@@ -195,6 +201,29 @@ body ::selection {
   font-size: 2rem;
   padding: 4rem;
   box-shadow: 0 0 3.5rem rgba(140, 152, 164, 0.25);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.log__form__container {
+  position: relative;
+  overflow: hidden;
+  margin-right: -3rem;
+}
+@media (max-width: 28.125em) {
+  .log__form__container {
+    margin-right: 0;
+  }
+}
+.log__form__container--background {
+  width: 41.5rem;
+  height: 100vh;
+}
+@media (max-width: 28.125em) {
+  .log__form {
+    width: 70vw !important;
+  }
 }
 .log__form--field {
   height: 6.5rem !important;
@@ -205,7 +234,7 @@ body ::selection {
   margin-right: 1rem;
 }
 .log__form--input {
-  font-size: 1.5rem !important;
+  font-size: 1.6rem !important;
 }
 .log__form--label {
   font-size: 1.5rem !important;
@@ -280,8 +309,18 @@ body ::selection {
   border: 1px dotted #CED4DA;
   height: 40%;
 }
+@media (max-width: 28.125em) {
+  .log__divider {
+    display: none;
+  }
+}
 .log__phrase {
   flex: 0 0 20%;
+}
+@media (max-width: 28.125em) {
+  .log__phrase {
+    display: none;
+  }
 }
 .log__phrase i {
   color: #007BFF;
@@ -309,23 +348,6 @@ body ::selection {
   padding: 2rem !important;
   font-weight: normal !important;
   width: 100%;
-}
-
-.form__container {
-  position: relative;
-  overflow: hidden;
-  margin-right: -3rem;
-}
-.form__container--background {
-  width: 41.5rem;
-  height: 100vh;
-}
-
-.form {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .mobile-navigation {
@@ -396,6 +418,9 @@ body ::selection {
   margin-right: 1.5rem;
   display: flex;
   align-items: center;
+}
+.mobile-navigation__item-active {
+  background-color: #0056b3;
 }
 .mobile-navigation__checkbox:checked ~ .mobile-navigation__background {
   transform: scale(80);
@@ -756,6 +781,11 @@ body ::selection {
   padding-top: 3rem;
   padding-bottom: 5rem;
   box-shadow: 0 -35px 35px rgba(140, 152, 164, 0.25);
+}
+@media (max-width: 28.125em) {
+  .main-footer-container {
+    box-shadow: none;
+  }
 }
 .main-footer > * {
   display: flex;

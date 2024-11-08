@@ -16,3 +16,10 @@ export function containsMixedCharacters(): ValidatorFn {
         }
     };
 }
+// Check if the confirmation password matches the main password
+export function passwordMatchValidator(mainPasswordControl: AbstractControl): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        // Check if the confirmation password matches the main password
+        return control.value === mainPasswordControl.value ? null : { passwordMismatch: true };
+    };
+}

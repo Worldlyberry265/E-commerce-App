@@ -6,6 +6,11 @@
 <div class="mobile-navigation__background" [class.disable-display]="isOpen()">&nbsp;</div>
 <nav class="mobile-navigation__nav" [class.disable-display]="isOpen()">
     <ul class="mobile-navigation__list">
+        <li class="mobile-navigation__item" routerLink="/homepage" (click)="onNavigate('homepage')" routerLinkActive="mobile-navigation__item-active">
+            <span>
+                <i class="fa-solid fa-house"></i>
+            </span> Home Page
+          </li>
         <li (click)="openDialog()" class="mobile-navigation__item">
             <!-- <a href="#" class="mobile-navigation__link"> -->
                 <span>
@@ -26,7 +31,7 @@
                     </svg></span>Shopping Carts
                 <!-- </a> -->
         </li>
-        <li class="mobile-navigation__item">
+        <li class="mobile-navigation__item" routerLink="/login" (click)="onNavigate('login')" routerLinkActive="mobile-navigation__item-active">
             <!-- <a href="#" class="mobile-navigation__link"> -->
                 <span>
                     <i class="fa-solid fa-right-to-bracket"></i>
