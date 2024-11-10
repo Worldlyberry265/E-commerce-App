@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, input } from '@angular/core';
 import { ReviewsComponent } from '../reviews/reviews.component';
 import { ProductNavComponent } from '../product-nav/product-nav.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'li[appProductCard]',
   standalone: true,
-  imports: [ReviewsComponent, ProductNavComponent],
+  imports: [ReviewsComponent, ProductNavComponent , RouterModule],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })

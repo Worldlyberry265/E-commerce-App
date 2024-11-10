@@ -1,7 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
-import { AddDecimalPipe } from '../products/reviews/add-decimal-pipe/add-decimal.pipe';
 import { ProductFrameComponent } from '../products/product-frame/product-frame.component';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [HeaderComponent, ProductCardComponent, AddDecimalPipe, ProductFrameComponent, FormsModule],
+  imports: [HeaderComponent, ProductCardComponent, ProductFrameComponent, FormsModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,26 +43,6 @@ export class LandingPageComponent implements AfterViewInit {
 
   // CREATE PRODUCT FRAME COMPONENT
   ngAfterViewInit(): void {
-
-
-
-    // document.addEventListener("DOMContentLoaded", function () {
-    //   const header = document.querySelector(".header") as HTMLElement;
-    //   const introductionSection = document.querySelector(".section-introduction") as HTMLElement;
-
-    //   // Get the offset position of the introduction section
-    //   // const stickyPoint = introductionSection!.offsetTop + introductionSection.offsetHeight;
-
-    //   // Add scroll event listener
-    //   window.addEventListener("scroll", function () {
-    //     if (window.scrollY > window.innerHeight ) {
-    //       header!.classList.add("header-sticky");
-    //     } else {
-    //       header!.classList.remove("header-sticky");
-    //     }
-    //   });
-    // });
-
 
     const video = document.getElementById('landing-video') as HTMLVideoElement;
     video.playbackRate = 0.5;

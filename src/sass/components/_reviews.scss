@@ -1,16 +1,21 @@
+.stars__rating--container {
+    display: flex;
+    align-items: center;
+}
+
 .shining-star {
-    color: goldenrod;
-    font-size: 1.3rem;
+  color: goldenrod;
+  font-size: 1.3em; // em to make it inherit its parent font-size since its a reusable component
 }
 
 .stars-count {
-    font-size: 1.3rem;
-    font-weight: 500;
+  font-size: 1.3em;
+  font-weight: 500;
 }
 
-.reviews-count {
-    display: block;
-    text-align: center;
-    font-size: 1rem;
-    font-weight: 500;
+.rating-count {
+  display: block;
+  text-align: center;
+  font-size: 1em;
+  // font-weight: 500;
 }

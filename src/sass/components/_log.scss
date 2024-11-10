@@ -65,7 +65,6 @@
         cursor: pointer;
         font-size: 2rem;
         margin-right: 1rem;
-        // z-index: 3;
       }
     }
     &--input {
@@ -79,10 +78,8 @@
 
     &--error {
       font-size: 1.2rem !important;
-      // text-wrap: nowrap;
       line-height: 1.5rem !important;
       margin-left: -1.5rem;
-      // margin-bottom: 1rem;
     }
 
     &--alternative-text {
@@ -136,17 +133,13 @@
       display: flex;
       justify-content: center;
       gap: 3rem;
-      //   align-items: center;
-      //   font-size: 2.5rem;
       height: 100%;
 
       span {
         cursor: pointer;
         display: flex;
-        // align-items: center;
         color: black;
         padding: 2rem;
-        // margin: 1rem;
         box-sizing: border-box;
         border: 1px solid $divider;
 
@@ -160,7 +153,6 @@
         }
 
         &:hover {
-          //   border: 1px solid $primary;
           box-shadow: $box-shadow-light inset;
         }
       }
@@ -199,20 +191,11 @@
     }
   }
 
-  &__buttons-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-    align-items: center;
-  }
-
   &__button {
     border-radius: 0.5rem !important;
     font-size: 2rem !important;
     padding: 2rem !important;
     font-weight: normal !important;
     width: 100%;
-    // margin-top: -1rem;
   }
 }

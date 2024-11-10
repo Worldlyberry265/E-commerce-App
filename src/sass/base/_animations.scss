@@ -14,3 +14,30 @@
         opacity: .5;
     }
 }
+
+
+@keyframes easefromLeft {
+    0% {
+            left: -90%;
+            opacity: .5;
+    }
+    
+
+    100% {
+            left: 10%;
+            opacity: 1;
+    }
+}
+
+@keyframes easetoRight {
+    0% {
+            left: 90%;
+            opacity: 1;
+    }
+    
+
+    100% {
+            left: 110%;
+            opacity: 0;
+    }
+}

@@ -16,17 +16,18 @@
 }
 
 .product-card {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  justify-content: center;
+  // cursor: pointer;
+  // display: flex;
+  // flex-direction: column;
+  // gap: 2rem;
+  // justify-content: center;
+  // padding: 2.5rem;
+  
   align-items: center;
   border: 5px solid $divider;
   border-radius: 3rem;
-  transition: all 0.4s;
-  padding: 2rem;
   box-shadow: 0 0 35px rgba(140, 152, 164, 0.25);
+  transition: all 0.4s;
 
   &:first-child {
     margin-left: 5rem;
@@ -37,13 +38,23 @@
   }
 
   &:hover {
-    // box-shadow: 0 0 10px 0
-    //   rgba(209.25000000000003, 209.25000000000003, 209.25000000000003, 0.5);
 
     @include respond(desktop) {
       box-shadow: 0 0 35px rgba(140, 152, 164, 0.75);
       transform: translateY(-1rem);
     }
+  }
+
+  &__wrapper {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem;
   }
 
   &__img {
@@ -72,26 +83,11 @@
   }
 
   &__nav {
-    width: 100%;
-    margin-left: 2rem;
-    box-sizing: border-box;
-    padding: 1rem 4rem;
-    padding-left: 2rem;
+    // width: 100%;
     gap: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    // width: 15rem;
-    // margin: 0 auto;
-    // // margin-left: 2rem;
-    // box-sizing: border-box;
-    // padding: 1rem 4rem;
-    // padding-left: 2rem;
-    // // gap: 2rem;
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
 
     &--item {
       // fill: white;

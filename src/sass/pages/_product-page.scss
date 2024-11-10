@@ -1,0 +1,24 @@
+.section-product-info {
+  min-height: 100vh;
+  // width: 90vw;
+  position: relative;
+  margin-top: 5rem;
+
+  @include respond(mobile) {
+    margin-top: 0;
+  }
+}
+
+.section-related-products {
+  position: relative;
+  padding: 0rem 0 10rem 0;
+
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 15vh;
+
+  @include respond(mobile) {
+    padding-top: 5rem;
+  }
+}
