@@ -5,11 +5,12 @@
       class="product__frame--img"
       [ngClass]="{'product__frame--img-active': triggeredCaption}"
     />
-    <figcaption  class="product__frame--caption" [ngClass]="{'product__frame--caption-active': triggeredCaption}">
-      <span class="product__frame--caption-stars"> 4.5 ★★★★★ </span>
+    <figcaption appReview [stars]="4.5" [reviewsCount]="200"  class="product__frame--caption" [ngClass]="{'product__frame--caption-active': triggeredCaption}">
+      
+      <!-- <span class="product__frame--caption-stars"> 4.5 ★★★★★ </span>
       <span class="product__frame--caption-review-count">
         200+ reviews
-      </span>
+      </span> -->
     </figcaption>
   </figure>
   <div class="product__frame--text">

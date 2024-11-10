@@ -1,8 +1,8 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
 import { ReviewsComponent } from '../reviews/reviews.component';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-page',

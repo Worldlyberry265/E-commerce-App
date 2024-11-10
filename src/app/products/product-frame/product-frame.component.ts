@@ -1,12 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReviewsComponent } from '../reviews/reviews.component';
 import { CommonModule } from '@angular/common';
-import { ProductNavComponent } from '../product-nav/product-nav.component';
 
 @Component({
   selector: 'div[appProductFrame]',
   standalone: true,
-  imports: [ReviewsComponent, CommonModule,ProductNavComponent],
+  imports: [ReviewsComponent, CommonModule],
   templateUrl: './product-frame.component.html',
   styleUrl: './product-frame.component.scss',
   host: {

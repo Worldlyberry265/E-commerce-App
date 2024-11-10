@@ -19,6 +19,11 @@
     font-weight: 500;
   }
 
+  &__loading-spinner {
+    @include absCenter;
+    position: absolute !important;
+  }
+
   &__form {
 
   
@@ -48,10 +53,7 @@
     padding: 4rem;
     box-shadow: $box-shadow-light;
     // flex: 0 0 20%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    @include absCenter;
 
 
     @include respond(mobile) {

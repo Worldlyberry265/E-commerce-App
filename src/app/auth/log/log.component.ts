@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,11 +11,19 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { minLengthBeforeAt, noConsecutiveHyphens, startsWithLetter, validDomainStructure } from './log-validators/email-validators';
 import { containsMixedCharacters, passwordMatchValidator } from './log-validators/password-validators';
 import { hasDesiredLength, noSpecialCharacters } from './log-validators/combined-validators';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../store/auth.actions';
+import * as AuthReducer from '../store/auth.reducer';
+import { take } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-log',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, HeaderComponent, MatButtonModule, MatIconModule, CommonModule, RouterModule],
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, HeaderComponent, MatButtonModule, MatIconModule, CommonModule, RouterModule, MatProgressSpinnerModule],
   templateUrl: './log.component.html',
   styleUrl: './log.component.scss',
   animations: [
@@ -84,7 +92,7 @@ import { hasDesiredLength, noSpecialCharacters } from './log-validators/combined
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LogComponent {
+export class LogComponent implements AfterViewInit{
 
   // didnt use email validator because i implemented a more restricted ones
   emailFormControl = new FormControl('', [
@@ -115,12 +123,8 @@ export class LogComponent {
   // should be at least 8 characters and have at least 1 capital and small letter, 1 number and 1  special character from the mentioned ones only
   Passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^*])[A-Za-z\d!@#$%^*]{8,}$/;
 
-  log: 'Register' | 'Login' | 'ResetPass' = "Login";
 
-  email = '';
-  password = '';
-  confirmedPassword = '';
-  // errorMessage = '';
+  errorMessage = signal('');
 
 
   emailNotFound = false;
@@ -128,11 +132,20 @@ export class LogComponent {
   resetPassword: '1' | '2' = '1'; // To move from 2nd password form to 3rd reset form
   resetting: '1' | '2' = '2'; // to move from 3rd reset form to 1st login form
 
-  dummyEmails = ["dummy1@icloud.com", "dummy2@icloud.com", "dummy3@icloud.com"]
+  // dummyEmails = ["dummy1@icloud.com", "dummy2@icloud.com", "dummy3@icloud.com"]
+
+  isLoading = signal(false);
 
   showPass = signal(false);
 
-  constructor(private router: Router) {
+  @ViewChild('inputField') input !: ElementRef<HTMLInputElement>;
+
+  constructor(private router: Router, private store: Store<fromApp.AppState>) {
+  }
+
+  ngAfterViewInit(): void {
+    // Added this bcz the navigating to the fragment logContainer using the routerlink is disabling the autofocus on it
+      this.input.nativeElement.focus();
   }
 
   onSubmitForm() {
@@ -144,15 +157,40 @@ export class LogComponent {
   }
 
   signingWithEmail() {
-    let found = false;
-    this.dummyEmails.forEach((email) => {
-      if (email === this.emailFormControl.value) {
-        found = true;
-      }
-    });
-    if (found) {
-      this.emailNotFound = !this.emailNotFound;
-    }
+
+    this.isLoading.set(true);
+  // ?? To avoid the it may be null error
+    this.store.dispatch(AuthActions.EmailLogStart({ email: this.emailFormControl.value ?? 'email'}));
+
+    this.store.select('auth').pipe(take(1))
+      .subscribe({
+        next: (state: AuthReducer.State) => {
+          const eror = state.authError;
+          if (eror) {
+            this.errorMessage.set(eror);
+          } else {
+            this.emailNotFound = state.emailNotFound;
+            this.isLoading.set(state.loading);
+            this.triggerAnimation();
+          }
+        },
+      })
+
+
+
+
+    // let found = false;
+    // this.dummyEmails.forEach((email) => {
+    //   if (email === this.emailFormControl.value) {
+    //     found = true;
+    //   }
+    // });
+    // if (found) {
+    //   this.emailNotFound = !this.emailNotFound;
+    // }
+  }
+
+  protected triggerAnimation() {
     this.formType = this.formType === '1' ? '2' : '1';
   }
 
@@ -221,7 +259,7 @@ export class LogComponent {
     }
   }
 
- get getForm3Animation3(): '1' | '2' {
+  get getForm3Animation3(): '1' | '2' {
     if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '1') {
       return '2';
     }

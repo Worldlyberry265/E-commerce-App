@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AddDecimalPipe } from '../reviews/add-decimal-pipe/add-decimal.pipe';
 
 @Component({
-  selector: 'div[appReview]',
+  selector: 'div[appReview], figcaption[appReview]',
   standalone: true,
   imports: [AddDecimalPipe],
   templateUrl: './reviews.component.html',

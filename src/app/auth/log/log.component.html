@@ -6,13 +6,16 @@
     <div class="log__form__container">
         <div class="log__form__container--background"></div>
 
+        @if (!true) {
+        <mat-spinner class="log__loading-spinner"></mat-spinner>
+        } @else {
         <form [@form-1-Animation]="getForm1Animation" class="log__form">
             <h6 class="log__title">Sign in or create an account</h6>
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Email</mat-label>
                 <input #inputField class="log__form--input" type="email" name="email" matInput
-                    [formControl]="emailFormControl" autocomplete="off" placeholder="Ex: pat@example.com" autofocus
-                    required [value]="emailFormControl.value">
+                    [formControl]="emailFormControl" autocomplete="off" placeholder="Ex: pat@example.com" required
+                    [value]="emailFormControl.value">
 
                 @if (emailFormControl.hasError('required')) {
                 <mat-error class="log__form--error">Please enter an email.</mat-error>
@@ -31,6 +34,9 @@
                     '&#64;'.</mat-error>
                 } @else if (emailFormControl.hasError('hasDesiredLength')) {
                 <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
+                }
+                @else if(errorMessage()){
+                <mat-error class="log__form--error">ASDADADS</mat-error>
                 }
 
             </mat-form-field>
@@ -82,6 +88,7 @@
             </p>
             <p class="log__form--text">All rights reserved.</p>
         </form>
+        }
 
         <form [@form-2-Animation]="getForm2Animation2" [@form-1-Animation]="getForm2Animation1" class="log__form"
             (ngSubmit)="onSubmitForm()">
@@ -140,7 +147,7 @@
             @if (!emailNotFound) {
             <p (click)="onResetPassword()" class="log__form--reset-link">Forgot your password?</p>
             }
-            <p (click)="signingWithEmail()" class="log__form--reset-link">Change Email?</p>
+            <p (click)="triggerAnimation()" class="log__form--reset-link">Change Email?</p>
 
             <hr>
             <p class="log__form--text">By signing in or creating an account, you agree with our

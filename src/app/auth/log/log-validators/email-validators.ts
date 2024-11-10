@@ -19,7 +19,7 @@ export function noConsecutiveHyphens(): ValidatorFn {
 export function minLengthBeforeAt(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         const value = control.value;
-        return /^[a-zA-Z][a-zA-Z0-9!@#$%^*.-_]{6,29}/.test(value) ? null : { minLengthBeforeAt: true }; 
+        return /^[a-zA-Z][a-zA-Z0-9!@#$%^*-._]{6,29}/.test(value) ? null : { minLengthBeforeAt: true }; 
     };
 }
 // Checks if the part after the @ in the email is valid

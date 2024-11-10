@@ -125,10 +125,8 @@
     align-items: center;
 
     @include respond(mobile) {
-      position: absolute;
-      left: 50%;
+      @include absCenter;
       top: 45%;
-      transform: translate(-50%, -50%);
     }
   }
 

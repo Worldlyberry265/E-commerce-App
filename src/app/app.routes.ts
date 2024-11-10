@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { LogComponent } from './authentication/log/log.component';
+import { LogComponent } from './auth/log/log.component';
 import { ProductPageComponent } from './products/product-page/product-page.component';
 
 export const routes: Routes = [ 

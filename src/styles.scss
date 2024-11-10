@@ -213,6 +213,13 @@ body ::selection {
   word-spacing: 0.5rem;
   font-weight: 500;
 }
+.log__loading-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute !important;
+}
 .log__form {
   width: 27.5rem !important;
   display: flex;
@@ -411,8 +418,8 @@ body ::selection {
 }
 .mobile-navigation__list {
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   list-style: none;
   text-align: center;
@@ -887,8 +894,9 @@ body ::selection {
   .product__rating {
     position: absolute;
     left: 50%;
-    top: 45%;
+    top: 50%;
     transform: translate(-50%, -50%);
+    top: 45%;
   }
 }
 .product__description {
