@@ -17,9 +17,6 @@ export class ReviewsComponent {
 
   get starsCount(): number[] {
     this.RemainingStarCount = this.stars() - Math.floor(this.stars());
-    console.log(`Remianing stars: ${this.RemainingStarCount}`);
-    console.log(`Remianing stars: ${Math.floor(this.stars())}`);
-    console.log(`Remianing stars: ${this.stars}`);
     return Array(Math.floor(this.stars()));
     
   }

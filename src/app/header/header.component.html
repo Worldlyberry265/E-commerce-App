@@ -5,6 +5,14 @@
   </svg>
 
   <ul class="main-header__menu">
+    @if (true) {
+      <li class="main-header__menu--item main-header__menu--item-active" >
+        <i class="fa-solid fa-house"></i>
+        <span>
+          Jwt Username
+        </span>
+      </li>
+    }
     <li class="main-header__menu--item" routerLink="/homepage" fragment="sectionIntroduction" routerLinkActive="main-header__menu--item-active">
       <i class="fa-solid fa-house"></i>
       <span>

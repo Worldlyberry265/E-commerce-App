@@ -16,7 +16,8 @@ import { Store } from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
 import * as AuthActions from '../store/auth.actions';
 import * as AuthReducer from '../store/auth.reducer';
-import { take } from 'rxjs';
+import { filter, take } from 'rxjs';
+import { User } from '../../models/User';
 
 
 
@@ -39,6 +40,10 @@ import { take } from 'rxjs';
         left: '-50%', // Move the form out of view
         opacity: 0,  // Reduced opacity
         // display: 'none'
+      })),
+      state('noAnimation', style({
+        left: '50%', // Position the form centrally
+        opacity: 1   // Full opacity
       })),
       // Transition from state '1' to '2' and vice versa
       transition('1 <=> 2', [
@@ -92,7 +97,7 @@ import { take } from 'rxjs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LogComponent implements AfterViewInit{
+export class LogComponent implements AfterViewInit {
 
   // didnt use email validator because i implemented a more restricted ones
   emailFormControl = new FormControl('', [
@@ -145,11 +150,36 @@ export class LogComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     // Added this bcz the navigating to the fragment logContainer using the routerlink is disabling the autofocus on it
-      this.input.nativeElement.focus();
+    this.input.nativeElement.focus();
   }
 
   onSubmitForm() {
-    this.router.navigate(['/homepage']);
+    this.isLoading.set(true);
+    const user: User = { email: this.emailFormControl.value ?? 'anything since its for sure not null', password: this.passwordFormControl.value ?? 'anything since its for sure not null' }
+    this.store.dispatch(AuthActions.PasswordLogStart({ user: user }));
+
+    this.store.select('auth').pipe(
+      // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
+      //so filtering will be waiting for the store to change the loading state, waiting for the delay 
+      filter((state: AuthReducer.State) => !state.loading)
+      , take(1))
+      .subscribe({
+        next: (state: AuthReducer.State) => {
+          const error = state.authError;
+          this.isLoading.set(state.loading);
+          if (error) {
+            // timeout bcz the loading state is cancelling the error display so i delayed it half a second
+            setTimeout(() => {
+            this.errorMessage.set(error);
+            this.passwordFormControl.setErrors({ authError: true });
+            }, 500);
+          } else {
+            this.router.navigate(['/homepage']);
+          }
+        },
+      });
+
+
   }
 
   togglePasswordVisibility() {
@@ -159,37 +189,31 @@ export class LogComponent implements AfterViewInit{
   signingWithEmail() {
 
     this.isLoading.set(true);
-  // ?? To avoid the it may be null error
-    this.store.dispatch(AuthActions.EmailLogStart({ email: this.emailFormControl.value ?? 'email'}));
+    // ?? To avoid the it may be null error
+    this.store.dispatch(AuthActions.EmailLogStart({ email: this.emailFormControl.value ?? 'anything since its for sure not null' }));
 
-    this.store.select('auth').pipe(take(1))
+    this.store.select('auth').pipe(
+      // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
+      //so filtering will be waiting for the store to change the loading state, waiting for the delay 
+      filter((state: AuthReducer.State) => !state.loading)
+      , take(1))
       .subscribe({
         next: (state: AuthReducer.State) => {
-          const eror = state.authError;
-          if (eror) {
-            this.errorMessage.set(eror);
+          const error = state.authError;
+          this.isLoading.set(state.loading);
+          if (error) {
+            // timeout bcz the loading state is cancelling the error display so i delayed it half a second
+            setTimeout(() => {
+              this.errorMessage.set(error);
+              this.emailFormControl.setErrors({ authError: true });
+            }, 500);
           } else {
             this.emailNotFound = state.emailNotFound;
-            this.isLoading.set(state.loading);
             this.triggerAnimation();
           }
         },
-      })
-
-
-
-
-    // let found = false;
-    // this.dummyEmails.forEach((email) => {
-    //   if (email === this.emailFormControl.value) {
-    //     found = true;
-    //   }
-    // });
-    // if (found) {
-    //   this.emailNotFound = !this.emailNotFound;
-    // }
+      });
   }
-
   protected triggerAnimation() {
     this.formType = this.formType === '1' ? '2' : '1';
   }
@@ -203,7 +227,6 @@ export class LogComponent implements AfterViewInit{
   }
 
   get getForm1Animation(): '1' | '2' {
-
     // if any of these variables changes, the getter triggers
     if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '2') {
       return '1';
@@ -232,7 +255,7 @@ export class LogComponent implements AfterViewInit{
     }
   }
 
-  get getForm2Animation1(): '1' | '2' { // resetpassword is the triggerer here
+  get getForm2Animation1(): '1' | '2' | 'noAnimation' { // resetpassword is the triggerer here
     if (this.formType == '2' && this.resetPassword == '2' && this.resetting == '1') {
       return '2';
     } else if (this.formType == '1' && this.resetPassword == '2' && this.resetting == '1') {
@@ -243,6 +266,8 @@ export class LogComponent implements AfterViewInit{
       return '2';
     } else if (this.formType == '2' && this.resetPassword == '2' && this.resetting == '2') {
       return '2';
+    } else if (this.errorMessage()) {
+      return 'noAnimation';
     } else {
       return '2';
     }

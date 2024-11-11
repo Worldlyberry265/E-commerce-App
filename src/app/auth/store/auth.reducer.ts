@@ -2,48 +2,35 @@ import { createReducer, on } from "@ngrx/store";
 import { User } from "../../models/User";
 import * as AuthActions from "./auth.actions";
 
-
-const dummyUser : User = {
-email : "william@gmail.com",
-password: "William56$hj"
-};
-
-
 export interface State {
-    user: User | null;
     authError: string;
     loading: boolean;
     emailNotFound : boolean; // To know if the user needs to create an account or to Login
     jwt : string;
+    userId : number | null;
 };
 
 const initialState: State = {
-    user: null,
     authError: '',
     loading: false,
     emailNotFound: true,
-    jwt: ''
+    jwt: '',
+    userId: null,
 };
 
 export const authReducer = createReducer(
     initialState,
 
-    // any to decrease to not put an extra condition to check if it's null.
     on(AuthActions.EmailLogStart, (state, {email}) => {
-        let isEmailNotFound : boolean;
-        if(email.toLowerCase() === dummyUser.email) {
-            isEmailNotFound = false;
-        } else {
-            isEmailNotFound = true;
-        }
         return {
             ...state,
             loading: true,
-            emailNotFound : isEmailNotFound
         }
     }),
 
     on(AuthActions.EmailLogFail, (state, payload) => {
+        console.log("fail triggered");
+        
         return {
             ...state,
             loading: false,
@@ -51,14 +38,42 @@ export const authReducer = createReducer(
         }
     }),
 
-    on(AuthActions.EmailLogSuccess, (state) => {
+    on(AuthActions.EmailLogSuccess, (state, {emailNotFound}) => {
         return {
             ...state,
             loading: false,
             authError : '',
-            emailNotFound : false
+            emailNotFound : emailNotFound
         }
     }),
+
+    on(AuthActions.PasswordLogStart, (state) => {
+        return {
+            ...state,
+            loading: true,
+        }
+    }),
+
+    on(AuthActions.PasswordLogFail, (state, {errorMessage}) => {
+        return {
+            ...state,
+            loading: false,
+            authError : errorMessage
+        }
+    }),
+
+    on(AuthActions.PasswordLogSuccess, (state, {jwtToken, userId}) => {
+        console.log(`From reducer userId: ${userId}`);
+        
+        return {
+            ...state,
+            loading: false,
+            authError: '',
+            jwt: jwtToken,
+            userId: userId,
+        }
+    }),
+    
     
    
 
