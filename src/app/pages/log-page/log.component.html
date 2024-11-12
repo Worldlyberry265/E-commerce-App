@@ -6,7 +6,8 @@
     <div class="log__form__container">
         <div class="log__form__container--background"></div>
 
-        @if (isLoading()) {
+        <!-- @if (isLoading()) { -->
+        @if (authStore.loading()) {
         <mat-spinner class="log__loading-spinner"></mat-spinner>
         } 
         @else {
@@ -38,7 +39,7 @@
                 <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
                 }
                 @else if(emailFormControl.hasError('authError')){
-                <mat-error class="log__form--error">{{ errorMessage() }}</mat-error>
+                <mat-error class="log__form--error">{{ authStore.authError() }}</mat-error>
                 }
 
             </mat-form-field>
@@ -96,7 +97,7 @@
             (ngSubmit)="onSubmitForm()">
 
 
-            <h6 class="log__title">{{ emailNotFound ? 'To create a new account, confirm' : 'Enter' }} your password
+            <h6 class="log__title">{{ authStore.emailNotFound() ? 'To create a new account, confirm' : 'Enter' }} your password
             </h6>
 
             <mat-form-field class="log__form--field">
@@ -125,7 +126,7 @@
             </mat-form-field>
 
 
-            @if (emailNotFound) {
+            @if (authStore.emailNotFound()) {
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Confirm Your Password</mat-label>
                 <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Confirm Your Password*"
@@ -143,12 +144,12 @@
 
 
             <button
-                [disabled]="(passwordConfirmationFormControl.invalid && emailNotFound) || passwordFormControl.invalid"
+                [disabled]="(passwordConfirmationFormControl.invalid && authStore.emailNotFound()) || passwordFormControl.invalid"
                 mat-flat-button type="submit" class="log__button"> Login
             </button>
 
             <hr>
-            @if (!emailNotFound) {
+            @if (!authStore.emailNotFound()) {
             <p (click)="onResetPassword()" class="log__form--reset-link">Forgot your password?</p>
             }
             <p (click)="triggerAnimation()" class="log__form--reset-link">Change Email?</p>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { AddDecimalPipe } from '../reviews/add-decimal-pipe/add-decimal.pipe';
+import { AddDecimalPipe } from './add-decimal-pipe/add-decimal.pipe';
 
 @Component({
   selector: 'div[appReview], figcaption[appReview]',

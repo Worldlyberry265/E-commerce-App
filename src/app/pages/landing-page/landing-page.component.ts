@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, signal } from "@angular/core";
-import { HeaderComponent } from "../header/header.component";
-import { ProductCardComponent } from "../products/product-card/product-card.component";
-import { ProductFrameComponent } from "../products/product-frame/product-frame.component";
 import { FormsModule } from "@angular/forms";
+import { HeaderComponent } from "../../Components/header/header.component";
+import { ProductCardComponent } from "../../Components/products/product-card/product-card.component";
+import { ProductFrameComponent } from "../../Components/products/product-frame/product-frame.component";
 
 ;
 

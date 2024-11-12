@@ -1,23 +1,24 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HeaderComponent } from '../../header/header.component';
 import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { minLengthBeforeAt, noConsecutiveHyphens, startsWithLetter, validDomainStructure } from './log-validators/email-validators';
-import { containsMixedCharacters, passwordMatchValidator } from './log-validators/password-validators';
-import { hasDesiredLength, noSpecialCharacters } from './log-validators/combined-validators';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
-import * as AuthActions from '../store/auth.actions';
-import * as AuthReducer from '../store/auth.reducer';
+import * as AuthActions from '../../auth/store/auth.actions';
+import * as AuthReducer from '../../auth/store/auth.reducer';
 import { filter, take } from 'rxjs';
 import { User } from '../../models/User';
+import { HeaderComponent } from '../../Components/header/header.component';
+import { AuthStore } from '../../store/auth.store';
+import { minLengthBeforeAt, noConsecutiveHyphens, startsWithLetter, validDomainStructure } from '../../services/log-validators/email-validators';
+import { hasDesiredLength, noSpecialCharacters } from '../../services/log-validators/combined-validators';
+import { containsMixedCharacters, passwordMatchValidator } from '../../services/log-validators/password-validators';
 
 
 
@@ -130,20 +131,19 @@ export class LogComponent implements AfterViewInit {
 
 
   errorMessage = signal('');
-
-
+  isLoading = signal(false);
   emailNotFound = false;
+
+
   formType: '1' | '2' = '1'; // TO move from 1st to to 2nd form 
   resetPassword: '1' | '2' = '1'; // To move from 2nd password form to 3rd reset form
   resetting: '1' | '2' = '2'; // to move from 3rd reset form to 1st login form
 
-  // dummyEmails = ["dummy1@icloud.com", "dummy2@icloud.com", "dummy3@icloud.com"]
-
-  isLoading = signal(false);
-
   showPass = signal(false);
 
   @ViewChild('inputField') input !: ElementRef<HTMLInputElement>;
+
+  readonly authStore = inject(AuthStore);
 
   constructor(private router: Router, private store: Store<fromApp.AppState>) {
   }
@@ -170,8 +170,8 @@ export class LogComponent implements AfterViewInit {
           if (error) {
             // timeout bcz the loading state is cancelling the error display so i delayed it half a second
             setTimeout(() => {
-            this.errorMessage.set(error);
-            this.passwordFormControl.setErrors({ authError: true });
+              this.errorMessage.set(error);
+              this.passwordFormControl.setErrors({ authError: true });
             }, 500);
           } else {
             this.router.navigate(['/homepage']);
@@ -185,37 +185,68 @@ export class LogComponent implements AfterViewInit {
   togglePasswordVisibility() {
     this.showPass.update((currentVisibility) => !currentVisibility);
   }
+  // signingWithEmail() {
+
+  //   this.isLoading.set(true);
+  //   // ?? To avoid the it may be null error
+  //   this.store.dispatch(AuthActions.EmailLogStart({ email: this.emailFormControl.value ?? 'anything since its for sure not null' }));
+
+  //   this.store.select('auth').pipe(
+  //     // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
+  //     //so filtering will be waiting for the store to change the loading state, waiting for the delay 
+  //     filter((state: AuthReducer.State) => !state.loading)
+  //     , take(1))
+  //     .subscribe({
+  //       next: (state: AuthReducer.State) => {
+  //         const error = state.authError;
+  //         this.isLoading.set(state.loading);
+  //         if (error) {
+  //           // timeout bcz the loading state is cancelling the error display so i delayed it half a second
+  //           setTimeout(() => {
+  //             this.errorMessage.set(error);
+  //             this.emailFormControl.setErrors({ authError: true });
+  //           }, 500);
+  //         } else {
+  //           this.emailNotFound = state.emailNotFound;
+  //           this.triggerAnimation();
+  //         }
+  //       },
+  //     });
+  // }
 
   signingWithEmail() {
-
-    this.isLoading.set(true);
     // ?? To avoid the it may be null error
-    this.store.dispatch(AuthActions.EmailLogStart({ email: this.emailFormControl.value ?? 'anything since its for sure not null' }));
-
-    this.store.select('auth').pipe(
-      // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
-      //so filtering will be waiting for the store to change the loading state, waiting for the delay 
-      filter((state: AuthReducer.State) => !state.loading)
-      , take(1))
-      .subscribe({
-        next: (state: AuthReducer.State) => {
-          const error = state.authError;
-          this.isLoading.set(state.loading);
-          if (error) {
-            // timeout bcz the loading state is cancelling the error display so i delayed it half a second
-            setTimeout(() => {
-              this.errorMessage.set(error);
-              this.emailFormControl.setErrors({ authError: true });
-            }, 500);
-          } else {
-            this.emailNotFound = state.emailNotFound;
-            this.triggerAnimation();
-          }
-        },
-      });
+    this.authStore.EmailLog(this.emailFormControl.value ?? 'anything since its for sure not null');
+    
+    console.log(1);
+    console.log(this.authStore.authError());
+    // Timeout bcz im doing also a timeout in the store to simulate the waiting time for an http response
+    setTimeout(() => {
+      if (this.authStore.authError()) {
+        console.log(2);
+        console.log(this.authStore.authError());
+        this.emailFormControl.setErrors({ authError: true });
+      } else {      
+        console.log(3);
+        console.log(this.authStore.authError());
+        // this.triggerAnimation();
+      }
+    }, 1500);
+    if(!this.authStore.authError()) {
+      this.triggerAnimation();
+    }
   }
+  
+  
+  
+  
   protected triggerAnimation() {
     this.formType = this.formType === '1' ? '2' : '1';
+    this.authStore.ResetAnimationError(); // STILL TESTING THIS
+    console.log(`email form: ${this.emailFormControl.hasError('authError')}`);
+    
+    this.emailFormControl.setErrors(null);
+    console.log(`email form: ${this.emailFormControl.hasError('authError')}`);
   }
 
   onResetPassword() {
@@ -266,7 +297,7 @@ export class LogComponent implements AfterViewInit {
       return '2';
     } else if (this.formType == '2' && this.resetPassword == '2' && this.resetting == '2') {
       return '2';
-    } else if (this.errorMessage()) {
+    } else if (this.authStore.authError()) {
       return 'noAnimation';
     } else {
       return '2';

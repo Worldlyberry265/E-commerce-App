@@ -4,8 +4,8 @@ import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as fromApp from '../../store/app.reducer';
 import { catchError, delay, map, of, switchMap, } from "rxjs";
-import { HttpClientService } from "../../Services/http.client";
-import { JwtDecodeService } from "../jwt-decode.service";
+import { HttpClientService } from "../../services/http.client";
+import { JwtDecodeService } from "../../services/jwt-decode.service";
 
 @Injectable()
 export class AuthEffects {
