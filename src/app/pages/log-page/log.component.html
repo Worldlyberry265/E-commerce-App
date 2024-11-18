@@ -9,7 +9,7 @@
         <!-- @if (isLoading()) { -->
         @if (authStore.loading()) {
         <mat-spinner class="log__loading-spinner"></mat-spinner>
-        } 
+        }
         @else {
 
         <form [@form-1-Animation]="getForm1Animation" class="log__form">
@@ -22,7 +22,8 @@
 
                 @if (emailFormControl.hasError('required')) {
                 <mat-error class="log__form--error">Please enter an email.</mat-error>
-                } @else if (emailFormControl.hasError('startsWithLetter')) {
+                }
+                 @else if (emailFormControl.hasError('startsWithLetter')) {
                 <mat-error class="log__form--error">The email should start with a letter.</mat-error>
                 } @else if (emailFormControl.hasError('noSpecialCharacters')) {
                 <mat-error class="log__form--error">The email can have only these types of special characters
@@ -91,13 +92,14 @@
             </p>
             <p class="log__form--text">All rights reserved.</p>
         </form>
-        
+
 
         <form [@form-2-Animation]="getForm2Animation2" [@form-1-Animation]="getForm2Animation1" class="log__form"
             (ngSubmit)="onSubmitForm()">
 
 
-            <h6 class="log__title">{{ authStore.emailNotFound() ? 'To create a new account, confirm' : 'Enter' }} your password
+            <h6 class="log__title">{{ authStore.emailNotFound() ? 'To create a new account, confirm' : 'Enter' }} your
+                password
             </h6>
 
             <mat-form-field class="log__form--field">
@@ -121,7 +123,7 @@
                 } @else if (passwordFormControl.hasError('hasDesiredLength')) {
                 <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
                 } @else if (passwordFormControl.hasError('authError')) {
-                <mat-error class="log__form--error">{{ errorMessage() }}</mat-error>
+                <mat-error class="log__form--error">{{ authStore.authError() }}</mat-error>
                 }
             </mat-form-field>
 
@@ -167,7 +169,7 @@
             <p class="log__form--text">All rights reserved.</p>
 
         </form>
-        
+
         <form [@form-2-Animation]="getForm3Animation2" [@form-3-Animation]="getForm3Animation3" class="log__form">
 
             <h6 class="log__title">Reset Password</h6>
@@ -215,7 +217,7 @@
             <p class="log__form--text">All rights reserved.</p>
 
         </form>
-    }
+        }
     </div>
 
     <div class="log__divider"></div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -130,9 +130,7 @@ export class LogComponent implements AfterViewInit {
   Passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^*])[A-Za-z\d!@#$%^*]{8,}$/;
 
 
-  errorMessage = signal('');
-  isLoading = signal(false);
-  emailNotFound = false;
+  // errorMessage = signal<string | null>('');
 
 
   formType: '1' | '2' = '1'; // TO move from 1st to to 2nd form 
@@ -154,7 +152,7 @@ export class LogComponent implements AfterViewInit {
   }
 
   onSubmitForm() {
-    this.isLoading.set(true);
+    // this.isLoading.set(true);
     const user: User = { email: this.emailFormControl.value ?? 'anything since its for sure not null', password: this.passwordFormControl.value ?? 'anything since its for sure not null' }
     this.store.dispatch(AuthActions.PasswordLogStart({ user: user }));
 
@@ -166,11 +164,11 @@ export class LogComponent implements AfterViewInit {
       .subscribe({
         next: (state: AuthReducer.State) => {
           const error = state.authError;
-          this.isLoading.set(state.loading);
+          // this.isLoading.set(state.loading);
           if (error) {
             // timeout bcz the loading state is cancelling the error display so i delayed it half a second
             setTimeout(() => {
-              this.errorMessage.set(error);
+              // this.errorMessage.set(error);
               this.passwordFormControl.setErrors({ authError: true });
             }, 500);
           } else {
@@ -182,71 +180,30 @@ export class LogComponent implements AfterViewInit {
 
   }
 
-  togglePasswordVisibility() {
-    this.showPass.update((currentVisibility) => !currentVisibility);
-  }
-  // signingWithEmail() {
-
-  //   this.isLoading.set(true);
-  //   // ?? To avoid the it may be null error
-  //   this.store.dispatch(AuthActions.EmailLogStart({ email: this.emailFormControl.value ?? 'anything since its for sure not null' }));
-
-  //   this.store.select('auth').pipe(
-  //     // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
-  //     //so filtering will be waiting for the store to change the loading state, waiting for the delay 
-  //     filter((state: AuthReducer.State) => !state.loading)
-  //     , take(1))
-  //     .subscribe({
-  //       next: (state: AuthReducer.State) => {
-  //         const error = state.authError;
-  //         this.isLoading.set(state.loading);
-  //         if (error) {
-  //           // timeout bcz the loading state is cancelling the error display so i delayed it half a second
-  //           setTimeout(() => {
-  //             this.errorMessage.set(error);
-  //             this.emailFormControl.setErrors({ authError: true });
-  //           }, 500);
-  //         } else {
-  //           this.emailNotFound = state.emailNotFound;
-  //           this.triggerAnimation();
-  //         }
-  //       },
-  //     });
-  // }
-
   signingWithEmail() {
     // ?? To avoid the it may be null error
     this.authStore.EmailLog(this.emailFormControl.value ?? 'anything since its for sure not null');
-    
-    console.log(1);
-    console.log(this.authStore.authError());
-    // Timeout bcz im doing also a timeout in the store to simulate the waiting time for an http response
-    setTimeout(() => {
-      if (this.authStore.authError()) {
-        console.log(2);
-        console.log(this.authStore.authError());
+    if (this.authStore.authError()) {
+      setTimeout(() => {
         this.emailFormControl.setErrors({ authError: true });
-      } else {      
-        console.log(3);
-        console.log(this.authStore.authError());
-        // this.triggerAnimation();
-      }
-    }, 1500);
-    if(!this.authStore.authError()) {
+        // this.errorMessage.set(this.authStore.authError());
+      }, 1001);
+    } else {
+      this.emailFormControl.setErrors({ authError: false });
+      // this.errorMessage.set(null);
       this.triggerAnimation();
     }
+
   }
-  
-  
-  
-  
+
+
   protected triggerAnimation() {
     this.formType = this.formType === '1' ? '2' : '1';
-    this.authStore.ResetAnimationError(); // STILL TESTING THIS
-    console.log(`email form: ${this.emailFormControl.hasError('authError')}`);
-    
-    this.emailFormControl.setErrors(null);
-    console.log(`email form: ${this.emailFormControl.hasError('authError')}`);
+    this.emailFormControl.updateValueAndValidity(); // to revalidate the form and enable the submit button
+  }
+
+  togglePasswordVisibility() {
+    this.showPass.update((currentVisibility) => !currentVisibility);
   }
 
   onResetPassword() {

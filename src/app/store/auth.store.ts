@@ -7,7 +7,7 @@ import { pipe, switchMap, tap } from 'rxjs';
 import { PasswordLogFail } from '../auth/store/auth.actions';
 
 type AuthState = {
-    authError: string;
+    authError: string | null;
     loading: boolean;
     emailNotFound: boolean; // To know if the user needs to create an account or to Login
     jwt: string;
@@ -15,9 +15,9 @@ type AuthState = {
 }
 
 const initialState: AuthState = {
-    authError: 'error',
+    authError: null,
     loading: false,
-    emailNotFound: true,
+    emailNotFound: false,
     jwt: '',
     userId: null,
 };
@@ -37,28 +37,27 @@ export const AuthStore = signalStore(
     { providedIn: 'root' },
     withState(initialState),
     withMethods((store, httpClient = inject(HttpClientService)) => ({
-        EmailLog(email: string): void {
+
+        EmailLog(email: string): void {            
             // This is the EmailLogStart action in the old approach
-            patchState(store, (state) => ({ loading: true }));
+            patchState(store, (state) => ({ loading: !state.loading }));
             //This is the EmailLogFail
             if (email.toLowerCase() === wrongEmail) {
-                console.log(store.authError());
-                console.log("triggered from new store");
+                // console.log(store.authError());
+                // console.log("triggered from new store");
+                patchState(store, {authError: "Please check if the email address you've entered is correct."});
                 setTimeout(() => {
-                    patchState(store, (state) => ({ authError: "Please check if the email address you've entered is correct."  , loading : false}))
+                    patchState(store, (state) => ({ loading : !state.loading}))
                 }, 1000);
             } else {
                 // This is the EmailLogSuccess
                 if (email.toLowerCase() === correctUser.email) {
-                    patchState(store, (state) => ({ emailNotFound : false , loading: false, authError: '' }));
+                    patchState(store, (state) => ({ emailNotFound : false , loading: !state.loading, authError: null }));
                 } else {
-                    patchState(store, (state) => ({ emailNotFound : true , loading: false, authError: '' }));
+                    patchState(store, (state) => ({ emailNotFound : true , loading: !state.loading, authError: null }));
                 }
             }
         },
-        ResetAnimationError() {
-            patchState(store, (state) => ({authError: 'Error To not trigger the animation directly'}))
-        }
         // PasswordLog: rxMethod<string>(
         //     pipe(
         //         tap(() => {
