@@ -6,7 +6,6 @@
     <div class="log__form__container">
         <div class="log__form__container--background"></div>
 
-        <!-- @if (isLoading()) { -->
         @if (authStore.loading()) {
         <mat-spinner class="log__loading-spinner"></mat-spinner>
         }
@@ -104,7 +103,7 @@
 
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Enter Your Password</mat-label>
-                <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Enter Your Password*"
+                <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Enter Your Password*" autocomplete="off"
                     [formControl]="passwordFormControl" matInput name="password" class="log__form--input" required>
 
                 <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"
@@ -132,7 +131,7 @@
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Confirm Your Password</mat-label>
                 <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Confirm Your Password*"
-                    [formControl]="passwordConfirmationFormControl" matInput name="Confirmedpassword"
+                    [formControl]="passwordConfirmationFormControl" matInput name="Confirmedpassword" autocomplete="off"
                     class="log__form--input" required>
 
                 <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"

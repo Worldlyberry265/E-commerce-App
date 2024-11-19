@@ -143,7 +143,28 @@ export class LogComponent implements AfterViewInit {
 
   readonly authStore = inject(AuthStore);
 
-  constructor(private router: Router, private store: Store<fromApp.AppState>) {
+  constructor() {
+
+    effect(() => {
+      if(this.authStore.authError() && !this.authStore.loading()) {
+        console.log("Effet triggered");
+        
+        // this.passwordFormControl.setErrors( { authError : false});
+        setTimeout(() => {
+          
+          this.passwordFormControl.setErrors( { authError : true});
+          // console.log(this.passwordFormControl.hasError('authError'));
+          // this.passwordFormControl.updateValueAndValidity();
+          // console.log(this.authStore.authError());
+          // console.log(this.passwordFormControl.hasError('authError'));
+          // console.log(`auth loading: ${this.authStore.loading()}`);
+          
+        }, 1);
+        
+        
+        
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -151,46 +172,54 @@ export class LogComponent implements AfterViewInit {
     this.input.nativeElement.focus();
   }
 
+  // onSubmitForm() {
+  //   // this.isLoading.set(true);
+  //   const user: User = { email: this.emailFormControl.value ?? 'anything since its for sure not null', password: this.passwordFormControl.value ?? 'anything since its for sure not null' }
+  //   this.store.dispatch(AuthActions.PasswordLogStart({ user: user }));
+
+  //   this.store.select('auth').pipe(
+  //     // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
+  //     //so filtering will be waiting for the store to change the loading state, waiting for the delay 
+  //     filter((state: AuthReducer.State) => !state.loading)
+  //     , take(1))
+  //     .subscribe({
+  //       next: (state: AuthReducer.State) => {
+  //         const error = state.authError;
+  //         // this.isLoading.set(state.loading);
+  //         if (error) {
+  //           // timeout bcz the loading state is cancelling the error display so i delayed it half a second
+  //           setTimeout(() => {
+  //             // this.errorMessage.set(error);
+  //             this.passwordFormControl.setErrors({ authError: true });
+  //           }, 500);
+  //         } else {
+  //           this.router.navigate(['/homepage']);
+  //         }
+  //       },
+  //     });
+
+
+  // }
+
   onSubmitForm() {
-    // this.isLoading.set(true);
-    const user: User = { email: this.emailFormControl.value ?? 'anything since its for sure not null', password: this.passwordFormControl.value ?? 'anything since its for sure not null' }
-    this.store.dispatch(AuthActions.PasswordLogStart({ user: user }));
 
-    this.store.select('auth').pipe(
-      // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
-      //so filtering will be waiting for the store to change the loading state, waiting for the delay 
-      filter((state: AuthReducer.State) => !state.loading)
-      , take(1))
-      .subscribe({
-        next: (state: AuthReducer.State) => {
-          const error = state.authError;
-          // this.isLoading.set(state.loading);
-          if (error) {
-            // timeout bcz the loading state is cancelling the error display so i delayed it half a second
-            setTimeout(() => {
-              // this.errorMessage.set(error);
-              this.passwordFormControl.setErrors({ authError: true });
-            }, 500);
-          } else {
-            this.router.navigate(['/homepage']);
-          }
-        },
-      });
-
-
+    const user : User = {
+      email: this.emailFormControl.value ?? 'anything since its for sure not null',
+      password: this.passwordFormControl.value ?? 'anything since its for sure not null',
+    }
+    this.authStore.PasswordLog(user);
   }
 
   signingWithEmail() {
     // ?? To avoid the it may be null error
     this.authStore.EmailLog(this.emailFormControl.value ?? 'anything since its for sure not null');
     if (this.authStore.authError()) {
+      // 1001 just the enough time to pass the simulated time for the response.
       setTimeout(() => {
         this.emailFormControl.setErrors({ authError: true });
-        // this.errorMessage.set(this.authStore.authError());
       }, 1001);
     } else {
       this.emailFormControl.setErrors({ authError: false });
-      // this.errorMessage.set(null);
       this.triggerAnimation();
     }
 
@@ -247,7 +276,7 @@ export class LogComponent implements AfterViewInit {
     if (this.formType == '2' && this.resetPassword == '2' && this.resetting == '1') {
       return '2';
     } else if (this.formType == '1' && this.resetPassword == '2' && this.resetting == '1') {
-      return '2';
+      return 'noAnimation';
     } else if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '1') {
       return '2';
     } else if (this.formType == '1' && this.resetPassword == '1' && this.resetting == '2') {
