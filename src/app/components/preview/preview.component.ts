@@ -10,8 +10,8 @@ import { MatInputModule } from "@angular/material/input";
   selector: 'app-preview',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule],
-  templateUrl: './preview-component.component.html',
-  styleUrl: './preview-component.component.scss'
+  templateUrl: './preview.component.html',
+  styleUrl: './preview.component.scss'
 })
 export class PreviewComponent {
   numb = signal<number>(0);

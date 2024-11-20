@@ -14,7 +14,7 @@ import * as AuthActions from '../../auth/store/auth.actions';
 import * as AuthReducer from '../../auth/store/auth.reducer';
 import { filter, take } from 'rxjs';
 import { User } from '../../models/User';
-import { HeaderComponent } from '../../Components/header/header.component';
+import { HeaderComponent } from '../../components/header/header.component';
 import { AuthStore } from '../../store/auth.store';
 import { minLengthBeforeAt, noConsecutiveHyphens, startsWithLetter, validDomainStructure } from '../../services/log-validators/email-validators';
 import { hasDesiredLength, noSpecialCharacters } from '../../services/log-validators/combined-validators';
@@ -141,30 +141,18 @@ export class LogComponent implements AfterViewInit {
 
   @ViewChild('inputField') input !: ElementRef<HTMLInputElement>;
 
-  readonly authStore = inject(AuthStore);
+  protected readonly authStore = inject(AuthStore);
 
   constructor() {
 
     effect(() => {
       if(this.authStore.authError() && !this.authStore.loading()) {
-        console.log("Effet triggered");
-        
-        // this.passwordFormControl.setErrors( { authError : false});
         setTimeout(() => {
-          
-          this.passwordFormControl.setErrors( { authError : true});
-          // console.log(this.passwordFormControl.hasError('authError'));
-          // this.passwordFormControl.updateValueAndValidity();
-          // console.log(this.authStore.authError());
-          // console.log(this.passwordFormControl.hasError('authError'));
-          // console.log(`auth loading: ${this.authStore.loading()}`);
-          
-        }, 1);
-        
-        
-        
+          this.passwordFormControl.setErrors( { authError : true});          
+        }, 1);        
       }
     });
+    
   }
 
   ngAfterViewInit(): void {
@@ -172,42 +160,16 @@ export class LogComponent implements AfterViewInit {
     this.input.nativeElement.focus();
   }
 
-  // onSubmitForm() {
-  //   // this.isLoading.set(true);
-  //   const user: User = { email: this.emailFormControl.value ?? 'anything since its for sure not null', password: this.passwordFormControl.value ?? 'anything since its for sure not null' }
-  //   this.store.dispatch(AuthActions.PasswordLogStart({ user: user }));
-
-  //   this.store.select('auth').pipe(
-  //     // im filtering bcz the subscription is receiving a value instantly when the effect is dispatching, not event waiting for the delay in the effect
-  //     //so filtering will be waiting for the store to change the loading state, waiting for the delay 
-  //     filter((state: AuthReducer.State) => !state.loading)
-  //     , take(1))
-  //     .subscribe({
-  //       next: (state: AuthReducer.State) => {
-  //         const error = state.authError;
-  //         // this.isLoading.set(state.loading);
-  //         if (error) {
-  //           // timeout bcz the loading state is cancelling the error display so i delayed it half a second
-  //           setTimeout(() => {
-  //             // this.errorMessage.set(error);
-  //             this.passwordFormControl.setErrors({ authError: true });
-  //           }, 500);
-  //         } else {
-  //           this.router.navigate(['/homepage']);
-  //         }
-  //       },
-  //     });
-
-
-  // }
-
   onSubmitForm() {
-
-    const user : User = {
-      email: this.emailFormControl.value ?? 'anything since its for sure not null',
-      password: this.passwordFormControl.value ?? 'anything since its for sure not null',
+    // To not let the user to make another request if he/she got an error untill he matches the passwords again
+    this.passwordConfirmationFormControl.updateValueAndValidity();
+    if(!this.passwordConfirmationFormControl.getError('passwordMismatch') || this.passwordConfirmationFormControl.value === '') {
+      const user : User = {
+        email: this.emailFormControl.value ?? 'anything since its for sure not null',
+        password: this.passwordFormControl.value ?? 'anything since its for sure not null',
+      }
+      this.authStore.PasswordLog(user);
     }
-    this.authStore.PasswordLog(user);
   }
 
   signingWithEmail() {
@@ -223,6 +185,12 @@ export class LogComponent implements AfterViewInit {
       this.triggerAnimation();
     }
 
+  }
+
+  changeEmail() {
+    this.triggerAnimation();
+    // To remove the confirmed password if the user chose to login instead of signing up
+    this.passwordConfirmationFormControl.setValue('');
   }
 
 

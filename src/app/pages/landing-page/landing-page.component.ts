@@ -1,8 +1,9 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { HeaderComponent } from "../../Components/header/header.component";
-import { ProductCardComponent } from "../../Components/products/product-card/product-card.component";
-import { ProductFrameComponent } from "../../Components/products/product-frame/product-frame.component";
+import { HeaderComponent } from "../../components/header/header.component";
+import { ProductCardComponent } from "../../components/products/product-card/product-card.component";
+import { ProductFrameComponent } from "../../components/products/product-frame/product-frame.component";
+import { ProductStore } from "../../store/products.store";
 
 ;
 
@@ -15,8 +16,9 @@ import { ProductFrameComponent } from "../../Components/products/product-frame/p
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingPageComponent implements AfterViewInit {
+export class LandingPageComponent implements OnInit, AfterViewInit {
 
+  protected readonly productsStore = inject(ProductStore);
   Weather = 1;
 
   products = signal(["abc", "Asddddddddddd", "sdddddddddd"]);
@@ -24,12 +26,26 @@ export class LandingPageComponent implements AfterViewInit {
   foundProducts = signal<string[]>([]);
 
 
-  selectProduct(productName: any) {
-    this.searchedProduct = productName;
-    this.foundProducts.set([]);
-    // DISPATCH HERE
+
+  ngOnInit(): void {
+      this.productsStore.FetchAllProducts();
   }
 
+  ngAfterViewInit(): void {
+    const video = document.getElementById('landing-video') as HTMLVideoElement;
+    video.playbackRate = 0.5;
+
+
+    // Use this bcz if we have only 1 product the user wont be able to scroll
+    // if(this.products().length > 7) {
+    const scrollContainer = document.querySelector('.product-cards__container') as HTMLElement;
+    scrollContainer!.addEventListener('wheel', (event) => {
+      event.preventDefault(); // Prevent the default vertical scroll
+      scrollContainer!.scrollLeft += event.deltaY * 10; // Scroll horizontally
+    });
+    // }
+
+  }
   // I NEED TO SELECT STORE SINCE I WILL BE DISPATCHING FROM THE HEADER THE KEYUP EVENT
   onSearchProduct(event: KeyboardEvent) {
     this.foundProducts.set([]);
@@ -42,41 +58,13 @@ export class LandingPageComponent implements AfterViewInit {
     }
   }
 
-  // CREATE PRODUCT FRAME COMPONENT
-  ngAfterViewInit(): void {
-
-    const video = document.getElementById('landing-video') as HTMLVideoElement;
-    video.playbackRate = 0.5;
 
 
-    // Use this bcz if we have only 1 product the user wont be able to scroll
-    // if(this.products().length > 7) {
-      const scrollContainer = document.querySelector('.product-cards__container') as HTMLElement;
-      scrollContainer!.addEventListener('wheel', (event) => {
-        event.preventDefault(); // Prevent the default vertical scroll
-        scrollContainer!.scrollLeft += event.deltaY * 10; // Scroll horizontally
-      });
-    // }
-
+  selectProduct(productName: any) {
+    this.searchedProduct = productName;
+    this.foundProducts.set([]);
+    // DISPATCH HERE
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

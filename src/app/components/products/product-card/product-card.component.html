@@ -1,11 +1,10 @@
-<a [routerLink]="'/product/' + Id()" target="_blank" class="product-card__wrapper">
+<a [routerLink]="'/product/' + product().id" target="_blank" class="product-card__wrapper">
 
-  <img src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" alt="machine img"
+  <img [src]="product().image" [alt]="product().title"
     class="product-card__img" />
 
-  <div appReview [reviewsCount]="200" [stars]="4"></div>
-
-  <span class="product-card__caption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et repellat
-    sed ab</span>
+  <div appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate"></div>
+  
+  <span class="product-card__caption">{{ product().title }}</span>
 </a>
-<nav [appProductNav]="'Prod-' + Id()" class="product-card__nav u-margin-bottom-small"></nav>
+<nav [appProductNav]="'Prod-' + product().id" class="product-card__nav u-margin-bottom-small"></nav>

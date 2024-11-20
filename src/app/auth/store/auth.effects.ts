@@ -43,55 +43,55 @@ export class AuthEffects {
         })
     ));
 
-    passwordLog = createEffect(() => this.$actions.pipe(
-        ofType(AuthActions.PasswordLogStart),
-        switchMap(({ user }) => {
-            // This is the case where we login with the correct dummy user found in fakestoreApi to get the jwt 
-            if (user.email.toLowerCase() === this.correctUser.email) {
-                return this.httpClient.postLogin({ username: this.correctUser.username, password: user.password }).pipe(
-                    map(({ token }) => {
-                        const userId = this.jwtDecoder.fetchSubject(token);
-                        return AuthActions.PasswordLogSuccess({ jwtToken: token, userId: userId })
-                    }),
-                    // We catch the error if we put a wrong password
-                    // we use of to not cancel the flow of the effect
-                    catchError((responseError) => {
-                        return of(AuthActions.PasswordLogFail({ errorMessage: responseError.error }));
-                    })
-                );
-            } else {
-                // This is the case where we put any email that isnt found in the fakestoreApi, so it tries to sign up
-                // The fakestoreApi only returns an id upon success, so I login again with the correct dummy user to get a jwt
-                // We get the jwt to login the user automatically after signing up successfully.
-                return this.httpClient.postAddUser(user).pipe(
-                    switchMap((returnedId) => {
-                        return this.httpClient.postLogin({ username: this.correctUser.username, password: this.correctUser.password }).pipe(
-                            map(({ token }) => {
-                                const userId = this.jwtDecoder.fetchSubject(token);
-                                return AuthActions.PasswordLogSuccess({ jwtToken: token, userId: userId })
-                            }),
-                            // This is the catchError for the login endpoint
-                            // It wont trigger unless the request timeouted out or the server didnt respond because we are using the correct email
-                            // It won't trigger in my case unless i made the browser offline
-                            // That's why I'm putting a custom error
-                            catchError((responseError) => {
-                                return of(AuthActions.PasswordLogFail({ errorMessage: "Request Timed Out" }));
-                            })
-                        )
-                    }),
-                    // This is the catchError for the sign up endpoint
-                    // It wont trigger unless the request timeouted out or the server didnt respond 
-                    // Because the fakestoreapi doesnt return an error at all for this endpoint except if i dont put a json object and i did already.
-                    // It won't trigger in my case unless i made the browser offline
-                    // That's why I'm putting a custom error
-                    catchError(() => {
-                        return of(AuthActions.PasswordLogFail({ errorMessage: "Request Timed Out" }));
-                    })
-                );
-            }
-        }
-        )
+    // passwordLog = createEffect(() => this.$actions.pipe(
+    //     ofType(AuthActions.PasswordLogStart),
+    //     switchMap(({ user }) => {
+    //         // This is the case where we login with the correct dummy user found in fakestoreApi to get the jwt 
+    //         if (user.email.toLowerCase() === this.correctUser.email) {
+    //             return this.httpClient.postLogin({ username: this.correctUser.username, password: user.password }).pipe(
+    //                 map(({ token }) => {
+    //                     const userId = this.jwtDecoder.fetchSubject(token);
+    //                     return AuthActions.PasswordLogSuccess({ jwtToken: token, userId: userId })
+    //                 }),
+    //                 // We catch the error if we put a wrong password
+    //                 // we use of to not cancel the flow of the effect
+    //                 catchError((responseError) => {
+    //                     return of(AuthActions.PasswordLogFail({ errorMessage: responseError.error }));
+    //                 })
+    //             );
+    //         } else {
+    //             // This is the case where we put any email that isnt found in the fakestoreApi, so it tries to sign up
+    //             // The fakestoreApi only returns an id upon success, so I login again with the correct dummy user to get a jwt
+    //             // We get the jwt to login the user automatically after signing up successfully.
+    //             return this.httpClient.postAddUser(user).pipe(
+    //                 switchMap((returnedId) => {
+    //                     return this.httpClient.postLogin({ username: this.correctUser.username, password: this.correctUser.password }).pipe(
+    //                         map(({ token }) => {
+    //                             const userId = this.jwtDecoder.fetchSubject(token);
+    //                             return AuthActions.PasswordLogSuccess({ jwtToken: token, userId: userId })
+    //                         }),
+    //                         // This is the catchError for the login endpoint
+    //                         // It wont trigger unless the request timeouted out or the server didnt respond because we are using the correct email
+    //                         // It won't trigger in my case unless i made the browser offline
+    //                         // That's why I'm putting a custom error
+    //                         catchError((responseError) => {
+    //                             return of(AuthActions.PasswordLogFail({ errorMessage: "Request Timed Out" }));
+    //                         })
+    //                     )
+    //                 }),
+    //                 // This is the catchError for the sign up endpoint
+    //                 // It wont trigger unless the request timeouted out or the server didnt respond 
+    //                 // Because the fakestoreapi doesnt return an error at all for this endpoint except if i dont put a json object and i did already.
+    //                 // It won't trigger in my case unless i made the browser offline
+    //                 // That's why I'm putting a custom error
+    //                 catchError(() => {
+    //                     return of(AuthActions.PasswordLogFail({ errorMessage: "Request Timed Out" }));
+    //                 })
+    //             );
+    //         }
+    //     }
+    //     )
 
-    ));
+    // ));
 
 }

@@ -3,7 +3,7 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { User } from '../models/User';
 import { HttpClientService } from '../services/http.client';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { catchError, exhaustMap, map, of, pipe, switchMap, tap } from 'rxjs';
+import { catchError, exhaustMap, of, pipe, switchMap, tap } from 'rxjs';
 import { JwtDecodeService } from '../services/jwt-decode.service';
 import { tapResponse } from '@ngrx/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,16 +14,16 @@ type AuthState = {
     authError: string | null;
     loading: boolean;
     emailNotFound: boolean; // To know if the user needs to create an account or to Login
-    jwt: string;
-    userId: number | null;
+    jwt: string | null;
+    username: string | null;
 }
 
 const initialState: AuthState = {
     authError: null,
     loading: false,
     emailNotFound: false,
-    jwt: '',
-    userId: null,
+    jwt: null,
+    username: null,
 };
 
 // An exampe of an non-existent email to stimulate a server response
@@ -63,55 +63,41 @@ export const AuthStore = signalStore(
             }
         },
 
-        PasswordLog: rxMethod<any>(
+        PasswordLog: rxMethod<User>(
             pipe(
                 tap(() => {
-                    console.log("loading is on");
-                    
                     patchState(store, { loading: true });
                 }),
                 //All subsequent login requests are ignored until the current request finishes due to exhaustMap.
                 // (However the user can only press it once at time due to the loading spinner displaying instead of the form in the log component)
                 exhaustMap((user: User) => {
                     if (user.email.toLowerCase() === correctUser.email) {
-
                         return httpClient.postLogin({ username: correctUser.username, password: user.password }).pipe(
-                            tap( {
-                                       
-                                error(err) {
-                                    console.log("FROM NEW STORE LOADINGGGGGGGGGG error");
-                                    patchState(store, {loading: false}) 
-                                    console.log(`authstore error inside errir ${store.authError()}`);
-                                    
-                                    
+                            tap({
+                                error() {
+                                    patchState(store, { loading: false })
                                 },
-                            
+
                             }),
                             tapResponse({
                                 //If the entered password is correct then fetch token
                                 next: ({ token }) => {
-                                    const userId = jwtDecoder.fetchSubject(token);
-                                    patchState(store, { jwt: token, userId: userId })
-                                    // console.log(" FROM NEW STORE PASS 2");
-                                    // console.log(store.userId());
-                                    // console.log(store.jwt());
-                                    
-
+                                    const userName = jwtDecoder.fetchSubject(token);
+                                    localStorage.setItem('jwt', token);
+                                    patchState(store, { jwt: token, username: userName, loading: false, authError: null })
                                     router.navigate(['/homepage']);
-
                                 },
                                 // else we return the generated token
                                 error: (HttpError: HttpErrorResponse) => {
-                                    // console.log("from new store errormessage : down");
-                                    // console.log(" FROM NEW STORE PASS 3 BTW");
-
-                                    console.log(HttpError.error);
-
-                                    patchState(store, { authError: HttpError.error })
+                                    let returnedError = HttpError.error;
+                                    // If the request timed out or there was no response, the HttpError.error will be an object
+                                    if (typeof (returnedError) != 'string') {
+                                        returnedError = "Request Timed Out";
+                                    }
+                                    patchState(store, { authError: returnedError })
                                 },
                             }),
                         );
-
                     }
                     else {
                         // This is the case where we put any email that isnt found in the fakestoreApi, so it tries to sign up
@@ -120,13 +106,12 @@ export const AuthStore = signalStore(
                         return httpClient.postAddUser(user).pipe(
                             switchMap(({ id }) => {
                                 return httpClient.postLogin({ username: correctUser.username, password: correctUser.password }).pipe(
-                                    tap( () => patchState(store, {loading: false}) ),
+                                    tap(() => patchState(store, { loading: false })),
                                     tapResponse({
                                         next: ({ token }) => {
-                                            // const userId = jwtDecoder.fetchSubject(token);
-                                            patchState(store, { jwt: token, userId: id })
-                                            console.log(store.userId());
-                                            
+                                            const userName = jwtDecoder.fetchSubject(token);
+                                            localStorage.setItem('jwt', token);
+                                            patchState(store, { jwt: token, username: userName, authError: null })
                                             router.navigate(['/homepage']);
 
                                         },
@@ -135,10 +120,6 @@ export const AuthStore = signalStore(
                                         // It won't trigger in my case unless i made the browser offline
                                         // That's why I'm putting a custom error
                                         error: (errorMessage: HttpErrorResponse) => {
-                                            console.log("from new store errormessage : down");
-
-                                            console.log(errorMessage);
-
                                             patchState(store, { authError: "Request Timed Out" })
                                         }
                                     }),
@@ -149,7 +130,11 @@ export const AuthStore = signalStore(
                             // Because the fakestoreapi doesnt return an error at all for this endpoint except if i dont put a json object and i did already.
                             // It won't trigger in my case unless i made the browser offline
                             // That's why I'm putting a custom error
-                            tap( () => patchState(store, {loading: false}) ),
+                            tap({
+                                error() {
+                                    patchState(store, { loading: false })
+                                },
+                            }),
                             catchError(() => {
                                 return of(patchState(store, { authError: "Request Timed Out" }))
                             })
@@ -162,59 +147,19 @@ export const AuthStore = signalStore(
             )
         ),
 
-        // AuthenticateUser: rxMethod<any>((source$: Observable<User>) => 
-        //     source$.pipe(
-        //       map(user => 
-        //         httpClient.postLogin({ username: correctUser.username, password: user.password }).pipe(
-        //           tapResponse({
-        //             next: ({ token }) => {
-        //               const userId = jwtDecoder.fetchSubject(token);
-        //               patchState(store, { loading: false, jwt: token, userId: userId });
-        //               router.navigate(['/homepage']);
+        FetchJwtFromLocalStorage() {
+            const jwtToken = localStorage.getItem('jwt');
+            if (jwtToken) {
+                const userName = jwtDecoder.fetchSubject(jwtToken);
+                patchState(store, { jwt: jwtToken, username: userName })
+            }
+        },
 
-        //             },
-        //             error: (errorMessage: HttpErrorResponse) => {
-        //               console.log("from new store errormessage : down");
-        //               console.log(errorMessage);
-        //               patchState(store, { loading: false, authError: errorMessage.message });
-        //             }
-        //           })
-        //         )
-        //       )
-        //     )
-        //   ),
-
-
-
-        // return httpClient.postLogin({ username: correctUser.username, password: user.password }).pipe(
-        //     tapResponse({
-        //         next: ({ token }) => {
-        //             const userId = jwtDecoder.fetchSubject(token);
-        //             patchState(store, { loading: false, jwt: token, userId: userId })
-        //             console.log(" FROM NEW STORE PASS 2");
-        //             router.navigate(['/homepage']);
-
-        //         },
-        //         error: (errorMessage: HttpErrorResponse) => {
-        //             console.log("from new store errormessage : down");
-        //             console.log(" FROM NEW STORE PASS 3 BTW");
-
-        //             console.log(errorMessage);
-
-        //             patchState(store, { loading: false, authError: errorMessage.message })
-        //         }
-        //     }),
-        // );
+        DeleteJwt() {
+            localStorage.removeItem('jwt');
+            patchState(store, { jwt: null, username: null })
+            router.navigate(['/login']);
+        },
     })
     ),
 );
-
-
-// function AuthenticateUser(user: User, onSuccess: (token: string) => void, onError: (error: any) => void): Observable<void> {
-//     return httpClient.post<{ token: string }>('login', { username: user.username, password: user.password }).pipe(
-//         tap({
-//             next: ({ token }) => onSuccess(token),
-//             error: (error) => onError(error),
-//         })
-//     );
-// }

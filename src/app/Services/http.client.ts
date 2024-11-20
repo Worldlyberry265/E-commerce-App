@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiEndpointsService } from './api-endpoints.service';
 import { User } from '../models/User';
+import { Product } from '../models/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,12 @@ export class HttpClientService {
   postAddUser( user : User) {
     return this.http.post<{id : number}>(this.endpointGetterService.getAddUserUrl(), {username : user.email , password : user.password})
   }
+
+  getAllProducts() {
+    return this.http.get<Product[]>(this.endpointGetterService.getAllProductsUrl());
+  }
+
+
 
 //   login(loginData): Observable<string> {
 //     return this.http.post(this.LoginURL, loginData, { responseType: "text" });

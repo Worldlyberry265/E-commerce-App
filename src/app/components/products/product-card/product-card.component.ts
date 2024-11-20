@@ -2,6 +2,7 @@ import { AfterViewInit, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReviewsComponent } from '../reviews/reviews.component';
 import { ProductNavComponent } from '../product-nav/product-nav.component';
+import { Product } from '../../../models/Product';
 
 @Component({
   selector: 'li[appProductCard]',
@@ -12,12 +13,12 @@ import { ProductNavComponent } from '../product-nav/product-nav.component';
 })
 export class ProductCardComponent implements AfterViewInit{
 
-  Id = input.required<number>({alias: 'appProductCard'});
+  product = input.required<Product>({alias: 'appProductCard'});
 
 
   ngAfterViewInit(): void {
-    const heart = document.getElementById(`heart-svg-${this.Id()}`);
-    const cart = document.getElementById(`cart-svg-${this.Id()}`);
+    const heart = document.getElementById(`heart-svg-${this.product().id}`);
+    const cart = document.getElementById(`cart-svg-${this.product().id}`);
 
     if (heart) {
       heart.addEventListener('click', function () {

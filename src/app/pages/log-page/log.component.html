@@ -145,7 +145,7 @@
 
 
             <button
-                [disabled]="(passwordConfirmationFormControl.invalid && authStore.emailNotFound()) || passwordFormControl.invalid"
+                [disabled]="(passwordConfirmationFormControl.invalid && authStore.emailNotFound()) || (passwordFormControl.invalid)"
                 mat-flat-button type="submit" class="log__button"> Login
             </button>
 
@@ -153,7 +153,7 @@
             @if (!authStore.emailNotFound()) {
             <p (click)="onResetPassword()" class="log__form--reset-link">Forgot your password?</p>
             }
-            <p (click)="triggerAnimation()" class="log__form--reset-link">Change Email?</p>
+            <p (click)="changeEmail()" class="log__form--reset-link">Change Email?</p>
 
             <hr>
             <p class="log__form--text">By signing in or creating an account, you agree with our

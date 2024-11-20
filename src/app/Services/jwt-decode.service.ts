@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 
 
-// export interface DecodedJwt {
-//   userId: string;
-//   // add any other fields present in the JWT payload
-// }
+export interface CustomJwtPayload {
+  sub: number;
+  user: string;
+  iat: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import * as jwt_decode from 'jwt-decode';
 export class JwtDecodeService {
 
   fetchSubject(jwtToken: string) {
-    const userID = +(jwt_decode.jwtDecode(jwtToken).sub ?? 0);
-    return userID;
+    const username = jwt_decode.jwtDecode<CustomJwtPayload>(jwtToken).user;
+    return username;
   }
 }

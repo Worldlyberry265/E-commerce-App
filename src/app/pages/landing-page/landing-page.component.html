@@ -137,27 +137,9 @@
 
 
   <ul class="product-cards__container">
-    <li [appProductCard]="1" class="product-card"></li>
-    <li [appProductCard]="2" class="product-card"></li>
-    <li [appProductCard]="3" class="product-card"></li>
-    <li [appProductCard]="4" class="product-card"></li>
-    <li [appProductCard]="5" class="product-card"></li>
-    <li [appProductCard]="6" class="product-card"></li>
-    <li [appProductCard]="7" class="product-card"></li>
-    <li [appProductCard]="8" class="product-card"></li>
-    <li [appProductCard]="9" class="product-card"></li>
-    <li [appProductCard]="10" class="product-card"></li>
-    <li [appProductCard]="11" class="product-card"></li>
-    <li [appProductCard]="12" class="product-card"></li>
-    <li [appProductCard]="13" class="product-card"></li>
-    <li [appProductCard]="14" class="product-card"></li>
-    <li [appProductCard]="15" class="product-card"></li>
-    <li [appProductCard]="16" class="product-card"></li>
-    <li [appProductCard]="17" class="product-card"></li>
-    <li [appProductCard]="18" class="product-card"></li>
-    <li [appProductCard]="19" class="product-card"></li>
-    <li [appProductCard]="20" class="product-card"></li>
-    <li [appProductCard]="21" class="product-card"></li>
+@for (product of productsStore.products(); track $index) {
+  <li [appProductCard]="product" class="product-card"></li>
+}
   </ul>
 
 

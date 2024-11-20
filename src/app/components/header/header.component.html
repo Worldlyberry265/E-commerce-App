@@ -5,11 +5,10 @@
   </svg>
 
   <ul class="main-header__menu">
-    @if (true) {
-      <li class="main-header__menu--item main-header__menu--item-active" >
-        <i class="fa-solid fa-house"></i>
+    @if (authStore.jwt()) {
+      <li class="main-header__menu--item-account-name" >
         <span>
-          Jwt Username
+          Welcome {{ authStore.username() }}
         </span>
       </li>
     }
@@ -19,24 +18,22 @@
         Home Page
       </span>
     </li>
+    @if (authStore.jwt() == null) {
     <li class="main-header__menu--item" routerLink="/login" fragment="logContainer" routerLinkActive="main-header__menu--item-active">
       <i class="fa-solid fa-right-to-bracket"></i>
       <span>
         Sign In
       </span>
     </li>
-    <li class="main-header__menu--item">
+  }
+    @if (authStore.jwt()) {
+    <li class="main-header__menu--item" (click)="signOut()">
       <i class="fa-solid fa-right-from-bracket"></i>
       <span>
         Sign Out
       </span>
     </li>
-    <li class="main-header__menu--item" routerLink="/resetpassword" fragment="logContainer" routerLinkActive="main-header__menu--item-active">
-      <i class="fa-solid fa-user-gear"></i>
-      <span>
-        Edit Profile
-      </span>
-    </li>
+  }
     <li class="main-header__menu--item" routerLink="/register" fragment="logContainer" routerLinkActive="main-header__menu--item-active">
       <i class="fa-solid fa-user-plus"></i>
       <span>

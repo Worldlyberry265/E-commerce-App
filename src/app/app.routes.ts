@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { LandingPageComponent } from './Pages/landing-page/landing-page.component';
-import { LogComponent } from './Pages/log-page/log.component';
-import { ProductPageComponent } from './Pages/product-page/product-page.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { LogComponent } from './pages/log-page/log.component';
+import { ProductPageComponent } from './pages/product-page/product-page.component';
+
 
 export const routes: Routes = [ 
     {path: 'homepage' , component: LandingPageComponent},

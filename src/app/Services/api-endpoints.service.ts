@@ -4,14 +4,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiEndpointsService {
-  private fakeStoreApiUrl = 'https://fakestoreapi.com';
+
+  private fakeStoreApi = 'https://fakestoreapi.com';
+
+  private fakeStoreApiUrl_Auth = `${this.fakeStoreApi}/auth`;
+  private fakeStoreApiUrl_Users = `${this.fakeStoreApi}/users`;
+  private fakeStoreApiUrl_Products = `${this.fakeStoreApi}/products`;
 
   getLoginUrl() : string {
-    return `${this.fakeStoreApiUrl}/auth/login`;
+    return `${this.fakeStoreApiUrl_Auth}/login`;
   }
 
   getAddUserUrl(): string {
-    return `${this.fakeStoreApiUrl}/users`;
+    return `${this.fakeStoreApiUrl_Users}`;
+  }
+
+  getAllProductsUrl() : string {
+    return `${this.fakeStoreApiUrl_Products}`
   }
 
 }
