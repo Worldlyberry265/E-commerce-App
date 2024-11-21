@@ -28,7 +28,7 @@
   </div>
 </section>
 
-<header appHeader [displaySearchInput]="true" class="main-header"></header>
+<header [appHeader]="true" class="main-header" (navigateToProducts)="scrollToProducts()"></header>
 
 <section class="section-weather u-margin-top-medium">
   <span class="weather__icon--container">
@@ -88,31 +88,35 @@
 
 
 <!-- THE SCREEN IS SHAKING WHEN I UNCOMMENT THEM -->
-<section class="section-categories u-margin-top-medium">
+<section class="section-categories u-margin-top-medium" id="productsSection">
   <p class="main-title">
     You can Look to our categories if you're looking for somehting else
   </p>
 
   <menu class="categories__menu u-margin-top-medium">
-    <div class="categories__item">
+    <div class="categories__item" (click)="fetchCategoryProducts('men\'s clothing')"
+      [class.categories__item-selected]="productsStore.selectedCategory() === 'men\'s clothing'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-shirt"></i>
       </span>
       <p class="categories__item--name">Men's Clothing</p>
     </div>
-    <div class="categories__item">
+    <div class="categories__item" (click)="fetchCategoryProducts('electronics')"
+      [class.categories__item-selected]="productsStore.selectedCategory() === 'electronics'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-bolt"></i>
       </span>
-      <p class="categories__item--name u-margin-top-small">Electronics</p>
+      <p class="categories__item--name">Electronics</p>
     </div>
-    <div class="categories__item">
+    <div class="categories__item" (click)="fetchCategoryProducts('jewelery')"
+      [class.categories__item-selected]="productsStore.selectedCategory() === 'jewelery'">
       <span class="categories__item--icon">
         <i class="fa-regular fa-gem"></i>
       </span>
-      <p class="categories__item--name u-margin-top-small">Jewellery</p>
+      <p class="categories__item--name">Jewellery</p>
     </div>
-    <div class="categories__item">
+    <div class="categories__item" (click)="fetchCategoryProducts('women\'s clothing')"
+      [class.categories__item-selected]="productsStore.selectedCategory() === 'women\'s clothing'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-person-dress"></i>
       </span>
@@ -121,7 +125,8 @@
   </menu>
 
   <div class="categories__search--container">
-    <input type="text" [(ngModel)]="searchedProduct" class="main-header__search categories__search--input" (keyup)="onSearchProduct($event)" placeholder="Enter an item Id" />
+    <input type="text" [(ngModel)]="searchedProduct" class="main-header__search categories__search--input"
+      (keyup)="onSearchProduct($event)" placeholder="Enter an item Id" />
 
     <!-- @if (foundProducts().length > 0) { -->
     @if (foundProducts().length > 0) {
@@ -130,16 +135,27 @@
       <li class="main-header__search categories__search--item u-margin-top-small" (click)="selectProduct(product)">
         {{ product }}
       </li>
-    }
+      }
     </ul>
     }
   </div>
 
+  <ul class="categories__search--list">
+    @for (product of foundProducts(); track $index) {
+    <li class="main-header__search categories__search--item u-margin-top-small" (click)="selectProduct(product)">
+      {{ product }}
+    </li>
+    }
+  </ul>
 
   <ul class="product-cards__container">
-@for (product of productsStore.products(); track $index) {
-  <li [appProductCard]="product" class="product-card"></li>
-}
+    @if (!productsStore.loading()) {
+      @for (product of productsStore.products(); track $index) {
+        <li [appProductCard]="product" class="product-card"></li>
+      }
+    } @else {
+    <mat-spinner class="product-cards__container--spinner"></mat-spinner>
+    }
   </ul>
 
 

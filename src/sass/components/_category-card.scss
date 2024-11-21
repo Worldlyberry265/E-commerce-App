@@ -18,11 +18,11 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     flex: calc(25% - 3rem);
     text-align: center;
     height: 30rem;
-    gap: 2rem;
+    // gap: 2rem;
     background-color: $primary;
     box-sizing: border-box;
     border-radius: 1rem;
@@ -51,9 +51,8 @@
       }
     }
 
-    &:hover {
-      transform: scaleY(1.1);
-      transform: translateY(-1rem);
+    &-selected {
+      transform: translateY(-3rem);
     }
   }
 

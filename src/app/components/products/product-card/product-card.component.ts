@@ -9,7 +9,7 @@ import { Product } from '../../../models/Product';
   standalone: true,
   imports: [ReviewsComponent, ProductNavComponent, RouterModule],
   templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.scss'
+  styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent implements AfterViewInit{
 
@@ -18,7 +18,7 @@ export class ProductCardComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     const heart = document.getElementById(`heart-svg-${this.product().id}`);
-    const cart = document.getElementById(`cart-svg-${this.product().id}`);
+    const cart = document.getElementById(`cart-svg-${this.product().id}`);    
 
     if (heart) {
       heart.addEventListener('click', function () {

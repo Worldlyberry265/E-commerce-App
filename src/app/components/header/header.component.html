@@ -43,8 +43,8 @@
   </ul>
 </div>
 
-@if (displaySearchInput) {
-  <input type="text" class="main-header__search" placeholder="Enter an item Id" />
+@if (displaySearchInput()) {
+  <input type="text" class="main-header__search" placeholder="Enter an item Id" (keyup)="onSearchForProduct($event)"/>
 }
 
 <nav class="main-header__nav">

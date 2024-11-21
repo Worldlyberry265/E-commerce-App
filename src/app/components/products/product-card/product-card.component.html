@@ -3,7 +3,7 @@
   <img [src]="product().image" [alt]="product().title"
     class="product-card__img" />
 
-  <div appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate"></div>
+  <div class="product-card__ratings" appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate"></div>
   
   <span class="product-card__caption">{{ product().title }}</span>
 </a>

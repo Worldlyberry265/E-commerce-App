@@ -6,13 +6,20 @@
   // width: fit;
   // width: 95vw;
   gap: 5rem;
+  position: relative;
   list-style-type: none;
   scroll-behavior: smooth;
   overflow-x: auto;
 
+  height: 47rem;
+
   // @include respond(mobile) {
   //   // justify-content: space-around;
   // }
+
+  &--spinner {
+    margin: 5rem auto;
+  }
 }
 
 .product-card {
@@ -23,6 +30,10 @@
   // justify-content: center;
   // padding: 2.5rem;
   
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between; // to make all the navs have the same position regardless of the card wrapper height
   align-items: center;
   border: 5px solid $divider;
   border-radius: 3rem;
@@ -54,7 +65,7 @@
     gap: 2rem;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
   }
 
   &__img {
@@ -73,9 +84,16 @@
     }
   }
 
+  &__ratings {
+    font-size: 1.2rem;
+  }
+
   &__caption {
     font-size: 1.7rem;
     text-align: center;
+    max-height: 10rem;
+    overflow-y: hidden;
+    margin-bottom: 2rem;
     //   font-family: $title-font;
 
     //   @include respond(Iphone) {

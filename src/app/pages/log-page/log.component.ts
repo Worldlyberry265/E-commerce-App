@@ -2,17 +2,12 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, El
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Store } from '@ngrx/store';
-import * as fromApp from '../../store/app.reducer';
-import * as AuthActions from '../../auth/store/auth.actions';
-import * as AuthReducer from '../../auth/store/auth.reducer';
-import { filter, take } from 'rxjs';
 import { User } from '../../models/User';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AuthStore } from '../../store/auth.store';

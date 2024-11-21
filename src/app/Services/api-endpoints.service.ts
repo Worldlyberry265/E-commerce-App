@@ -23,4 +23,12 @@ export class ApiEndpointsService {
     return `${this.fakeStoreApiUrl_Products}`
   }
 
+  getProductUrl(id : number | string) : string {
+    return `${this.fakeStoreApiUrl_Products}/${id}`
+  }
+
+  getCategoryProducts(category : string) : string {
+    return `${this.fakeStoreApiUrl_Products}/category/${category}`;
+  }
+
 }

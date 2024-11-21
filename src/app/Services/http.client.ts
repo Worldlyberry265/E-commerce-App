@@ -28,6 +28,14 @@ export class HttpClientService {
     return this.http.get<Product[]>(this.endpointGetterService.getAllProductsUrl());
   }
 
+  getProduct(id : number | string) { // or null, take care
+    return this.http.get<Product>(this.endpointGetterService.getProductUrl(id));
+  }
+
+  getCategoryProducts(category : string) {
+    return this.http.get<Product[]>(this.endpointGetterService.getCategoryProducts(category));
+  }
+
 
 
 //   login(loginData): Observable<string> {
