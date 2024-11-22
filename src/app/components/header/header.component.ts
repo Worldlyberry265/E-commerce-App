@@ -18,13 +18,19 @@ export class HeaderComponent {
 
   // protected to use it only in this component and its template
   protected readonly authStore = inject(AuthStore);
-  protected readonly productsStore = inject(ProductStore);
+  protected readonly productStore = inject(ProductStore);
   private router = inject(Router);
 
   displaySearchInput = input.required<boolean>({ alias: 'appHeader' })
-  navigateToProducts = output<void>();
+  navigateToProducts = output<string>();
 
   readonly dialog = inject(MatDialog);
+
+  // Only allows letters,spaces,numbers, and ,./()- (but not double hyphens) as they are used in some product titles.
+  // It cant also start with a hyphen to cancel negative ids requests.
+  inputRegex = /^(?!-)(?!.*--)[a-zA-Z0-9\s(),./-]*$/;
+
+
 
   openDialog() {
     const dialogRef = this.dialog.open(PreviewComponent, {
@@ -40,13 +46,22 @@ export class HeaderComponent {
     this.authStore.DeleteJwt();
   }
 
-  onSearchForProduct(event: KeyboardEvent) {
-
-    // if ((event.target as HTMLInputElement).value.length > 0) {
+  onSearchForProduct(event: Event) {
     const productName = (event.target as HTMLInputElement).value;
-    this.productsStore.SearchForAProduct(productName);
-    this.navigateToProducts.emit();
-    // }
+    
+    // To not send a request of empty and malicious input 
+    if (this.inputRegex.test(productName)) {
+
+    // If its an id then its greater than 0
+    if(+productName > 0 ) { // the ids start from 0
+      this.productStore.SearchForAProduct(+productName);
+      // else it will be a string
+    } else {
+      this.productStore.SearchForAProduct(productName);
+    }
+
+    this.navigateToProducts.emit(productName);
+    }
 
   }
 }

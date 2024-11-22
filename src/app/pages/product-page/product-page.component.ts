@@ -1,8 +1,23 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from '../../components/header/header.component';
 import { ReviewsComponent } from '../../components/products/reviews/reviews.component';
+import { Product } from '../../models/Product';
+import { ProductStore } from '../../store/product.store';
+
+const defaultProduct : Product = {
+  category: '',
+  description: '',
+  id: 0,
+  image: '',
+  price: 0,
+  rating: {
+    count: 0,
+    rate: 0
+  },
+  title: ''
+};
 
 @Component({
   selector: 'app-product-page',
@@ -12,11 +27,6 @@ import { ReviewsComponent } from '../../components/products/reviews/reviews.comp
   styleUrl: './product-page.component.scss'
 })
 export class ProductPageComponent implements OnInit {
-
-  numb = signal(0);
-
-  isScrollEnabled = true;
-
   Allimgs = [
     "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
     "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
@@ -33,11 +43,23 @@ export class ProductPageComponent implements OnInit {
     "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
   ];
 
+  numb = signal(0);
+  product = signal<Product>(defaultProduct);
+
+  isScrollEnabled = true;
+
+
   displayedImgs : string[] = [];
 
   ImageIndex = 4;
 
+  private productStore = inject(ProductStore);
+
   ngOnInit(): void {
+
+    // T
+    this.product.set(this.productStore.selectedProduct() ?? defaultProduct);
+
     setInterval(() => {
       if(this.isScrollEnabled) {
         this.onNextClick();

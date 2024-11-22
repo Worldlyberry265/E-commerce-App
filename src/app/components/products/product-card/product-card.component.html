@@ -1,7 +1,7 @@
-<a [routerLink]="'/product/' + product().id" target="_blank" class="product-card__wrapper">
+<a [routerLink]="'/product/' + product().id" class="product-card__wrapper">  <!-- target="_blank" -->
+ 
 
-  <img [src]="product().image" [alt]="product().title"
-    class="product-card__img" />
+  <img [src]="product().image" [alt]="product().title" class="product-card__img" />
 
   <div class="product-card__ratings" appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate"></div>
   

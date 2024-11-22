@@ -2,25 +2,25 @@
 
 <section class="section-product-info">
 
-    <h6 class="product__title">Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</h6>
+    <h6 class="product__title">{{ product()?.title }}</h6>
 
     <div class="product__main-content">
-        <img class="product__main-content--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+        <img class="product__main-content--img" [src]="product().image"
             alt="product-img">
 
         <div class="product__main-content--list-buttons-wrapper">
             <ul class="product__main-content--list">
                 <li class="product__main-content--list--item">
                     <span class="product__main-content--list--item-title">ID</span>
-                    <span class="product__main-content--list--item-value">1</span>
+                    <span class="product__main-content--list--item-value">{{ product()?.id }}</span>
                 </li>
                 <li class="product__main-content--list--item">
                     <span class="product__main-content--list--item-title">Category</span>
-                    <span class="product__main-content--list--item-value">men's clothing</span>
+                    <span class="product__main-content--list--item-value">{{ product()?.category }}</span>
                 </li>
                 <li class="product__main-content--list--item">
                     <span class="product__main-content--list--item-title">Price</span>
-                    <span class="product__main-content--list--item-value currency">$ 109.95</span>
+                    <span class="product__main-content--list--item-value currency">$ {{ product()?.price }}</span>
                 </li>
             </ul>
 
@@ -47,13 +47,10 @@
 
     </div>
 
-    <div class="product__rating" appReview [reviewsCount]="200" [stars]="4"></div>
-
-    <div class="product__description">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque perspiciatis illo sapiente nobis inventore alias
-        aliquid error molestiae quos officia rerum aliquam dolorem debitis corrupti, porro molestias cumque! Dolorum,
-        ipsa!
+    <div class="product__rating" appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate">
     </div>
+
+    <p class="product__description">{{ product().description }}</p>
 
 
 </section>
@@ -61,10 +58,9 @@
 <section class="section-related-products" (mouseenter)="onCancelScrolling()" (mouseleave)="onEnableScrolling()">
 
     <h6 class="product__related--title">Products that may interest you</h6>
-        <!-- Used the ngFor because the new @for syntax caused a problem with the animation transitions -->
-        <div *ngFor="let img of displayedImgs; let i=index" class="product__related--item product__related--item-{{i}}">
-            <h6 class="product__related--item--title">{{ i }}</h6>
-            <img [src]="img" alt="related product img"
-                class="product__related--item--img">
-        </div>
+    <!-- Used the ngFor because the new @for syntax caused a problem with the animation transitions -->
+    <div *ngFor="let img of displayedImgs; let i=index" class="product__related--item product__related--item-{{i}}">
+        <h6 class="product__related--item--title">{{ i }}</h6>
+        <img [src]="img" alt="related product img" class="product__related--item--img">
+    </div>
 </section>

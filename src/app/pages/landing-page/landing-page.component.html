@@ -28,7 +28,7 @@
   </div>
 </section>
 
-<header [appHeader]="true" class="main-header" (navigateToProducts)="scrollToProducts()"></header>
+<header [appHeader]="true" class="main-header" (navigateToProducts)="scrollToProducts($event)"></header>
 
 <section class="section-weather u-margin-top-medium">
   <span class="weather__icon--container">
@@ -95,28 +95,28 @@
 
   <menu class="categories__menu u-margin-top-medium">
     <div class="categories__item" (click)="fetchCategoryProducts('men\'s clothing')"
-      [class.categories__item-selected]="productsStore.selectedCategory() === 'men\'s clothing'">
+      [class.categories__item-selected]="productStore.selectedCategory() === 'men\'s clothing'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-shirt"></i>
       </span>
       <p class="categories__item--name">Men's Clothing</p>
     </div>
     <div class="categories__item" (click)="fetchCategoryProducts('electronics')"
-      [class.categories__item-selected]="productsStore.selectedCategory() === 'electronics'">
+      [class.categories__item-selected]="productStore.selectedCategory() === 'electronics'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-bolt"></i>
       </span>
       <p class="categories__item--name">Electronics</p>
     </div>
     <div class="categories__item" (click)="fetchCategoryProducts('jewelery')"
-      [class.categories__item-selected]="productsStore.selectedCategory() === 'jewelery'">
+      [class.categories__item-selected]="productStore.selectedCategory() === 'jewelery'">
       <span class="categories__item--icon">
         <i class="fa-regular fa-gem"></i>
       </span>
       <p class="categories__item--name">Jewellery</p>
     </div>
     <div class="categories__item" (click)="fetchCategoryProducts('women\'s clothing')"
-      [class.categories__item-selected]="productsStore.selectedCategory() === 'women\'s clothing'">
+      [class.categories__item-selected]="productStore.selectedCategory() === 'women\'s clothing'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-person-dress"></i>
       </span>
@@ -126,31 +126,12 @@
 
   <div class="categories__search--container">
     <input type="text" [(ngModel)]="searchedProduct" class="main-header__search categories__search--input"
-      (keyup)="onSearchProduct($event)" placeholder="Enter an item Id" />
-
-    <!-- @if (foundProducts().length > 0) { -->
-    @if (foundProducts().length > 0) {
-    <ul class="categories__search--list">
-      @for (product of foundProducts(); track $index) {
-      <li class="main-header__search categories__search--item u-margin-top-small" (click)="selectProduct(product)">
-        {{ product }}
-      </li>
-      }
-    </ul>
-    }
+      (input)="onSearchProduct($event)" placeholder="Enter an item Id" />
   </div>
 
-  <ul class="categories__search--list">
-    @for (product of foundProducts(); track $index) {
-    <li class="main-header__search categories__search--item u-margin-top-small" (click)="selectProduct(product)">
-      {{ product }}
-    </li>
-    }
-  </ul>
-
   <ul class="product-cards__container">
-    @if (!productsStore.loading()) {
-      @for (product of productsStore.products(); track $index) {
+    @if (!productStore.loading()) {
+      @for (product of displayedProducts(); track $index) {
         <li [appProductCard]="product" class="product-card"></li>
       }
     } @else {

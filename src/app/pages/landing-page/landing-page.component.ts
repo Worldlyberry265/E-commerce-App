@@ -5,6 +5,7 @@ import { ProductCardComponent } from "../../components/products/product-card/pro
 import { ProductFrameComponent } from "../../components/products/product-frame/product-frame.component";
 import { ProductStore } from "../../store/product.store";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { Product } from "../../models/Product";
 
 @Component({
   selector: 'app-landing-page',
@@ -19,12 +20,16 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 // how many products i can fetch, but I can provide an offset.
 export class LandingPageComponent implements OnInit, AfterViewInit {
 
-  protected readonly productsStore = inject(ProductStore);
+  protected readonly productStore = inject(ProductStore);
   Weather = 1;
   searchedProduct = ''; // I NEED TO MANUALLY TRIGGER CHANGE DETECTION !!!!!!!!!!!
-  foundProducts = signal<string[]>([]);
 
   productsSection!: HTMLUListElement;
+
+  displayedProducts = signal<Product[] | null>(null);
+  searchedProductInfo = signal<string | null>(null);
+  inputRegex = /^(?!-)(?!.*--)[a-zA-Z0-9\s(),./-]*$/;
+
 
   // If handleWheelEvent were defined as a local constant inside confirmProductsScroll, a new function instance 
   // would be created every time confirmProductsScroll is called.
@@ -39,27 +44,36 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
   constructor() {
     effect(() => {
-      const products = this.productsStore.products();
-      if (products) {
-        this.confirmProductsScroll();
+      const products = this.productStore.products();
+      const searchedProducts = this.productStore.searchedProducts();
+
+      // We display the searchedForProducts if there is any, else we display the normal products
+      if (searchedProducts) {
+        this.displayedProducts.set(searchedProducts);
+      } else if (this.searchedProductInfo() != null) {
+        this.displayedProducts.set(null);
+      } else {
+        this.displayedProducts.set(products);
       }
-    });
+      // To check if we should scroll normally or horizentally each time the products update.
+      this.confirmProductsScroll();
+    }, { allowSignalWrites: true }); // to allow updating signals in effects
   }
 
   ngOnInit(): void {
-    this.productsStore.FetchAllProducts();
+    this.productStore.FetchAllProducts();
   }
 
   ngAfterViewInit(): void {
     const video = document.getElementById('landing-video') as HTMLVideoElement;
     video.playbackRate = 0.5;
-       
+
     this.productsSection = document.getElementById('productsSection') as HTMLUListElement;
   }
 
   private confirmProductsScroll() {
     const scrollContainer = document.querySelector('.product-cards__container') as HTMLElement;
-    const products = this.productsStore.products();
+    const products = this.displayedProducts();
 
     // If we have only few products the user wont be able to scroll the page over them, instead the browser will try
     // to scroll horizentally between the products, so we stop the horizental scroll then
@@ -71,31 +85,32 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   }
 
 
-  // I NEED TO SELECT STORE SINCE I WILL BE DISPATCHING FROM THE HEADER THE KEYUP EVENT
-  onSearchProduct(event: KeyboardEvent) {
-    this.foundProducts.set([]);
-    const searchedProductName = event.target as HTMLInputElement;
+  onSearchProduct(event: Event) {
+    
+    const productName = (event.target as HTMLInputElement).value;
+    
+    // To not send a request of empty and malicious input 
+    if (this.inputRegex.test(productName)) {
 
-    // if (searchedProductName.value.length > 0) {
-    //   this.foundProducts.set(
-    //     this.products().filter(product => product.includes(searchedProductName.value))
-    //   );
-    // }
+    // If its an id then its greater than 0
+    if(+productName > 0 ) { // the ids start from 0
+      this.productStore.SearchForAProduct(+productName);
+      // else it will be a string
+    } else {
+      this.productStore.SearchForAProduct(productName);
+    }
+
+    }
   }
 
   fetchCategoryProducts(category: string) {
-    this.productsStore.FetchCategoryProducts(category);
+    this.searchedProductInfo.set(null);
+    this.productStore.FetchCategoryProducts(category);
   }
 
-  selectProduct(productName: any) {
-    this.searchedProduct = productName;
-    this.foundProducts.set([]);
-    // DISPATCH HERE
-  }
-
-  scrollToProducts() {
+  scrollToProducts(productName: string) {
+    this.searchedProductInfo.set(productName === '' ? null : productName);
     this.productsSection.scrollIntoView({ behavior: 'smooth' });
-
   }
 
 }

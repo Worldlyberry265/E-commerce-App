@@ -44,7 +44,7 @@
 </div>
 
 @if (displaySearchInput()) {
-  <input type="text" class="main-header__search" placeholder="Enter an item Id" (keyup)="onSearchForProduct($event)"/>
+  <input type="text" class="main-header__search" placeholder="Enter an item Id" (input)="onSearchForProduct($event)"/>
 }
 
 <nav class="main-header__nav">

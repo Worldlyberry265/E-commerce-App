@@ -23,7 +23,7 @@ export class ApiEndpointsService {
     return `${this.fakeStoreApiUrl_Products}`
   }
 
-  getProductUrl(id : number | string) : string {
+  getProductUrl(id : number) : string {
     return `${this.fakeStoreApiUrl_Products}/${id}`
   }
 
