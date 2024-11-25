@@ -54,10 +54,10 @@ export class HeaderComponent {
 
     // If its an id then its greater than 0
     if(+productName > 0 ) { // the ids start from 0
-      this.productStore.SearchForAProduct(+productName);
+      this.productStore.SearchForProducts(+productName);
       // else it will be a string
     } else {
-      this.productStore.SearchForAProduct(productName);
+      this.productStore.SearchForProducts(productName);
     }
 
     this.navigateToProducts.emit(productName);

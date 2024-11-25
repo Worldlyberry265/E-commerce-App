@@ -1,28 +1,17 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from '../../components/header/header.component';
 import { ReviewsComponent } from '../../components/products/reviews/reviews.component';
 import { Product } from '../../models/Product';
 import { ProductStore } from '../../store/product.store';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
-const defaultProduct : Product = {
-  category: '',
-  description: '',
-  id: 0,
-  image: '',
-  price: 0,
-  rating: {
-    count: 0,
-    rate: 0
-  },
-  title: ''
-};
 
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [HeaderComponent, ReviewsComponent, MatButtonModule, CommonModule],
+  imports: [HeaderComponent, ReviewsComponent, MatButtonModule, CommonModule, MatProgressSpinnerModule],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss'
 })
@@ -44,7 +33,7 @@ export class ProductPageComponent implements OnInit {
   ];
 
   numb = signal(0);
-  product = signal<Product>(defaultProduct);
+  product = signal<Product | null>(null);
 
   isScrollEnabled = true;
 
@@ -53,12 +42,15 @@ export class ProductPageComponent implements OnInit {
 
   ImageIndex = 4;
 
-  private productStore = inject(ProductStore);
+  protected productStore = inject(ProductStore);
+
+  constructor() {
+    effect( () => {
+      this.product.set(this.productStore.selectedProduct() ?? null);
+    }, {allowSignalWrites: true});
+  }
 
   ngOnInit(): void {
-
-    // T
-    this.product.set(this.productStore.selectedProduct() ?? defaultProduct);
 
     setInterval(() => {
       if(this.isScrollEnabled) {

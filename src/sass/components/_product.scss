@@ -1,4 +1,19 @@
 .product {
+
+  &__not-found {
+    font-size: 5rem;
+    text-align: center;
+    padding-top: 10rem;
+    box-sizing: border-box;
+    height: calc(100vh - 15rem); // 10rem for the footer margin and 5rem for the header height
+  }
+
+  &__spinner {
+    height: calc(100vh - 15rem) !important; // 10rem for the footer margin and 5rem for the header height
+    margin: auto;
+    position: relative;
+  }
+
   &__title {
     font-size: 3rem;
     text-align: center;
@@ -15,6 +30,7 @@
     &--img {
       width: fit-content;
       height: 50vh;
+      max-width: 30vw;
       object-fit: contain;
       padding: 5rem 0;
 
@@ -95,6 +111,11 @@
         display: flex;
         align-items: center;
         gap: 2rem;
+        flex-basis: 25%;
+
+        span {
+          flex-grow: 1;
+        }
 
         div {
           display: flex;

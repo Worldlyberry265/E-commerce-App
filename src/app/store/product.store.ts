@@ -7,10 +7,10 @@ import { Product } from '../models/Product';
 
 
 type ProductsState = {
-    products: Product[] | null;
-    searchedProducts: Product[] | null; // OR SEARCHED
-    selectedProduct: Product | null;
-    selectedCategory: string;
+    products: Product[] | null; // The normal/standard products
+    searchedProducts: Product[] | null; // For the searched products using id or product name
+    selectedProduct: Product | null; // For the single selected product for product page
+    selectedCategory: string; 
     loading: boolean;
 }
 
@@ -25,9 +25,9 @@ const initialState: ProductsState = {
 export const ProductStore = signalStore(
     { providedIn: 'root' },
     withState(initialState),
-    withMethods((store, httpClient = inject(HttpClientService),) => ({
+    withMethods((store, httpClient = inject(HttpClientService),) => {
 
-        FetchAllProducts: rxMethod<void>(
+        const FetchAllProducts = rxMethod<void>(
             pipe(
                 tap(() => {
                     patchState(store, { loading: true });
@@ -38,7 +38,7 @@ export const ProductStore = signalStore(
                 switchMap(() =>
                     httpClient.getAllProducts().pipe(
                         tap((products: Product[]) => {
-                            patchState(store, { products: products, searchedProducts: null, loading: false });
+                            patchState(store, { products: products, searchedProducts: null, selectedCategory: '', loading: false });
                             // patchState(store, (State) => ({ products: products, loading: false })); //CHECK THISSSSSSSSSSSSSSSSSSSSSSS
                         },
 
@@ -46,33 +46,33 @@ export const ProductStore = signalStore(
                     )
                 )
             )
-        ),
-        FetchCategoryProducts: rxMethod<string>(
+        );
+
+        const FetchCategoryProducts = rxMethod<string>(
             pipe(
                 tap(() => {
                     patchState(store, { loading: true });
                 }),
                 //All subsequent login requests are ignored until the current request finishes due to exhaustMap.
                 exhaustMap((category: string) =>
-                    httpClient.getCategoryProducts(category).pipe(
+                    httpClient.getCategoryProducts(category.toLowerCase()).pipe(
                         tap((products: Product[]) => {
-                            patchState(store, { products: products, selectedCategory: category, searchedProducts: null, loading: false });
+                            patchState(store, { products: products, selectedCategory: category.toLowerCase(), searchedProducts: null, loading: false });
                         },
 
                         )
                     )
                 )
             )
-        ),
+        );
 
-        SearchForAProduct: rxMethod<number | string>(
+        const SearchForProducts = rxMethod<number | string>(
             pipe(
                 tap(() => {
                     patchState(store, { loading: true });
                 }),
                 // switchMap ensures that only the latest emission (input id) is processed by canceling any ongoing operations for previous emissions.
                 switchMap((productInfo: number | string) => {
-
                     // To return displaying the normal products (not the searched ones)
                     if (productInfo == '') {
                         return of(patchState(store, { loading: false, searchedProducts: null }));
@@ -100,10 +100,10 @@ export const ProductStore = signalStore(
                                 tap((product: Product) => {
                                     // Im using an if statement instead of an error inside tapResponse bcz the fakestoreapi just doesn't return anything 
                                     // if the product wasn't found, hence null
-                                    if(product === null) {
-                                        patchState(store, { searchedProducts: null, loading: false });
+                                    if (product === null) {
+                                        patchState(store, { searchedProducts: null, loading: false, selectedProduct: null});
                                     } else {
-                                        patchState(store, { searchedProducts: [product], loading: false });
+                                        patchState(store, { searchedProducts: [product], loading: false, selectedProduct: product });
                                     }
                                 },
 
@@ -115,22 +115,20 @@ export const ProductStore = signalStore(
                     }
                 })
             )
-        ),
+        );
 
-        SelectProduct(id : number) {
-            let selected = null;
-            if(store.searchedProducts()) {
-                selected = store.searchedProducts()!.find( product => product.id === id);
-            } else {
-                console.log(store.products());
-                
-                selected = store.products()!.find( product => product.id === id);
-            }
-            patchState(store , {selectedProduct : selected})
-        }
+        const SelectProduct = rxMethod<number>(
+            pipe(
+                switchMap((productId: number) => {
+                    return of(SearchForProducts(productId));
+                     },
+                )
+            )
+        );
 
-
-
-    }))
+        // All are public bcz they are all called from outside the store.
+        // SearchForProducts is also called from SelectProduct to avoid redundant code
+        return { FetchAllProducts, FetchCategoryProducts, SelectProduct, SearchForProducts };
+    })
 
 );

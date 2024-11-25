@@ -20,7 +20,5 @@ export class ProductFrameComponent {
 
   triggerHover() {
     this.triggeredCaption = !this.triggeredCaption;
-    console.log("TRIGGERED BUTTON");
-    
   }
 }

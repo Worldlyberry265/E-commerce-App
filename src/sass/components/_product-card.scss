@@ -11,7 +11,7 @@
   scroll-behavior: smooth;
   overflow-x: auto;
 
-  height: 47rem;
+  // height: 47rem;
 
   // @include respond(mobile) {
   //   // justify-content: space-around;
@@ -77,10 +77,10 @@
     width: 20rem;
     object-fit: contain;
 
-    border-radius: 3rem;
 
     @include respond(mobile) {
       height: 15rem;
+      width: 15rem;
     }
   }
 

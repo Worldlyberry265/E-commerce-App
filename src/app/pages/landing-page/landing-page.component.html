@@ -21,9 +21,10 @@
     </p>
 
     <nav class="introduction__nav">
-      <button class="btn-nav">Women's Clothing</button>
-      <button class="btn-nav">Men's Clothing</button><button class="btn-nav">Jewellery</button>
-      <button class="btn-nav">Electronics</button>
+      <button (click)="onFetchAndScrollCategoryProducts('Men\'s Clothing', 2)" class="btn-nav">Men's Clothing</button>
+      <button (click)="onFetchAndScrollCategoryProducts('Electronics', 4)" class="btn-nav">Electronics</button>
+      <button (click)="onFetchAndScrollCategoryProducts('Jewelery', 3)" class="btn-nav">Jewelery</button>
+      <button (click)="onFetchAndScrollCategoryProducts('Women\'s Clothing', 1)" class="btn-nav">Women's Clothing</button>
     </nav>
   </div>
 </section>
@@ -94,28 +95,28 @@
   </p>
 
   <menu class="categories__menu u-margin-top-medium">
-    <div class="categories__item" (click)="fetchCategoryProducts('men\'s clothing')"
+    <div class="categories__item" (click)="fetchCategoryProducts('men\'s clothing', 1)" id="Category-1"
       [class.categories__item-selected]="productStore.selectedCategory() === 'men\'s clothing'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-shirt"></i>
       </span>
       <p class="categories__item--name">Men's Clothing</p>
     </div>
-    <div class="categories__item" (click)="fetchCategoryProducts('electronics')"
+    <div class="categories__item" (click)="fetchCategoryProducts('electronics', 2)" id="Category-2"
       [class.categories__item-selected]="productStore.selectedCategory() === 'electronics'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-bolt"></i>
       </span>
       <p class="categories__item--name">Electronics</p>
     </div>
-    <div class="categories__item" (click)="fetchCategoryProducts('jewelery')"
+    <div class="categories__item" (click)="fetchCategoryProducts('jewelery', 3)" id="Category-3"
       [class.categories__item-selected]="productStore.selectedCategory() === 'jewelery'">
       <span class="categories__item--icon">
         <i class="fa-regular fa-gem"></i>
       </span>
       <p class="categories__item--name">Jewellery</p>
     </div>
-    <div class="categories__item" (click)="fetchCategoryProducts('women\'s clothing')"
+    <div class="categories__item" (click)="fetchCategoryProducts('women\'s clothing', 4)" id="Category-4"
       [class.categories__item-selected]="productStore.selectedCategory() === 'women\'s clothing'">
       <span class="categories__item--icon">
         <i class="fa-solid fa-person-dress"></i>
@@ -131,9 +132,9 @@
 
   <ul class="product-cards__container">
     @if (!productStore.loading()) {
-      @for (product of displayedProducts(); track $index) {
-        <li [appProductCard]="product" class="product-card"></li>
-      }
+    @for (product of displayedProducts(); track $index) {
+    <li [appProductCard]="product" class="product-card"></li>
+    }
     } @else {
     <mat-spinner class="product-cards__container--spinner"></mat-spinner>
     }

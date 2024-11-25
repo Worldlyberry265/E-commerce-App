@@ -1,12 +1,15 @@
 <header [appHeader]="false" class="main-header"></header>
 
+@if (productStore.loading()) {
+<mat-spinner class="product__spinner"></mat-spinner>
+} @else {
+@if (product()){
 <section class="section-product-info">
 
     <h6 class="product__title">{{ product()?.title }}</h6>
 
     <div class="product__main-content">
-        <img class="product__main-content--img" [src]="product().image"
-            alt="product-img">
+        <img class="product__main-content--img" [src]="product()!.image" alt="product-img">
 
         <div class="product__main-content--list-buttons-wrapper">
             <ul class="product__main-content--list">
@@ -47,10 +50,10 @@
 
     </div>
 
-    <div class="product__rating" appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate">
+    <div class="product__rating" appReview [reviewsCount]="product()!.rating.count" [stars]="product()!.rating.rate">
     </div>
 
-    <p class="product__description">{{ product().description }}</p>
+    <p class="product__description">{{ product()!.description }}</p>
 
 
 </section>
@@ -64,3 +67,8 @@
         <img [src]="img" alt="related product img" class="product__related--item--img">
     </div>
 </section>
+}
+@else {
+<h1 class="product__not-found">Page Not Found</h1>
+}
+}
