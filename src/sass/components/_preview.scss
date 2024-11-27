@@ -14,17 +14,17 @@
 
   &__content {
     display: grid;
-    grid-template-columns: 10rem 20rem 12rem 4rem;
+    grid-template-columns: 10rem 20rem 12rem 5rem 4rem;
     align-items: center;
 
     row-gap: 1rem;
     column-gap: 4rem;
 
     @include respond(mobile) {
-      grid-template-columns: 20vw 40vw 20vw 10vw;
+      grid-template-columns: 20vw 40vw 20vw 15vw 10vw;
       column-gap: 0rem;
       padding: 0rem !important;
-      row-gap: .5rem;
+      row-gap: 0.5rem;
     }
 
     &--titles {
@@ -37,7 +37,9 @@
         width: 100%;
         height: 8rem;
         object-fit: fill;
-        margin-top: -3rem; //to occupy the empty row above it
+        cursor: pointer;
+        background-color: transparent;
+        mix-blend-mode: multiply;
         // transform: scale(0.8);
         // OR
         // object-fit: fill;
@@ -51,13 +53,21 @@
 
       &--name {
         font-size: 1.5rem;
+        padding: 1rem 0;
         font-weight: 500;
+        cursor: pointer;
+        // To not let the name to increase the grid row height
+        overflow-y: scroll;
+        display: -webkit-box; /* Enable multi-line truncation */
+        line-clamp: 2;
+        -webkit-line-clamp: 2; /* Number of lines to show */
+        -webkit-box-orient: vertical;
       }
 
       &--quantity {
         &-field {
           width: 100%;
-          font-size: 3rem;
+          font-size: 2.5rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -72,6 +82,18 @@
             color: $primary;
           }
         }
+      }
+
+      &--price {
+        color: $currency-color;
+        font-size: 1.5rem;
+        font-weight: 500;
+        text-wrap: nowrap;
+      }
+
+      &--rating {
+        font-size: 1rem;
+        text-wrap: nowrap;
       }
 
       &--delete-btn {
@@ -98,11 +120,21 @@
       width: 100%;
       text-align: center;
       color: $error-color;
-
     }
   }
 
   &__button {
     font-size: 2rem !important;
+  }
+
+  &__total-price {
+    &--container {
+      font-size: 2rem;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+      padding-top: 1rem;
+    }
   }
 }

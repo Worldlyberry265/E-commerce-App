@@ -24,7 +24,8 @@
       <button (click)="onFetchAndScrollCategoryProducts('Men\'s Clothing', 2)" class="btn-nav">Men's Clothing</button>
       <button (click)="onFetchAndScrollCategoryProducts('Electronics', 4)" class="btn-nav">Electronics</button>
       <button (click)="onFetchAndScrollCategoryProducts('Jewelery', 3)" class="btn-nav">Jewelery</button>
-      <button (click)="onFetchAndScrollCategoryProducts('Women\'s Clothing', 1)" class="btn-nav">Women's Clothing</button>
+      <button (click)="onFetchAndScrollCategoryProducts('Women\'s Clothing', 1)" class="btn-nav">Women's
+        Clothing</button>
     </nav>
   </div>
 </section>
@@ -133,7 +134,11 @@
   <ul class="product-cards__container">
     @if (!productStore.loading()) {
     @for (product of displayedProducts(); track $index) {
-    <li [appProductCard]="product" class="product-card"></li>
+    @if(product.id === toggledItemIdFromDialog()) {
+    <li [appProductCard]="product" [toggleIcon]="true" class="product-card"></li>
+    } @else {
+    <li [appProductCard]="product" [toggleIcon]="false" class="product-card"></li>
+    }
     }
     } @else {
     <mat-spinner class="product-cards__container--spinner"></mat-spinner>

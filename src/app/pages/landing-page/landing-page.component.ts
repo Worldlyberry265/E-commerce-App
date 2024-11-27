@@ -6,6 +6,7 @@ import { ProductFrameComponent } from "../../components/products/product-frame/p
 import { ProductStore } from "../../store/product.store";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { Product } from "../../models/Product";
+import { UserItemsStore } from "../../store/user-items.store";
 
 @Component({
   selector: 'app-landing-page',
@@ -21,6 +22,7 @@ import { Product } from "../../models/Product";
 export class LandingPageComponent implements OnInit, AfterViewInit {
 
   protected readonly productStore = inject(ProductStore);
+  private readonly userItemsStore = inject(UserItemsStore);
   Weather = 1;
   searchedProduct = ''; // I NEED TO MANUALLY TRIGGER CHANGE DETECTION !!!!!!!!!!!
 
@@ -30,6 +32,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   searchedProductInfo = signal<string | null>(null);
   inputRegex = /^(?!-)(?!.*--)[a-zA-Z0-9\s(),./-]*$/;
 
+  toggledItemIdFromDialog = signal(0);
 
   // If handleWheelEvent were defined as a local constant inside confirmProductsScroll, a new function instance 
   // would be created every time confirmProductsScroll is called.
@@ -57,7 +60,14 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
       }
       // To check if we should scroll normally or horizentally each time the products update.
       this.confirmProductsScroll();
+      // TRY TO USE THE 2ND EFFECT OR TO UNCOMMENT THIS
+      // this.toggledItemIdFromDialog.set(this.userItemsStore.removedItemId());
+
     }, { allowSignalWrites: true }); // to allow updating signals in effects
+
+    // effect(() => {
+    //   this.toggledItemIdFromDialog.set(this.userItemsStore.removedItemId());
+    // }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {

@@ -94,21 +94,36 @@
     align-items: center;
 
     &--item {
-      // fill: white;
-      fill: $primary-dark;
-      //   color: red;
-      width: 3rem;
-      height: 3rem;
-      cursor: pointer;
-      transition: all 0.5s;
+      position: relative;
 
-      stroke: transparent;
-      stroke-width: 1.5rem;
-      &:hover {
-        // fill: $selected-color;
-        stroke: white;
-        transform: scale(1.2);
+      svg {
+        fill: $primary-dark;
+        width: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        transition: all 0.5s;
+        
+        stroke: transparent;
+        stroke-width: 1.5rem;
+        &:hover {
+          stroke: white;
+          transform: scale(1.2);
+        }
       }
+
+      span {
+        z-index: 3; // to stay above the svg 
+        position: absolute;
+        top: -.5rem;
+        right: -1rem;
+        text-align: center;
+        background-color: $accent-color;
+        font-size: 1.5rem;
+        color: white;
+        border-radius: 50%;
+        padding: .2rem .5rem;
+      }
+      
     }
 
     @include respond(mobile) {

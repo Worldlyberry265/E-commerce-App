@@ -2,7 +2,7 @@ import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from '../../components/header/header.component';
-import { ReviewsComponent } from '../../components/products/reviews/reviews.component';
+import { ProductRatingComponent } from '../../components/products/product-rating/product-rating.component';
 import { Product } from '../../models/Product';
 import { ProductStore } from '../../store/product.store';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [HeaderComponent, ReviewsComponent, MatButtonModule, CommonModule, MatProgressSpinnerModule],
+  imports: [HeaderComponent, ProductRatingComponent, MatButtonModule, CommonModule, MatProgressSpinnerModule],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss'
 })

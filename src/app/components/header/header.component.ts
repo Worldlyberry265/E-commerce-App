@@ -33,7 +33,7 @@ export class HeaderComponent {
 
 
   openDialog(dialogType : string) {
-    const dialogRef = this.dialog.open(PreviewComponent, {
+    this.dialog.open(PreviewComponent, {
       panelClass: 'preview',
       data: { DialogType : dialogType}
     });

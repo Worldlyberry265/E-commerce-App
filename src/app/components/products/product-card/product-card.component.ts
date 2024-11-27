@@ -1,24 +1,26 @@
 import { AfterViewInit, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ReviewsComponent } from '../reviews/reviews.component';
+import { ProductRatingComponent } from '../product-rating/product-rating.component';
 import { ProductNavComponent } from '../product-nav/product-nav.component';
 import { Product } from '../../../models/Product';
 
 @Component({
   selector: 'li[appProductCard]',
   standalone: true,
-  imports: [ReviewsComponent, ProductNavComponent, RouterModule],
+  imports: [ProductRatingComponent, ProductNavComponent, RouterModule],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
-export class ProductCardComponent implements AfterViewInit{
+export class ProductCardComponent implements AfterViewInit {
 
-  product = input.required<Product>({alias: 'appProductCard'});
+  product = input.required<Product>({ alias: 'appProductCard' });
+
+  toggleIcon = input<boolean>(false);
 
 
   ngAfterViewInit(): void {
     const heart = document.getElementById(`heart-svg-${this.product().id}`);
-    const cart = document.getElementById(`cart-svg-${this.product().id}`);    
+    const cart = document.getElementById(`cart-svg-${this.product().id}`);
 
     if (heart) {
       heart.addEventListener('click', function () {
@@ -30,6 +32,6 @@ export class ProductCardComponent implements AfterViewInit{
         this.classList.toggle('product-card__nav--item-active-cart'); // Toggle the active class
       });
     }
-    
+
   }
 }

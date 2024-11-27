@@ -5,26 +5,36 @@
     <span class="preview__content--titles">&nbsp;</span>
     <span class="preview__content--titles">Product</span>
     <span class="preview__content--titles">Quantity</span>
+    <span class="preview__content--titles">Price</span>
     <span class="preview__content--titles">&nbsp;</span>
 
-    <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-      alt="Item Img" />
+    @for (item of products(); track $index) {
 
-    <span class="preview__content--item--name">Product Name</span>
+    <img class="preview__content--item--img" [src]="item.image" alt="Item Img" />
+
+    <span class="preview__content--item--name">{{ item.title}} </span>
 
     <div class="preview__content--item--quantity-field">
-      <span>{{ numb() }}</span>
+      <span>{{ item.quantity }}</span>
       <div>
-        <i (click)="decrementQuantity()" class="fa-solid fa-circle-minus"></i>
-        <i (click)="incrementQuantity()" class="fa-solid fa-circle-plus"></i>
+        <i (click)="decrementQuantity($index)" class="fa-solid fa-circle-minus"></i>
+        <i (click)="incrementQuantity($index)" class="fa-solid fa-circle-plus"></i>
       </div>
     </div>
+
+    <span class="preview__content--item--price">$ {{ item.price}}</span>
 
     <i class="fa-solid fa-trash preview__content--item--delete-btn"></i>
 
     <div class="preview__content--item--border"></div>
+    }
+
   </div>
 </mat-dialog-content>
+<div class="preview__total-price--container">
+  <span>Total Price: </span>
+  <span>$ 115</span>
+</div>
 <mat-dialog-actions align="end">
   <button class="preview__button" mat-button mat-dialog-close>Close</button>
   <button class="preview__button" mat-button mat-dialog-close>
@@ -34,8 +44,9 @@
     Go To Payment
   </button>
 </mat-dialog-actions>
-} @if (dialogType() === 'heart') {
-     @if(authStore.jwt()) {
+}
+@if (dialogType() === 'heart') {
+@if(authStore.jwt()) {
 <h2 mat-dialog-title class="preview__title">Saved Items</h2>
 
 <mat-dialog-content class="mat-typography">
@@ -43,6 +54,7 @@
     <span class="preview__content--titles">&nbsp;</span>
     <span class="preview__content--titles">Product</span>
     <span class="preview__content--titles">Category</span>
+    <span class="preview__content--titles">Rating</span>
     <span class="preview__content--titles">&nbsp;</span>
 
     <img class="preview__content--item--img" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
@@ -51,6 +63,22 @@
     <span class="preview__content--item--name">Product Name</span>
 
     <span class="preview__content--item--name">Categoory Name</span>
+
+    <!-- <div class="preview__content--item--rating" appReview [stars]="5" [reviewsCount]="400" ></div> -->
+
+    <div class="preview__content--item--rating">
+
+      @for (star of starsCount; track $index) {
+      <i class="fa-solid fa-star stars-icon shining-star"></i>
+      }
+      <!-- .299/.71/.75 bcz (3.8 - 3) is returning .7999 instead of 0.8-->
+      @if (RemainingStarCount >= .299 && RemainingStarCount <= .71) { <i
+        class="fa-solid fa-star-half-stroke shining-star"></i>
+        }
+        @else if(RemainingStarCount >= .75) {
+        <i class="fa-solid fa-star stars-icon shining-star"></i>
+        }
+    </div>
 
     <i class="fa-solid fa-heart preview__content--item--delete-btn"></i>
 

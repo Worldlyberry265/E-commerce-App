@@ -5,11 +5,11 @@ import { AddDecimalPipe } from './add-decimal-pipe/add-decimal.pipe';
   selector: 'div[appReview], figcaption[appReview]',
   standalone: true,
   imports: [AddDecimalPipe],
-  templateUrl: './reviews.component.html',
-  styleUrl: './reviews.component.scss',
+  templateUrl: './product-rating.component.html',
+  styleUrl: './product-rating.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReviewsComponent {
+export class ProductRatingComponent {
 
   stars = input.required<number>();
   reviewsCount = input.required<number>();

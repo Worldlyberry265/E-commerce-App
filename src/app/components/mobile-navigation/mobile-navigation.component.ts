@@ -27,14 +27,14 @@ export class MobileNavigationComponent {
       this.isOpen.set(true);
       this.mobileCheckbox.nativeElement.checked = false;
 
-    const dialogRef = this.dialog.open(PreviewComponent, {
+    this.dialog.open(PreviewComponent, {
       panelClass: 'preview'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.isOpen.set(false);
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.isOpen.set(false);
+    //   console.log(`Dialog result: ${result}`);
+    // });
   }
 
   closeDialog() {
