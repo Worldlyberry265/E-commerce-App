@@ -64,19 +64,17 @@
 
       &-account-name {
         text-align: center;
- font-weight: 700;
- font-size: 1.5rem;
- color: $primary-dark;
- cursor: default;
- width: min-content;
- text-wrap: wrap;
- margin: 0 auto;
- display: block;
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: $primary-dark;
+        cursor: default;
+        width: min-content;
+        text-wrap: wrap;
+        margin: 0 auto;
+        display: block;
 
         span {
-
         }
-        
       }
 
       i {
@@ -102,7 +100,7 @@
       width: 3rem;
       height: 3rem;
       cursor: pointer;
-      transition: all .5s;
+      transition: all 0.5s;
 
       stroke: transparent;
       stroke-width: 1.5rem;

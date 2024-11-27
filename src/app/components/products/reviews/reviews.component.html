@@ -3,7 +3,7 @@
     @for (star of starsCount; track $index) {
     <i class="fa-solid fa-star stars-icon shining-star"></i>
     }
-    <!-- .299/.71/.75 bcz 3.8 - 3 is returning .7999 -->
+    <!-- .299/.71/.75 bcz (3.8 - 3) is returning .7999 instead of 0.8-->
     @if (RemainingStarCount >= .299 && RemainingStarCount <= .71) { <i
         class="fa-solid fa-star-half-stroke shining-star"></i>
         }

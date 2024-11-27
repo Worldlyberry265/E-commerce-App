@@ -32,14 +32,12 @@ export class HeaderComponent {
 
 
 
-  openDialog() {
+  openDialog(dialogType : string) {
     const dialogRef = this.dialog.open(PreviewComponent, {
-      panelClass: 'preview'
+      panelClass: 'preview',
+      data: { DialogType : dialogType}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   signOut() {

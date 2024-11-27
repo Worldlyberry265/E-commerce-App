@@ -66,7 +66,7 @@ body ::selection {
   font-size: 2.5rem;
   color: #118ea1;
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   word-spacing: 0.5rem;
   text-align: center;
 }
@@ -263,7 +263,7 @@ body ::selection {
 }
 .mobile-navigation__item-account-name {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 600;
   padding: 1.5rem 2rem;
   color: white;
   text-transform: uppercase;
@@ -398,6 +398,12 @@ body ::selection {
   grid-column: 1/-1; /* Span across all columns */
   border-bottom: 2px dashed #CED4DA; /* Adjust color and thickness */
 }
+.preview__content--warning-icon {
+  font-size: 5rem;
+  width: 100%;
+  text-align: center;
+  color: #b84f4f;
+}
 .preview__button {
   font-size: 2rem !important;
 }
@@ -468,7 +474,11 @@ body ::selection {
   text-align: center;
   max-height: 10rem;
   overflow-y: hidden;
-  margin-bottom: 2rem;
+}
+.product-card__price {
+  font-size: 2rem;
+  color: goldenrod;
+  font-weight: 500;
 }
 .product-card__nav {
   gap: 2rem;
@@ -872,7 +882,7 @@ body ::selection {
 
 .currency {
   color: goldenrod;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .stars__rating--container {
@@ -1017,7 +1027,7 @@ body ::selection {
 }
 .main-header__menu--item-account-name {
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.5rem;
   color: #0056b3;
   cursor: default;
@@ -1354,7 +1364,7 @@ body ::selection {
   text-align: center;
   margin-bottom: 4rem;
   font-size: 8rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 .log__phrase p {
   font-size: 2rem;

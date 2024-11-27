@@ -142,6 +142,7 @@ export class LogComponent implements AfterViewInit {
 
     effect(() => {
       if(this.authStore.authError() && !this.authStore.loading()) {
+        // We need a timeout to avoid changing the Component's loading state and error state so the error gets displayed.
         setTimeout(() => {
           this.passwordFormControl.setErrors( { authError : true});          
         }, 1);        

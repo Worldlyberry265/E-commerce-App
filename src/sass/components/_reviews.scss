@@ -4,7 +4,7 @@
 }
 
 .shining-star {
-  color: goldenrod;
+  color: $currency-color;
   font-size: 1.3em; // em to make it inherit its parent font-size since its a reusable component
 }
 

@@ -93,12 +93,18 @@
     text-align: center;
     max-height: 10rem;
     overflow-y: hidden;
-    margin-bottom: 2rem;
+    // margin-bottom: 2rem;
     //   font-family: $title-font;
 
     //   @include respond(Iphone) {
     //     font-size: 2.3rem;
     //   }
+  }
+
+  &__price {
+    font-size: 2rem;
+    color: $currency-color;
+    font-weight: 500;
   }
 
   &__nav {

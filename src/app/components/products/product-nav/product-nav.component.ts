@@ -25,6 +25,9 @@ export class ProductNavComponent implements AfterViewInit {
         this.classList.toggle('product-card__nav--item-active-cart'); // Toggle the active class
       });
     }
+  }
+
+  onAddItem() {
     
   }
 }
