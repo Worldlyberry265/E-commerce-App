@@ -29,21 +29,25 @@
 
             <nav class="product__main-content--navigation">
                 <div class="product__main-content--navigation--quantity">
-                    <span>{{ numb() }}</span>
+                    <span>{{ product()!.quantity === undefined ? 1 : product()!.quantity }}</span>
                     <div>
                         <i (click)="decrementQuantity()" class="fa-solid fa-circle-minus"></i>
                         <i (click)="incrementQuantity()" class="fa-solid fa-circle-plus"></i>
                     </div>
                 </div>
 
-                <button mat-flat-button
-                    class="product__main-content--navigation--button product__main-content--navigation--button-add">
-                    Add to Cart
-                </button>
-                <button mat-flat-button
-                    class="product__main-content--navigation--button product__main-content--navigation--button-save">
-                    Save
-                </button>
+                <div class="product__main-content--navigation--buttons-container">
+                    <button mat-flat-button (click)="onAlterCart()"
+                        class="product__main-content--navigation--button product__main-content--navigation--button-add"
+                        [class.product__main-content--navigation--button-add]="!itemAdded()"
+                        [class.product__main-content--navigation--button-remove]="itemAdded()">
+                        {{ itemAdded() ? 'Remove From Cart' : 'Add To Cart'}}
+                    </button>
+                    <button mat-flat-button (click)="onAlterSavedItems()"
+                        class="product__main-content--navigation--button product__main-content--navigation--button-save">
+                        Save
+                    </button>
+                </div>
             </nav>
 
         </div>

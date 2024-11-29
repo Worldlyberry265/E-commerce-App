@@ -21,26 +21,23 @@ import { Product } from "../../models/Product";
 })
 export class PreviewComponent {
 
-  // numb = signal<number>(0);
 
   dialogType = signal<string>('');
-
   RemainingStarCount = 0;
   stars = signal(5);
 
-  products = signal<Product[] | null>(null);
+  products = signal<Product[]>([]);
 
   private router = inject(Router);
   private dialogRef = inject(MatDialogRef<PreviewComponent>);
   protected readonly authStore = inject(AuthStore);
   protected readonly userItemsStore = inject(UserItemsStore);
 
-  // private data = inject(MAT_DIALOG_DATA);
-
+  // to fetch the data passed with the request to open the dialog
   constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: string }) {
     this.dialogType.set(data.DialogType);
-
-    this.products.set(this.userItemsStore.cartItems().map(product => ({ ...product, quantity: 1 })));
+    // We start the product with quantity = 1
+    this.products.set(this.userItemsStore.cartItems().map(product => ({ ...product, quantity: product.quantity ?? 1 })));
   }
 
   get starsCount(): number[] {
@@ -48,24 +45,36 @@ export class PreviewComponent {
     return Array(Math.floor(this.stars()));
 
   }
-  // TRY TO USE ITEM INSTEAD
+
+  get TotalPrice() {
+    let sum = 0;
+    for (let i = 0; i < this.products().length; i++) {
+      sum += (this.products()[i].price * this.products()[i].quantity);
+    }
+    return sum;
+  }
   decrementQuantity(itemIndex: number) {
-    const product = this.products()!.at(itemIndex);
+    const product = this.products().at(itemIndex);
     if (product!.quantity > 1) {
       --product!.quantity;
     } else { // else we remove the item
-
       // Create a copy of the products array without the item at `itemIndex`
-      const updatedProducts = [...this.products()!];
+      const updatedProducts = [...this.products()];
       updatedProducts.splice(itemIndex, 1);
 
       // Update the signal with the new array
       this.products.set(updatedProducts);
+
+      // Update the cart in store
+      this.userItemsStore.RemoveItemFromCart(product!)
+
+      // Toggle the cart icon in the product-card to confirm to the user that she/he removed the item from his/her cart 
+      this.toggleIcon(product!.id, 'cart')
     }
   }
 
   incrementQuantity(itemIndex: number) {
-    const product = this.products()!.at(itemIndex);
+    const product = this.products().at(itemIndex);
     ++product!.quantity;
   }
 
@@ -76,5 +85,40 @@ export class PreviewComponent {
     setTimeout(() => {
       this.router.navigate(['login'], { fragment: 'logContainer' });
     }, 100);
+  }
+
+  removeItemFromCart(itemIndex: number) {
+    const updatedProducts = [...this.products()];
+    const remvedProductId = updatedProducts.splice(itemIndex, 1)[0].id;
+    console.log("Id element at array index 0 is : ");
+    console.log(remvedProductId);
+
+
+
+    // Update the signal with the new array
+    this.products.set(updatedProducts);
+    this.toggleIcon(remvedProductId, 'cart')
+  }
+
+  onUpdateCart() {
+    this.userItemsStore.updateCart(this.products());
+  }
+
+  onClearCart() {
+
+    for (let i = 0; i < this.products().length; i++) {
+      this.toggleIcon((this.products()[i].id), "cart");
+    }
+    this.userItemsStore.updateCart([]);
+  }
+
+  private toggleIcon(productId: number, iconType: 'heart' | 'cart') {
+    if (iconType === 'heart') {
+      const heartIcon = document.getElementById('heart-svg-' + productId)
+      heartIcon?.classList.toggle('product-card__nav--item-active-heart');
+    } else {
+      const cartIcon = document.getElementById('cart-svg-' + productId)
+      cartIcon?.classList.toggle('product-card__nav--item-active-cart');
+    }
   }
 }

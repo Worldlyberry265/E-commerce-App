@@ -24,27 +24,38 @@
 
     <span class="preview__content--item--price">$ {{ item.price}}</span>
 
-    <i class="fa-solid fa-trash preview__content--item--delete-btn"></i>
+    <i (click)="removeItemFromCart($index)" class="fa-solid fa-trash preview__content--item--delete-btn"></i>
 
     <div class="preview__content--item--border"></div>
     }
 
   </div>
 </mat-dialog-content>
+
+@if (products()!.length != 0) {
 <div class="preview__total-price--container">
   <span>Total Price: </span>
-  <span>$ 115</span>
+  <span>$ {{ TotalPrice }}</span>
 </div>
+}
+
 <mat-dialog-actions align="end">
-  <button class="preview__button" mat-button mat-dialog-close>Close</button>
-  <button class="preview__button" mat-button mat-dialog-close>
+  <button class="preview__button" mat-button mat-dialog-close (click)="onUpdateCart()">Close</button>
+  <button [disabled]="products()!.length === 0" class="preview__button" mat-button mat-dialog-close
+    (click)="onClearCart()">
     Clear Cart
   </button>
-  <button class="preview__button" mat-button cdkFocusInitial disabled="true">
+  <button [disabled]="products()!.length === 0" class="preview__button" mat-button cdkFocusInitial disabled="true">
     Go To Payment
   </button>
 </mat-dialog-actions>
 }
+
+
+
+
+
+
 @if (dialogType() === 'heart') {
 @if(authStore.jwt()) {
 <h2 mat-dialog-title class="preview__title">Saved Items</h2>

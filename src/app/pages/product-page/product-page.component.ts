@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -6,6 +6,7 @@ import { ProductRatingComponent } from '../../components/products/product-rating
 import { Product } from '../../models/Product';
 import { ProductStore } from '../../store/product.store';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { UserItemsStore } from '../../store/user-items.store';
 
 
 @Component({
@@ -37,23 +38,38 @@ export class ProductPageComponent implements OnInit {
 
   isScrollEnabled = true;
 
+  itemSaved = signal(false);
+  itemAdded = signal(false);
 
-  displayedImgs : string[] = [];
+
+
+  displayedImgs: string[] = [];
 
   ImageIndex = 4;
 
   protected productStore = inject(ProductStore);
+  private userItemsStore = inject(UserItemsStore);
 
   constructor() {
-    effect( () => {
-      this.product.set(this.productStore.selectedProduct() ?? null);
-    }, {allowSignalWrites: true});
+    effect(() => {
+      if (this.product()?.quantity === undefined) {
+        // we only want to fetch the product the once the component initialize, not everytime product updates
+        this.product.set(this.productStore.selectedProduct() ?? null);
+      }
+
+      if (this.product() != null) {
+        if (this.userItemsStore.ItemInCart(this.product()!.id)) {
+          this.itemAdded.set(true);
+        } else {
+          this.itemAdded.set(false);
+        }
+      }
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {
-
     setInterval(() => {
-      if(this.isScrollEnabled) {
+      if (this.isScrollEnabled) {
         this.onNextClick();
       }
     }, 2000);
@@ -83,14 +99,35 @@ export class ProductPageComponent implements OnInit {
     this.isScrollEnabled = true;
   }
 
+  onAlterCart() {
+    if (this.itemAdded()) {
+      this.userItemsStore.RemoveItemFromCart(this.product()!);
+      this.itemAdded.update(state => !state);
+    } else {
+      this.userItemsStore.AddItemToCart(this.product()!);
+      this.itemAdded.update(state => !state);
+    }
+  }
+
+  onAlterSavedItems() {
+
+  }
+
   decrementQuantity() {
-    if (this.numb() > 0) {
-      this.numb.update(oldVal => --oldVal);
+    if (this.product()!.quantity > 1) {
+      this.product.update(state => ({
+        ...state,
+        quantity: --state!.quantity  // The 1st decncrement the quantity will be undefined
+      }) as Product);
     }
   }
 
   incrementQuantity() {
-    this.numb.update(oldVal => ++oldVal);
+    this.product.update(state => ({
+      ...state,
+      quantity: state!.quantity === undefined ? 2 : ++state!.quantity  // The 1st increment the quantity will be undefined
+    }) as Product);
   }
+
 
 }

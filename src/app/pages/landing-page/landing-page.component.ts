@@ -32,8 +32,6 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   searchedProductInfo = signal<string | null>(null);
   inputRegex = /^(?!-)(?!.*--)[a-zA-Z0-9\s(),./-]*$/;
 
-  toggledItemIdFromDialog = signal(0);
-
   // If handleWheelEvent were defined as a local constant inside confirmProductsScroll, a new function instance 
   // would be created every time confirmProductsScroll is called.
   // For addEventListener and removeEventListener to work correctly, they must reference the exact same function instance.
@@ -44,30 +42,17 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     event.preventDefault(); // Prevent the default vertical scroll
     scrollContainer.scrollLeft += event.deltaY * 10; // Scroll horizontally
   };
-
   constructor() {
     effect(() => {
       const products = this.productStore.products();
       const searchedProducts = this.productStore.searchedProducts();
 
-      // We display the searchedForProducts if there is any, else we display the normal products
-      if (searchedProducts) {
-        this.displayedProducts.set(searchedProducts);
-      } else if (this.searchedProductInfo() != null) {
-        this.displayedProducts.set(null);
-      } else {
-        this.displayedProducts.set(products);
-      }
       // To check if we should scroll normally or horizentally each time the products update.
-      this.confirmProductsScroll();
-      // TRY TO USE THE 2ND EFFECT OR TO UNCOMMENT THIS
-      // this.toggledItemIdFromDialog.set(this.userItemsStore.removedItemId());
+      if (products || searchedProducts) {
+        this.confirmProductsScroll();
+      }
 
     }, { allowSignalWrites: true }); // to allow updating signals in effects
-
-    // effect(() => {
-    //   this.toggledItemIdFromDialog.set(this.userItemsStore.removedItemId());
-    // }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {

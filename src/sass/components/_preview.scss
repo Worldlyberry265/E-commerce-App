@@ -28,7 +28,7 @@
     }
 
     &--titles {
-      padding-top: 1rem;
+      padding: 1rem 0;
       font-size: 2rem;
     }
 
@@ -111,8 +111,12 @@
         }
       }
       &--border {
-        grid-column: 1 / -1; /* Span across all columns */
-        border-bottom: 2px dashed $divider; /* Adjust color and thickness */
+        grid-column: 1 / -1;
+        border-bottom: 2px dashed $divider;
+
+        &:last-of-type {
+          display: none;
+        }
       }
     }
     &--warning-icon {
@@ -129,6 +133,9 @@
 
   &__total-price {
     &--container {
+      border-top: 2px dashed $divider;
+      box-sizing: border-box;
+      margin-top: 1rem;
       font-size: 2rem;
       font-weight: 500;
       display: flex;

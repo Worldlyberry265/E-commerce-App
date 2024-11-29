@@ -128,32 +128,27 @@
 
   <div class="categories__search--container">
     <input type="text" [(ngModel)]="searchedProduct" class="main-header__search categories__search--input"
-      (input)="onSearchProduct($event)" placeholder="Enter an item Id" />
+      (input)="onSearchProduct($event)" placeholder="Enter an item Id or name" />
   </div>
 
   <ul class="product-cards__container">
     @if (!productStore.loading()) {
-    @for (product of displayedProducts(); track $index) {
-    @if(product.id === toggledItemIdFromDialog()) {
-    <li [appProductCard]="product" [toggleIcon]="true" class="product-card"></li>
+
+    @if (productStore.searchedProducts()) {
+    @for(product of productStore.searchedProducts(); track $index) {
+    <li [appProductCard]="product" class="product-card"></li>
+    }
+    } @else if(searchedProductInfo() != null) {
+    <!-- no product was found so we dont display anything -->
     } @else {
-    <li [appProductCard]="product" [toggleIcon]="false" class="product-card"></li>
+    @for(product of productStore.products(); track $index) {
+    <li [appProductCard]="product" class="product-card"></li>
     }
     }
+
     } @else {
     <mat-spinner class="product-cards__container--spinner"></mat-spinner>
     }
   </ul>
-
-
-
-
-
-
-
-
-
-
-
 
 </section>

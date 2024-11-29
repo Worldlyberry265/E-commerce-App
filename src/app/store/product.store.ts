@@ -10,7 +10,7 @@ type ProductsState = {
     products: Product[] | null; // The normal/standard products
     searchedProducts: Product[] | null; // For the searched products using id or product name
     selectedProduct: Product | null; // For the single selected product for product page
-    selectedCategory: string; 
+    selectedCategory: string;
     loading: boolean;
 }
 
@@ -101,7 +101,7 @@ export const ProductStore = signalStore(
                                     // Im using an if statement instead of an error inside tapResponse bcz the fakestoreapi just doesn't return anything 
                                     // if the product wasn't found, hence null
                                     if (product === null) {
-                                        patchState(store, { searchedProducts: null, loading: false, selectedProduct: null});
+                                        patchState(store, { searchedProducts: null, loading: false, selectedProduct: null });
                                     } else {
                                         patchState(store, { searchedProducts: [product], loading: false, selectedProduct: product });
                                     }
@@ -121,7 +121,7 @@ export const ProductStore = signalStore(
             pipe(
                 switchMap((productId: number) => {
                     return of(SearchForProducts(productId));
-                     },
+                },
                 )
             )
         );
