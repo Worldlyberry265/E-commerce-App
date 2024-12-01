@@ -126,25 +126,23 @@
 
       &--buttons-container {
         display: flex;
-        // justify-content: space-between;
-        gap: 2rem;
-        // flex-grow: 1;
+        justify-content: space-between;
+        flex-grow: 1;
+        margin-left: 2rem;
       }
 
       &--button {
         font-size: 2rem !important;
+        text-wrap: nowrap;
 
-        &-add {
+        &-added {
+          // background-color: $warn-2 !important;
           background-color: $success-color !important;
         }
 
-        &-remove {
-          background-color: $warn-2 !important;
+        &-saved {
+          background-color: red !important;
         }
-
-        // &-save {
-        //   background-color: $error-color !important
-        // }
       }
     }
   }

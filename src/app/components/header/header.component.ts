@@ -5,6 +5,7 @@ import { Router, RouterModule } from "@angular/router";
 import { PreviewComponent } from "../preview/preview.component";
 import { AuthStore } from "../../store/auth.store";
 import { ProductStore } from "../../store/product.store";
+import { UserItemsStore } from "../../store/user-items.store";
 
 @Component({
   selector: 'header[appHeader]',
@@ -19,6 +20,7 @@ export class HeaderComponent {
   // protected to use it only in this component and its template
   protected readonly authStore = inject(AuthStore);
   protected readonly productStore = inject(ProductStore);
+  protected readonly userItemsStore = inject(UserItemsStore);
   private router = inject(Router);
 
   displaySearchInput = input.required<boolean>({ alias: 'appHeader' })

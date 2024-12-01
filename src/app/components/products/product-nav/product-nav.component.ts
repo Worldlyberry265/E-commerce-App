@@ -17,6 +17,7 @@ import { ProductStore } from '../../../store/product.store';
 export class ProductNavComponent implements AfterViewInit {
 
   private readonly userItemsStore = inject(UserItemsStore);
+  private readonly authStore = inject(AuthStore);
   readonly dialog = inject(MatDialog);
 
   product = input.required<Product>({ alias: 'appProductNav' });
@@ -29,40 +30,39 @@ export class ProductNavComponent implements AfterViewInit {
 
     // !!!! IMPORTANT !!!!!!!!!!!!!!!!!
     this.cart = document.getElementById('cart-svg-' + this.product().id);
-    if (this.userItemsStore.ItemInCart(this.product().id)) {
+    if (this.userItemsStore.IsItemInCart(this.product().id)) {
       this.cart?.classList.add('product-card__nav--item-active-cart')
     }
-    // !!!! IMPORTANT !!!!!!!!!!!!!!!!!
+    this.heart = document.getElementById('heart-svg-' + this.product().id);
+    if (this.userItemsStore.IsItemSaved(this.product().id)) {
+      this.heart?.classList.add('product-card__nav--item-active-heart')
+    }
 
 
   }
 
   onToggleItem(dialogType: string) {
-
     this.dialogType.set(dialogType);
-    // if (dialogType === 'heart') {
-    //   if (!this.authStore.jwt()) {
-    //     this.dialog.open(PreviewComponent, {
-    //       panelClass: 'preview',
-    //       data: { DialogType: 'heart' }
-    //     });
-    //   } else {
-    //     this.heart = document.getElementById(`heart-svg-${this.Id()}`);
-    //     if (this.heart) {
-    //       if (this.heart.classList.contains('product-card__nav--item-active-heart')) {
-    //         this.userItemsStore.RemoveSavedItem(this.product());
-    //       } else {
-    //         this.userItemsStore.SaveItem(this.product());
-    //       }
-    //       this.userItemsStore.selectItem({ Id: this.Id()!, type: 'heart' });
-    //       // this.heart.classList.toggle('product-card__nav--item-active-heart'); // Toggle the active class
-    //     }
-    //   }
-    // } 
-
-    if (dialogType === 'cart') {
+    if (dialogType === 'heart') {
+      if (this.authStore.jwt()) {
+        if (this.heart) {
+          if (this.userItemsStore.IsItemSaved(this.product().id)) {
+            this.userItemsStore.RemoveSavedItem(this.product());
+          } else {
+            this.userItemsStore.SaveItem(this.product());
+          }
+          this.heart.classList.toggle('product-card__nav--item-active-heart');
+        }
+      } else {
+        // If the user isnt logged in then we cant save his item and ask him to sign in
+        this.dialog.open(PreviewComponent, {
+          panelClass: 'preview',
+          data: { DialogType: 'heart' }
+        });
+      }
+    } else if (dialogType === 'cart') {
       if (this.cart) {
-        if (this.userItemsStore.ItemInCart(this.product().id)) {
+        if (this.userItemsStore.IsItemInCart(this.product().id)) {
           this.userItemsStore.RemoveItemFromCart(this.product());
         } else {
           this.userItemsStore.AddItemToCart(this.product());

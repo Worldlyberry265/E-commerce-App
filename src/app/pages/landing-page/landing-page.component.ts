@@ -48,8 +48,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
       const searchedProducts = this.productStore.searchedProducts();
 
       // To check if we should scroll normally or horizentally each time the products update.
-      if (products || searchedProducts) {
-        this.confirmProductsScroll();
+      if (searchedProducts) {
+        this.confirmProductsScroll(searchedProducts.length);
+      } else if (products && this.searchedProductInfo() === null) {
+        this.confirmProductsScroll(products!.length);
       }
 
     }, { allowSignalWrites: true }); // to allow updating signals in effects
@@ -67,13 +69,11 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   }
 
   // To confirm if we scroll through the products horizontally, or normally/vertically
-  private confirmProductsScroll() {
+  private confirmProductsScroll(productsLength: number) {
     const scrollContainer = document.querySelector('.product-cards__container') as HTMLElement;
-    const products = this.displayedProducts();
-
     // If we have only few products the user wont be able to scroll the page over them, instead the browser will try
     // to scroll horizentally between the products, so we stop the horizental scroll then
-    if (products && products.length > 5) {
+    if (productsLength > 5) {
       scrollContainer!.addEventListener('wheel', this.handleWheelEvent);
     } else {
       scrollContainer!.removeEventListener('wheel', this.handleWheelEvent); // Return back normal scroll behavior

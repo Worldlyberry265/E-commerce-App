@@ -58,10 +58,16 @@ export class ProductPageComponent implements OnInit {
       }
 
       if (this.product() != null) {
-        if (this.userItemsStore.ItemInCart(this.product()!.id)) {
+        if (this.userItemsStore.IsItemInCart(this.product()!.id)) {
           this.itemAdded.set(true);
         } else {
           this.itemAdded.set(false);
+        }
+
+        if (this.userItemsStore.IsItemSaved(this.product()!.id)) {
+          this.itemSaved.set(true);
+        } else {
+          this.itemSaved.set(false);
         }
       }
     }, { allowSignalWrites: true });
@@ -110,7 +116,13 @@ export class ProductPageComponent implements OnInit {
   }
 
   onAlterSavedItems() {
-
+    if (this.itemSaved()) {
+      this.userItemsStore.RemoveSavedItem(this.product()!);
+      this.itemSaved.update(state => !state);
+    } else {
+      this.userItemsStore.SaveItem(this.product()!);
+      this.itemSaved.update(state => !state);
+    }
   }
 
   decrementQuantity() {

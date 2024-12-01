@@ -22,9 +22,12 @@ import { Product } from "../../models/Product";
 export class PreviewComponent {
 
 
-  dialogType = signal<string>('');
+  dialogType = signal<'heart' | 'cart'>('cart');
   RemainingStarCount = 0;
   stars = signal(5);
+
+  Math = Math; // Expose Math for use in the template
+  Array = Array; // Expose Array for use in the template
 
   products = signal<Product[]>([]);
 
@@ -34,16 +37,20 @@ export class PreviewComponent {
   protected readonly userItemsStore = inject(UserItemsStore);
 
   // to fetch the data passed with the request to open the dialog
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: string }) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: 'heart' | 'cart' }) {
     this.dialogType.set(data.DialogType);
-    // We start the product with quantity = 1
-    this.products.set(this.userItemsStore.cartItems().map(product => ({ ...product, quantity: product.quantity ?? 1 })));
+    if (this.dialogType() === 'cart') {
+      // We start the product with quantity = 1
+      this.products.set(this.userItemsStore.cartItems().map(product => ({ ...product, quantity: product.quantity ?? 1 })));
+    } else {
+      this.products.set(this.userItemsStore.savedItems());
+    }
   }
 
-  get starsCount(): number[] {
-    this.RemainingStarCount = this.stars() - Math.floor(this.stars());
-    return Array(Math.floor(this.stars()));
-
+  // To check the products that have a decimal rate what should be give to them for the decimal part
+  // such as 3.1 : no star given, 3.7: a half star should be given, 3.9: a 4th star should be given
+  remainingStar(starsCount: number): number {
+    return starsCount = starsCount - Math.floor(starsCount);
   }
 
   get TotalPrice() {
@@ -51,7 +58,7 @@ export class PreviewComponent {
     for (let i = 0; i < this.products().length; i++) {
       sum += (this.products()[i].price * this.products()[i].quantity);
     }
-    return sum;
+    return sum.toFixed(2);
   }
   decrementQuantity(itemIndex: number) {
     const product = this.products().at(itemIndex);
@@ -78,37 +85,55 @@ export class PreviewComponent {
     ++product!.quantity;
   }
 
-  onNavigate() {
+  onNavigate(route?: string) {
     this.dialogRef.close();
     // We need a timeout here because the dialogue isn't allowing us to navigate to the logContainer
     // So we wait for it to close then navigate
     setTimeout(() => {
-      this.router.navigate(['login'], { fragment: 'logContainer' });
+      if (route) {
+        this.router.navigate([route]);
+      } else {
+        this.router.navigate(['login'], { fragment: 'logContainer' });
+      }
     }, 100);
   }
 
   removeItemFromCart(itemIndex: number) {
+    // update the displayed product list
     const updatedProducts = [...this.products()];
-    const remvedProductId = updatedProducts.splice(itemIndex, 1)[0].id;
-    console.log("Id element at array index 0 is : ");
-    console.log(remvedProductId);
-
-
-
-    // Update the signal with the new array
+    const remvedProduct = updatedProducts.splice(itemIndex, 1)[0];
     this.products.set(updatedProducts);
-    this.toggleIcon(remvedProductId, 'cart')
+
+    // update the UI icons
+    this.toggleIcon(remvedProduct.id, 'cart');
+    // update the store
+    this.userItemsStore.RemoveItemFromCart(remvedProduct);
   }
 
+  removeSavedItem(itemIndex: number) {
+    // update the displayed product list
+    const updatedProducts = [...this.products()];
+    const remvedProduct = updatedProducts.splice(itemIndex, 1)[0];
+    this.products.set(updatedProducts);
+
+    // update the UI icons
+    this.toggleIcon(remvedProduct.id, 'heart')
+    // update the store
+    this.userItemsStore.RemoveSavedItem(remvedProduct);
+  }
   onUpdateCart() {
     this.userItemsStore.updateCart(this.products());
   }
 
   onClearCart() {
-
     for (let i = 0; i < this.products().length; i++) {
       this.toggleIcon((this.products()[i].id), "cart");
     }
+    this.userItemsStore.updateCart([]);
+  }
+
+  onPay() {
+    this.onNavigate('homepage');
     this.userItemsStore.updateCart([]);
   }
 

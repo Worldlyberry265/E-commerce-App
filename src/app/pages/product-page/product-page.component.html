@@ -38,14 +38,14 @@
 
                 <div class="product__main-content--navigation--buttons-container">
                     <button mat-flat-button (click)="onAlterCart()"
-                        class="product__main-content--navigation--button product__main-content--navigation--button-add"
-                        [class.product__main-content--navigation--button-add]="!itemAdded()"
+                        class="product__main-content--navigation--button product__main-content--navigation--button-added"
                         [class.product__main-content--navigation--button-remove]="itemAdded()">
                         {{ itemAdded() ? 'Remove From Cart' : 'Add To Cart'}}
                     </button>
                     <button mat-flat-button (click)="onAlterSavedItems()"
-                        class="product__main-content--navigation--button product__main-content--navigation--button-save">
-                        Save
+                        [class.product__main-content--navigation--button-saved]="itemSaved()"
+                        class="product__main-content--navigation--button">
+                        {{ itemSaved() ? 'Unsave' : 'Save'}}
                     </button>
                 </div>
             </nav>
