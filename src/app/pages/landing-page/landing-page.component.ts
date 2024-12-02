@@ -101,7 +101,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-  fetchCategoryProducts(category: string, categoryId: number) {
+  onFetchCategoryProducts(category: string, categoryId: number) {
     // We reset it to null to display the category products after we don't find a searchedProduct
     // If we don't reset the products won't display untill the user deletes the searched Product Info
     this.searchedProductInfo.set(null);
@@ -116,7 +116,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
   onFetchAndScrollCategoryProducts(category: string, categoryId: number) {
     this.productsSection.scrollIntoView({ behavior: 'smooth' });
-    this.fetchCategoryProducts(category, categoryId);
+    this.onFetchCategoryProducts(category, categoryId);
   }
 
   scrollToProducts(productName: string) {

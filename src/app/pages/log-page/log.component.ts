@@ -141,26 +141,29 @@ export class LogComponent implements AfterViewInit {
   constructor() {
 
     effect(() => {
-      if(this.authStore.authError() && !this.authStore.loading()) {
+      if (this.authStore.authError() && !this.authStore.loading()) {
         // We need a timeout to avoid changing the Component's loading state and error state so the error gets displayed.
         setTimeout(() => {
-          this.passwordFormControl.setErrors( { authError : true});          
-        }, 1);        
+          this.passwordFormControl.setErrors({ authError: true });
+        }, 1);
       }
     });
-    
+
   }
 
   ngAfterViewInit(): void {
     // Added this bcz the navigating to the fragment logContainer using the routerlink is disabling the autofocus on it
-    this.input.nativeElement.focus();
+    // I don't want to autofocus on mobile because the focus together with the mobile navigation is making an unpleaseant animation
+    if (window.innerWidth > 450) {
+      this.input.nativeElement.focus();
+    }
   }
 
   onSubmitForm() {
     // To not let the user to make another request if he/she got an error untill he matches the passwords again
     this.passwordConfirmationFormControl.updateValueAndValidity();
-    if(!this.passwordConfirmationFormControl.getError('passwordMismatch') || this.passwordConfirmationFormControl.value === '') {
-      const user : User = {
+    if (!this.passwordConfirmationFormControl.getError('passwordMismatch') || this.passwordConfirmationFormControl.value === '') {
+      const user: User = {
         email: this.emailFormControl.value ?? 'anything since its for sure not null',
         password: this.passwordFormControl.value ?? 'anything since its for sure not null',
       }
@@ -168,7 +171,7 @@ export class LogComponent implements AfterViewInit {
     }
   }
 
-  signingWithEmail() {
+  onSigningWithEmail() {
     // ?? To avoid the it may be null error
     this.authStore.EmailLog(this.emailFormControl.value ?? 'anything since its for sure not null');
     if (this.authStore.authError()) {
@@ -183,7 +186,7 @@ export class LogComponent implements AfterViewInit {
 
   }
 
-  changeEmail() {
+  onChangeEmail() {
     this.triggerAnimation();
     // To remove the confirmed password if the user chose to login instead of signing up
     this.passwordConfirmationFormControl.setValue('');
@@ -195,7 +198,7 @@ export class LogComponent implements AfterViewInit {
     this.emailFormControl.updateValueAndValidity(); // to revalidate the form and enable the submit button
   }
 
-  togglePasswordVisibility() {
+  onTogglePasswordVisibility() {
     this.showPass.update((currentVisibility) => !currentVisibility);
   }
 

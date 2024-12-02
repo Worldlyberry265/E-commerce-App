@@ -21,9 +21,8 @@
     column-gap: 4rem;
 
     @include respond(mobile) {
-      grid-template-columns: 20vw 40vw 20vw 15vw 10vw;
-      column-gap: 0rem;
-      padding: 0rem !important;
+      grid-template-columns: 20vw 20vw 20vw 10vw 10vw;
+      column-gap: 1vw;
       row-gap: 0.5rem;
     }
 
@@ -47,7 +46,8 @@
         @include respond(mobile) {
           height: 7rem;
           // margin-top: -1rem;
-          padding: 1rem 1rem 1rem 1rem;
+          // padding: 1rem 1rem 1rem 1rem;
+          padding: 0.5rem 1rem;
         }
       }
 
@@ -55,7 +55,6 @@
         font-size: 1.5rem;
         padding: 1rem 0;
         font-weight: 500;
-        cursor: pointer;
         // To not let the name to increase the grid row height
         overflow-y: scroll;
         display: -webkit-box; /* Enable multi-line truncation */
@@ -64,18 +63,21 @@
         -webkit-box-orient: vertical;
       }
 
+      &--category {
+        font-size: 1.5rem;
+        padding: 1rem 0;
+        font-weight: 500;
+        text-align: center;
+      }
+
       &--quantity {
-        &-field {
+        &-wrapper {
           width: 100%;
           font-size: 2.5rem;
           display: flex;
           align-items: center;
+          text-align: center;
           justify-content: space-between;
-
-          div {
-            display: flex;
-            gap: 1rem;
-          }
 
           i {
             cursor: pointer;
@@ -86,7 +88,7 @@
 
       &--price {
         color: $currency-color;
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 500;
         text-wrap: nowrap;
       }
@@ -113,10 +115,6 @@
       &--border {
         grid-column: 1 / -1;
         border-bottom: 2px dashed $divider;
-
-        &:last-of-type {
-          display: none;
-        }
       }
     }
     &--warning-icon {
@@ -133,14 +131,11 @@
 
   &__total-price {
     &--container {
-      border-top: 2px dashed $divider;
       box-sizing: border-box;
-      margin-top: 1rem;
       font-size: 2rem;
       font-weight: 500;
       display: flex;
       justify-content: space-around;
-      gap: 2rem;
       padding-top: 1rem;
     }
   }

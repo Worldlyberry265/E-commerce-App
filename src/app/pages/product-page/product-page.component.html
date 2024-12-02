@@ -12,6 +12,7 @@
         <img class="product__main-content--img" [src]="product()!.image" alt="product-img">
 
         <div class="product__main-content--list-buttons-wrapper">
+
             <ul class="product__main-content--list">
                 <li class="product__main-content--list--item">
                     <span class="product__main-content--list--item-title">ID</span>
@@ -29,33 +30,34 @@
 
             <nav class="product__main-content--navigation">
                 <div class="product__main-content--navigation--quantity">
+                    <i (click)="onDecrementQuantity()" class="fa-solid fa-circle-minus"></i>
                     <span>{{ product()!.quantity === undefined ? 1 : product()!.quantity }}</span>
-                    <div>
-                        <i (click)="decrementQuantity()" class="fa-solid fa-circle-minus"></i>
-                        <i (click)="incrementQuantity()" class="fa-solid fa-circle-plus"></i>
-                    </div>
+                    <i (click)="onIncrementQuantity()" class="fa-solid fa-circle-plus"></i>
                 </div>
 
                 <div class="product__main-content--navigation--buttons-container">
                     <button mat-flat-button (click)="onAlterCart()"
-                        class="product__main-content--navigation--button product__main-content--navigation--button-added"
-                        [class.product__main-content--navigation--button-remove]="itemAdded()">
+                        class="product__main-content--navigation--button-cart"
+                        [class.product__main-content--navigation--button-added]="itemAdded()">
                         {{ itemAdded() ? 'Remove From Cart' : 'Add To Cart'}}
                     </button>
                     <button mat-flat-button (click)="onAlterSavedItems()"
                         [class.product__main-content--navigation--button-saved]="itemSaved()"
-                        class="product__main-content--navigation--button">
+                        class="product__main-content--navigation--button-heart">
                         {{ itemSaved() ? 'Unsave' : 'Save'}}
                     </button>
                 </div>
+                <!-- <nav [appProductNav]="product()!"></nav> -->
             </nav>
 
         </div>
 
+        <div class="product__rating" appReview [reviewsCount]="product()!.rating.count"
+            [stars]="product()!.rating.rate">
+        </div>
+
     </div>
 
-    <div class="product__rating" appReview [reviewsCount]="product()!.rating.count" [stars]="product()!.rating.rate">
-    </div>
 
     <p class="product__description">{{ product()!.description }}</p>
 

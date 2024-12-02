@@ -10,21 +10,22 @@
 
     @for (item of products(); track $index) {
 
-    <img class="preview__content--item--img" [src]="item.image" alt="Item Img" />
+    <img class="preview__content--item--img" [src]="item.image" alt="Item Img"
+      (click)="onNavigate('/product/' + item.id , true)" />
 
     <span class="preview__content--item--name">{{ item.title}} </span>
 
-    <div class="preview__content--item--quantity-field">
+    <div class="preview__content--item--quantity-wrapper">
+      <!-- <div> -->
+      <i (click)="onDecrementQuantity($index)" class="fa-solid fa-circle-minus"></i>
       <span>{{ item.quantity }}</span>
-      <div>
-        <i (click)="decrementQuantity($index)" class="fa-solid fa-circle-minus"></i>
-        <i (click)="incrementQuantity($index)" class="fa-solid fa-circle-plus"></i>
-      </div>
+      <i (click)="onIncrementQuantity($index)" class="fa-solid fa-circle-plus"></i>
+      <!-- </div> -->
     </div>
 
     <span class="preview__content--item--price">$ {{ item.price}}</span>
 
-    <i (click)="removeItemFromCart($index)" class="fa-solid fa-trash preview__content--item--delete-btn"></i>
+    <i (click)="onRemoveItemFromCart($index)" class="fa-solid fa-trash preview__content--item--delete-btn"></i>
 
     <div class="preview__content--item--border"></div>
     }
@@ -65,11 +66,12 @@
     <span class="preview__content--titles">&nbsp;</span>
 
     @for (item of products(); track $index) {
-    <img class="preview__content--item--img" [src]="item.image" [alt]="item.title" />
+    <img class="preview__content--item--img" [src]="item.image" [alt]="item.title"
+      (click)="onNavigate('/product/' + item.id , true)" />
 
     <span class="preview__content--item--name">{{ item.title }}</span>
 
-    <span class="preview__content--item--name">{{ item.category }}</span>
+    <span class="preview__content--item--category">{{ item.category }}</span>
 
     <!-- <div class="preview__content--item--rating" appReview [stars]="5" [reviewsCount]="400" ></div> -->
 
@@ -88,7 +90,7 @@
         }
     </div>
 
-    <i class="fa-solid fa-heart preview__content--item--delete-btn" (click)="removeSavedItem($index)"></i>
+    <i class="fa-solid fa-heart preview__content--item--delete-btn" (click)="onRemoveSavedItem($index)"></i>
 
     <div class="preview__content--item--border"></div>
     }

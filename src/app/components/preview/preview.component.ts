@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, inject, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Inject, inject, OnDestroy, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
@@ -19,7 +19,7 @@ import { Product } from "../../models/Product";
   styleUrl: './preview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PreviewComponent {
+export class PreviewComponent implements OnDestroy {
 
 
   dialogType = signal<'heart' | 'cart'>('cart');
@@ -60,7 +60,7 @@ export class PreviewComponent {
     }
     return sum.toFixed(2);
   }
-  decrementQuantity(itemIndex: number) {
+  onDecrementQuantity(itemIndex: number) {
     const product = this.products().at(itemIndex);
     if (product!.quantity > 1) {
       --product!.quantity;
@@ -80,25 +80,32 @@ export class PreviewComponent {
     }
   }
 
-  incrementQuantity(itemIndex: number) {
+  onIncrementQuantity(itemIndex: number) {
     const product = this.products().at(itemIndex);
     ++product!.quantity;
   }
 
-  onNavigate(route?: string) {
+  onNavigate(route?: string, blank?: boolean) {
     this.dialogRef.close();
     // We need a timeout here because the dialogue isn't allowing us to navigate to the logContainer
     // So we wait for it to close then navigate
     setTimeout(() => {
+      // We either navigate to login or to the homepage as the user should have finished the payment
       if (route) {
-        this.router.navigate([route]);
+        if (blank) {
+          // blank as target=_blank so we know that we are navigating to a product and it should be on a new tab
+          const url = this.router.serializeUrl(this.router.createUrlTree([route]));
+          window.open(url, '_blank');
+        } else {
+          this.router.navigate([route]);
+        }
       } else {
         this.router.navigate(['login'], { fragment: 'logContainer' });
       }
     }, 100);
   }
 
-  removeItemFromCart(itemIndex: number) {
+  onRemoveItemFromCart(itemIndex: number) {
     // update the displayed product list
     const updatedProducts = [...this.products()];
     const remvedProduct = updatedProducts.splice(itemIndex, 1)[0];
@@ -110,7 +117,7 @@ export class PreviewComponent {
     this.userItemsStore.RemoveItemFromCart(remvedProduct);
   }
 
-  removeSavedItem(itemIndex: number) {
+  onRemoveSavedItem(itemIndex: number) {
     // update the displayed product list
     const updatedProducts = [...this.products()];
     const remvedProduct = updatedProducts.splice(itemIndex, 1)[0];
@@ -122,19 +129,19 @@ export class PreviewComponent {
     this.userItemsStore.RemoveSavedItem(remvedProduct);
   }
   onUpdateCart() {
-    this.userItemsStore.updateCart(this.products());
+    this.userItemsStore.UpdateCart(this.products());
   }
 
   onClearCart() {
     for (let i = 0; i < this.products().length; i++) {
       this.toggleIcon((this.products()[i].id), "cart");
     }
-    this.userItemsStore.updateCart([]);
+    this.userItemsStore.UpdateCart([]);
   }
 
   onPay() {
     this.onNavigate('homepage');
-    this.userItemsStore.updateCart([]);
+    this.userItemsStore.UpdateCart([]);
   }
 
   private toggleIcon(productId: number, iconType: 'heart' | 'cart') {
@@ -145,5 +152,11 @@ export class PreviewComponent {
       const cartIcon = document.getElementById('cart-svg-' + productId)
       cartIcon?.classList.toggle('product-card__nav--item-active-cart');
     }
+  }
+
+  ngOnDestroy() {
+    // To get back the mobile navigation display. I'm not checking if the screen is mobile or not bcz the it isnt making much here, so an if
+    // check wouldn't make any difference in performance for desktop screens
+    this.userItemsStore.OpenMobileNavigation();
   }
 }

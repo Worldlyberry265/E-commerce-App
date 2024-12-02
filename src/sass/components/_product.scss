@@ -21,15 +21,25 @@
     font-size: 3rem;
     text-align: center;
     position: relative;
+
+    @include respond(mobile) {
+      padding-top: 2rem;
+    }
   }
   &__main-content {
-    display: flex;
-    justify-content: center;
-    gap: 5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 50vw;
+    margin: 0 auto;
+
+    grid-template-rows: repeat(auto, fit-content);
+
     @include respond(mobile) {
-      flex-direction: column;
+      width: 100vw;
+      justify-items: center;
       align-items: center;
     }
+
     &--img {
       width: fit-content;
       height: 50vh;
@@ -38,9 +48,9 @@
       padding: 5rem 0;
 
       @include respond(mobile) {
-        width: 100%;
+        grid-column: 1 / -1;
         height: 30vh;
-        padding: 3rem 0;
+        padding: 0;
       }
     }
 
@@ -53,6 +63,8 @@
         justify-content: center;
         align-items: center;
         gap: 5rem;
+
+        grid-column: 1 / -1;
       }
     }
     &--list {
@@ -103,23 +115,22 @@
     &--navigation {
       display: flex;
       justify-content: space-between;
-      // gap: 4rem;
 
+      @include respond(mobile) {
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: stretch;
+        align-items: center;
+      }
       &--quantity {
-        cursor: pointer;
         font-size: 3rem;
         display: flex;
         align-items: center;
         gap: 2rem;
-        flex-basis: 25%;
+        justify-content: space-between;
 
-        span {
-          flex-grow: 1;
-        }
-
-        div {
-          display: flex;
-          gap: 1rem;
+        i {
+          cursor: pointer;
           color: $primary;
         }
       }
@@ -127,16 +138,26 @@
       &--buttons-container {
         display: flex;
         justify-content: space-between;
-        flex-grow: 1;
-        margin-left: 2rem;
+        gap: 2rem;
       }
 
       &--button {
         font-size: 2rem !important;
         text-wrap: nowrap;
 
+        &-heart {
+          font-size: 2rem !important;
+          text-wrap: nowrap;
+          width: 10rem;
+        }
+
+        &-cart {
+          font-size: 2rem !important;
+          text-wrap: nowrap;
+          width: 21.6rem;
+        }
+
         &-added {
-          // background-color: $warn-2 !important;
           background-color: $success-color !important;
         }
 
@@ -152,10 +173,12 @@
     flex-direction: column;
     font-size: 1.5rem;
     align-items: center;
+    grid-column: 1 / -1;
 
     @include respond(mobile) {
-      @include absCenter;
-      top: 45%;
+      grid-row: 2/3;
+      margin-bottom: 2rem;
+      font-size: 2rem;
     }
   }
 

@@ -25,9 +25,6 @@
   }
 
   &__form {
-
-  
-
     &__container {
       position: relative;
       overflow: hidden;
@@ -36,12 +33,10 @@
       @include respond(mobile) {
         margin-right: 0;
       }
-    
+
       &--background {
         width: 41.5rem;
         height: 100vh;
-        
-       
       }
     }
 
@@ -55,7 +50,6 @@
     // flex: 0 0 20%;
     @include absCenter;
 
-
     @include respond(mobile) {
       width: 70vw !important;
     }
@@ -68,20 +62,35 @@
         font-size: 2rem;
         margin-right: 1rem;
       }
+
+      @include respond(mobile) {
+        height: 7.5rem !important;
+      }
     }
     &--input {
       font-size: 1.6rem !important;
 
+      @include respond(mobile) {
+        font-size: 2rem !important;
+      }
     }
 
     &--label {
       font-size: 1.5rem !important;
+
+      @include respond(mobile) {
+        font-size: 2rem !important;
+      }
     }
 
     &--error {
       font-size: 1.2rem !important;
       line-height: 1.5rem !important;
       margin-left: -1.5rem;
+
+      @include respond(mobile) {
+        font-size: 1.5rem !important;
+      }
     }
 
     &--alternative-text {
@@ -111,21 +120,21 @@
 
       a {
         text-decoration: none;
-        color:$link-color;
+        color: $link-color;
       }
     }
 
     &--reset-link {
-      color:  $link-color;
+      color: $link-color;
       font-size: 1.5rem;
       text-align: center;
       cursor: pointer;
       padding: 1rem 0;
       margin: -1rem 0;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
 
       &:hover {
-        box-shadow: inset  0 0 3.5rem rgba($text-soft-cyan, 0.4);
+        box-shadow: inset 0 0 3.5rem rgba($text-soft-cyan, 0.4);
       }
     }
   }

@@ -7,12 +7,16 @@ import { Product } from '../../models/Product';
 import { ProductStore } from '../../store/product.store';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { UserItemsStore } from '../../store/user-items.store';
+import { AuthStore } from '../../store/auth.store';
+import { MatDialog } from '@angular/material/dialog';
+import { PreviewComponent } from '../../components/preview/preview.component';
+import { ProductNavComponent } from '../../components/products/product-nav/product-nav.component';
 
 
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [HeaderComponent, ProductRatingComponent, MatButtonModule, CommonModule, MatProgressSpinnerModule],
+  imports: [HeaderComponent, ProductRatingComponent, MatButtonModule, CommonModule, MatProgressSpinnerModule, ProductNavComponent],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss'
 })
@@ -48,7 +52,11 @@ export class ProductPageComponent implements OnInit {
   ImageIndex = 4;
 
   protected productStore = inject(ProductStore);
+  protected authStore = inject(AuthStore);
   private userItemsStore = inject(UserItemsStore);
+
+  readonly dialog = inject(MatDialog);
+
 
   constructor() {
     effect(() => {
@@ -116,16 +124,28 @@ export class ProductPageComponent implements OnInit {
   }
 
   onAlterSavedItems() {
-    if (this.itemSaved()) {
-      this.userItemsStore.RemoveSavedItem(this.product()!);
-      this.itemSaved.update(state => !state);
+    if (this.authStore.jwt()) {
+      if (this.itemSaved()) {
+        this.userItemsStore.RemoveSavedItem(this.product()!);
+        this.itemSaved.update(state => !state);
+      } else {
+        this.userItemsStore.SaveItem(this.product()!);
+        this.itemSaved.update(state => !state);
+      }
     } else {
-      this.userItemsStore.SaveItem(this.product()!);
-      this.itemSaved.update(state => !state);
+      // If the user isnt logged in then we cant save his item and ask him to sign in
+      this.dialog.open(PreviewComponent, {
+        panelClass: 'preview',
+        data: { DialogType: 'heart' }
+      });
     }
+
+
+
+
   }
 
-  decrementQuantity() {
+  onDecrementQuantity() {
     if (this.product()!.quantity > 1) {
       this.product.update(state => ({
         ...state,
@@ -134,7 +154,7 @@ export class ProductPageComponent implements OnInit {
     }
   }
 
-  incrementQuantity() {
+  onIncrementQuantity() {
     this.product.update(state => ({
       ...state,
       quantity: state!.quantity === undefined ? 2 : ++state!.quantity  // The 1st increment the quantity will be undefined

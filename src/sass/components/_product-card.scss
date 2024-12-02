@@ -1,21 +1,11 @@
 .product-cards__container {
-  // margin: 0 auto;
   padding: 5rem 0 0 0;
   display: flex;
-  // justify-content: space-evenly;
-  // width: fit;
-  // width: 95vw;
   gap: 5rem;
   position: relative;
   list-style-type: none;
   scroll-behavior: smooth;
   overflow-x: auto;
-
-  // height: 47rem;
-
-  // @include respond(mobile) {
-  //   // justify-content: space-around;
-  // }
 
   &--spinner {
     margin: 5rem auto;
@@ -23,13 +13,6 @@
 }
 
 .product-card {
-  // cursor: pointer;
-  // display: flex;
-  // flex-direction: column;
-  // gap: 2rem;
-  // justify-content: center;
-  // padding: 2.5rem;
-  
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -49,7 +32,6 @@
   }
 
   &:hover {
-
     @include respond(desktop) {
       box-shadow: 0 0 35px rgba(140, 152, 164, 0.75);
       transform: translateY(-1rem);
@@ -62,21 +44,16 @@
     color: inherit;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     justify-content: center;
     align-items: center;
     padding: 1.5rem 1.5rem 0 1.5rem;
+    height: 100%;
   }
 
   &__img {
-    // padding: 2rem;
-    // width: calc(100% - 4rem);
-    //   width: 100%;
-    // padding: 5rem 2rem;
     height: 20rem;
     width: 20rem;
     object-fit: contain;
-
 
     @include respond(mobile) {
       height: 15rem;
@@ -86,6 +63,7 @@
 
   &__ratings {
     font-size: 1.2rem;
+    margin: 1rem 0;
   }
 
   &__caption {
@@ -93,39 +71,29 @@
     text-align: center;
     max-height: 10rem;
     overflow-y: hidden;
-    // margin-bottom: 2rem;
-    //   font-family: $title-font;
-
-    //   @include respond(Iphone) {
-    //     font-size: 2.3rem;
-    //   }
   }
 
   &__price {
     font-size: 2rem;
     color: $currency-color;
     font-weight: 500;
+    margin-top: auto;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
   }
 
   &__nav {
-    // width: 100%;
     gap: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &--item {
-      // fill: white;
-      // fill: $primary-dark;
       fill: $tertiary-accent;
-      //   color: red;
       width: 3rem;
       height: 3rem;
       cursor: pointer;
       transition: all 0.5s;
-
-      // stroke: transparent;
-      // stroke-width: 1.5rem;
 
       &-active {
         &-heart {
@@ -138,9 +106,6 @@
       }
       @include respond(desktop) {
         &:hover {
-          // fill: $primary-dark;
-          // stroke: white;
-          // stroke-width: 1.5rem;
           transform: scale(1.1);
         }
         &-heart {

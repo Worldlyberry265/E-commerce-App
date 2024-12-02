@@ -6,21 +6,13 @@ import { ProductStore } from './product.store';
 type UserItemsState = {
     cartItems: Product[],
     savedItems: Product[],
-    removedItemId: number, // To toggle the item icons from the dialog preview,
-    selectedItemIcon: {
-        Id: number,
-        type: 'heart' | 'cart'
-    }
+    isPreviewDisplayed: boolean,
 }
 
 const initialState: UserItemsState = {
     cartItems: [],
     savedItems: [],
-    removedItemId: 0,
-    selectedItemIcon: {
-        Id: -1,
-        type: 'heart'
-    }
+    isPreviewDisplayed: false,
 };
 
 export const UserItemsStore = signalStore(
@@ -51,9 +43,12 @@ export const UserItemsStore = signalStore(
                 ({ cartItems: state.cartItems.filter(productItem => productItem.id != product.id) }));
             localStorage.setItem('products-cart', JSON.stringify(store.cartItems()));
         }
-        function updateCart(products: Product[]) {
+        function UpdateCart(products: Product[]) {
             patchState(store, { cartItems: products });
             localStorage.setItem('products-cart', JSON.stringify(store.cartItems()));
+        }
+        function DeleteSavedItems() {
+            patchState(store, { savedItems: [] });
         }
         function IsItemInCart(productId: number) {
             return store.cartItems().find(product => product.id === productId) === undefined ? false : true;
@@ -61,8 +56,20 @@ export const UserItemsStore = signalStore(
         function IsItemSaved(productId: number) {
             return store.savedItems().find(product => product.id === productId) === undefined ? false : true;
         }
+        // !!! METHODS FOR MOBILE DISPLAY ONLY
+        function CloseMobileNavigation() {
+            patchState(store, { isPreviewDisplayed: true });
+        }
+        function OpenMobileNavigation() {
+            patchState(store, { isPreviewDisplayed: false });
+        }
+        // METHODS FOR MOBILE DISPLAY ONLY !!!
 
-        return { SaveItem, AddItemToCart, RemoveSavedItem, RemoveItemFromCart, updateCart, IsItemInCart, getCart, IsItemSaved };
+
+        return {
+            SaveItem, AddItemToCart, RemoveSavedItem, RemoveItemFromCart, UpdateCart, DeleteSavedItems, IsItemInCart, getCart, IsItemSaved,
+            CloseMobileNavigation, OpenMobileNavigation
+        };
     })
 
 );

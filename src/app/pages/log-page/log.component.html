@@ -21,7 +21,7 @@
                 @if (emailFormControl.hasError('required')) {
                 <mat-error class="log__form--error">Please enter an email.</mat-error>
                 }
-                 @else if (emailFormControl.hasError('startsWithLetter')) {
+                @else if (emailFormControl.hasError('startsWithLetter')) {
                 <mat-error class="log__form--error">The email should start with a letter.</mat-error>
                 } @else if (emailFormControl.hasError('noSpecialCharacters')) {
                 <mat-error class="log__form--error">The email can have only these types of special characters
@@ -44,7 +44,7 @@
             </mat-form-field>
 
 
-            <button [disabled]="emailFormControl.invalid" (click)="signingWithEmail()" mat-flat-button type="button"
+            <button [disabled]="emailFormControl.invalid" (click)="onSigningWithEmail()" mat-flat-button type="button"
                 type="submit" class="log__button">Continue with email </button>
 
             <div class="log__form--alternative-text--container">
@@ -102,11 +102,12 @@
 
             <mat-form-field class="log__form--field">
                 <mat-label class="log__form--label">Enter Your Password</mat-label>
-                <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Enter Your Password*" autocomplete="off"
-                    [formControl]="passwordFormControl" matInput name="password" class="log__form--input" required>
+                <input [type]="showPass() === false ? 'password' : 'text' " placeholder="Enter Your Password*"
+                    autocomplete="off" [formControl]="passwordFormControl" matInput name="password"
+                    class="log__form--input" required>
 
                 <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"
-                    (click)="togglePasswordVisibility()"></i>
+                    (click)="onTogglePasswordVisibility()"></i>
 
                 @if (passwordFormControl.hasError('required')) {
                 <mat-error class="log__form--error">Please enter a password</mat-error>
@@ -134,7 +135,7 @@
                     class="log__form--input" required>
 
                 <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"
-                    (click)="togglePasswordVisibility()"></i>
+                    (click)="onTogglePasswordVisibility()"></i>
 
                 @if (passwordConfirmationFormControl.hasError('passwordMismatch')) {
                 <mat-error class="log__form--error">Please match the password</mat-error>
@@ -152,7 +153,7 @@
             @if (!authStore.emailNotFound()) {
             <p (click)="onResetPassword()" class="log__form--reset-link">Forgot your password?</p>
             }
-            <p (click)="changeEmail()" class="log__form--reset-link">Change Email?</p>
+            <p (click)="onChangeEmail()" class="log__form--reset-link">Change Email?</p>
 
             <hr>
             <p class="log__form--text">By signing in or creating an account, you agree with our
