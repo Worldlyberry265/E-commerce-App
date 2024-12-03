@@ -5,11 +5,10 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
 import { productResolver } from './services/product-resolver';
 
 
-export const routes: Routes = [ 
-    {path: 'homepage' , component: LandingPageComponent},
-    {path: 'register' , component: LogComponent},
-    {path: 'login' , component: LogComponent},
-    {path: 'resetpassword' , component: LogComponent},
-    {path: 'product/:id' , component: ProductPageComponent , resolve: { product : productResolver}},
-    {path: '**' , redirectTo: 'homepage'}
+export const routes: Routes = [
+    { path: 'homepage', component: LandingPageComponent },
+    { path: 'register', component: LogComponent },
+    { path: 'login', component: LogComponent },
+    { path: 'product/:id', component: ProductPageComponent, resolve: { product: productResolver } },
+    { path: '**', redirectTo: 'homepage' }
 ];

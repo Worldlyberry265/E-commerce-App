@@ -755,7 +755,7 @@ body ::selection {
 }
 .product__main-content--navigation {
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
 }
 @media (max-width: 28.125em) {
   .product__main-content--navigation {
@@ -769,12 +769,17 @@ body ::selection {
   font-size: 3rem;
   display: flex;
   align-items: center;
-  gap: 2rem;
   justify-content: space-between;
+  flex-grow: 1;
 }
 .product__main-content--navigation--quantity i {
   cursor: pointer;
   color: #007BFF;
+}
+@media (max-width: 28.125em) {
+  .product__main-content--navigation--quantity {
+    width: 100%;
+  }
 }
 .product__main-content--navigation--buttons-container {
   display: flex;
@@ -1254,23 +1259,28 @@ body ::selection {
   gap: 3rem;
   padding-top: 2rem;
 }
-.weather__icon--svg-sunny {
+.weather__icon--svg {
   width: 10rem;
   height: 10rem;
-  fill: gold;
   animation: shine 2s infinite ease-in-out;
 }
-.weather__icon--svg-drizzle {
-  width: 10rem;
-  height: 10rem;
+.weather__icon--svg-sunny {
+  fill: gold;
+}
+.weather__icon--svg-cloudy {
+  fill: #6f90ba;
+}
+.weather__icon--svg-foggy {
+  fill: #092e5e;
+}
+.weather__icon--svg-rainy {
   fill: #355279;
-  animation: shine 2s infinite ease-in-out;
+}
+.weather__icon--svg-snowy {
+  fill: #99b9e1;
 }
 .weather__icon--svg-thunder {
-  width: 10rem;
-  height: 10rem;
-  fill: #6487b5;
-  animation: shine 2s infinite ease-in-out;
+  fill: #081f3e;
 }
 
 .section-advised-products {

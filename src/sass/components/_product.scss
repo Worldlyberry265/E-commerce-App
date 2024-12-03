@@ -114,7 +114,8 @@
 
     &--navigation {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
+      gap: 1rem;
 
       @include respond(mobile) {
         flex-direction: column;
@@ -126,12 +127,17 @@
         font-size: 3rem;
         display: flex;
         align-items: center;
-        gap: 2rem;
+        // The 2 following properties so the elements doesnt move when the quantity becomes double digit and it requires more space
         justify-content: space-between;
+        flex-grow: 1;
 
         i {
           cursor: pointer;
           color: $primary;
+        }
+
+        @include respond(mobile) {
+          width: 100%;
         }
       }
 

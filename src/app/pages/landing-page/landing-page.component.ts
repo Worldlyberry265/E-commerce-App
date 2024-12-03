@@ -7,6 +7,7 @@ import { ProductStore } from "../../store/product.store";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { Product } from "../../models/Product";
 import { UserItemsStore } from "../../store/user-items.store";
+import { WeatherStore } from "../../store/weather.store";
 
 @Component({
   selector: 'app-landing-page',
@@ -22,8 +23,10 @@ import { UserItemsStore } from "../../store/user-items.store";
 export class LandingPageComponent implements OnInit, AfterViewInit {
 
   protected readonly productStore = inject(ProductStore);
-  private readonly userItemsStore = inject(UserItemsStore);
-  Weather = 1;
+  private readonly weatherStore = inject(WeatherStore);
+
+  weather = signal(-1);
+  weatherType = signal<('sunny' | 'cloudy' | 'foggy' | 'rainy' | 'snowy' | 'thunders' | '')>('');
   searchedProduct = ''; // I NEED TO MANUALLY TRIGGER CHANGE DETECTION !!!!!!!!!!!
 
   productsSection!: HTMLUListElement;
@@ -43,6 +46,58 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     scrollContainer.scrollLeft += event.deltaY * 10; // Scroll horizontally
   };
   constructor() {
+
+    effect(() => {
+      if (this.weatherStore.weatherCodes()) {
+        const weatherCodes = this.weatherStore.weatherCodes();
+        // We start from 2, assuming the delivery needs 2 days, so the user wont be interested in the weather for the next 2 days
+        for (let i = 2; i < weatherCodes.length; i++) {
+          // Check if the weather has something special like rain,snow,fog, etc.
+          if (weatherCodes[i] >= 50) {
+            this.weather.set(weatherCodes[i]);
+          }
+        }
+        // else we pick the 4th date as its in the middle of the week and assuming the delivery will take up to 2 days to deliver the product
+        if (this.weather() === -1 && weatherCodes.length != 0) {
+          // -1 means the for loop didnt change the initial value of the weather
+          // weatherCodes.length != 0 to not enter an infinite loop
+          this.weather.set(weatherCodes[2]);
+        }
+
+        // I'm picking the Ids according to the most suitable option out there, so there is some redundancy bcz there isn't much products 
+        // found in fakeStoreApi
+        if (this.weather() != -1) {
+          if (this.weather() === 0 || this.weather() === 1) {
+            this.weatherType.set('sunny');
+            this.weatherStore.GetFramedProducts({ menProducId: 2, womenProductId: 20 });
+          } else if (this.weather() === 2 || this.weather() === 3) {
+            this.weatherType.set('cloudy');
+            this.weatherStore.GetFramedProducts({ menProducId: 2, womenProductId: 19 });
+          } else if (this.weather() >= 4 && this.weather() <= 47) {
+            this.weatherType.set('foggy');
+            this.weatherStore.GetFramedProducts({ menProducId: 4, womenProductId: 17 });
+          } else if ((this.weather() >= 50 && this.weather() <= 69) || (this.weather() >= 80 && this.weather() <= 82)) {
+            this.weatherType.set('rainy');
+            this.weatherStore.GetFramedProducts({ menProducId: 4, womenProductId: 16 });
+          } else if (this.weather() >= 70 && this.weather() <= 79) {
+            this.weatherType.set('snowy');
+            this.weatherStore.GetFramedProducts({ menProducId: 3, womenProductId: 15 });
+          } else if (this.weather() >= 83 && this.weather() <= 89) {
+            this.weatherType.set('thunders');
+            this.weatherStore.GetFramedProducts({ menProducId: 3, womenProductId: 15 });
+          }
+
+
+        }
+        console.log("from landng");
+        console.log(this.weather());
+
+
+      }
+
+    }, { allowSignalWrites: true });
+
+
     effect(() => {
       const products = this.productStore.products();
       const searchedProducts = this.productStore.searchedProducts();
@@ -58,7 +113,13 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.productStore.FetchAllProducts();
+    if (this.productStore.products() === null) {
+      this.productStore.FetchAllProducts();
+    }
+
+    if (this.weatherStore.weatherCodes().length === 0) {
+      this.weatherStore.GetWeatherCodes();
+    }
   }
 
   ngAfterViewInit(): void {

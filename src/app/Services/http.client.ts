@@ -16,37 +16,28 @@ export class HttpClientService {
 
   // The postLogin takes an object in the parameters in the form of username and password which are both strings.
   // It expects the return type to be an object which has only a string variable called token.
-  postLogin( {username , password} : {username : string , password : String}): Observable<{token : string}> {
-    return this.http.post<{token : string}>(this.endpointGetterService.getLoginUrl(), {username : username , password : password});
+  postLogin({ username, password }: { username: string, password: String }): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(this.endpointGetterService.getLoginUrl(), { username: username, password: password });
   }
 
-  postAddUser( user : User) {
-    return this.http.post<{id : number}>(this.endpointGetterService.getAddUserUrl(), {username : user.email , password : user.password})
+  postAddUser(user: User) {
+    return this.http.post<{ id: number }>(this.endpointGetterService.getAddUserUrl(), { username: user.email, password: user.password })
   }
 
   getAllProducts() {
     return this.http.get<Product[]>(this.endpointGetterService.getAllProductsUrl());
   }
 
-  getProduct(id : number) { // or null, take care
+  getProduct(id: number) { // or null, take care
     return this.http.get<Product>(this.endpointGetterService.getProductUrl(id));
   }
 
-  getCategoryProducts(category : string) {
+  getCategoryProducts(category: string) {
     return this.http.get<Product[]>(this.endpointGetterService.getCategoryProducts(category));
   }
-
-
-
-//   login(loginData): Observable<string> {
-//     return this.http.post(this.LoginURL, loginData, { responseType: "text" });
-// }
-
-//   getSingleUser(Id: number): Observable<any> {
-//     return this.http.get<User>(SingleUserURL + Id);
-//   }
-
-
+  getWeatherCodes(coordinates: { latitude: number, longitude: number }) {
+    return this.http.get(this.endpointGetterService.getWeatherCodes(coordinates));
+  }
 
 }
 
