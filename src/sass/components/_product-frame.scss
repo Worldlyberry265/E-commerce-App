@@ -7,10 +7,8 @@
   justify-content: center;
 }
 
-.product__frame {
-  cursor: pointer;
+.product-frame {
   width: 50%;
-  // margin: 0 auto;
   box-shadow: 0 3rem 6rem rgba(black, 0.1); // 3 in Y direction 6 for blur
   background-color: rgba(white, 0.6);
   border-radius: 3px;
@@ -19,67 +17,117 @@
   transform: skewX(-12deg);
 
   @include respond(mobile) {
+    flex: 1; // to make them have same size
     transform: skewX(0);
     padding: 3rem 6rem;
     font-size: 1.7rem;
-    // box-shadow: 0 3rem 6rem rgba(black, 0.2);
-  }
 
-  &--figure {
-    width: 15rem;
-    height: 15rem;
-    float: left;
-    transform: translateX(-3rem) skewX(12deg);
-    position: relative;
-    overflow: hidden;
-    border-radius: 50%;
-
-    @include respond(mobile) {
-      transform: skewX(0);
-      width: 10rem;
-      height: 10rem;
-      margin-right: 2rem;
+    &:first-of-type {
+      margin-top: 2rem;
+    }
+    &:last-of-type {
+      margin-bottom: 2rem;
     }
   }
 
-  &--img {
+  &__figure {
+    width: 15rem;
+    height: 15rem;
+    float: left;
+    transform: skewX(12deg);
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 2rem;
+
+    @include respond(mobile) {
+      float: none;
+      transform: skewX(0);
+      width: 10rem;
+      height: 10rem;
+      // margin-right: 2rem;
+      margin: 0 auto;
+    }
+  }
+
+  &__img {
     height: 100%;
-    // width: 100%;
-    transform: translateX(-4rem) scale(1.1);
+    width: 100%;
+    transform: scale(1.1);
     backface-visibility: hidden;
     transition: all 0.8s;
     object-fit: contain;
+    border-radius: 50%;
 
     &-active {
       @include respond(mobile) {
-        transform: translateX(-4rem) scale(0.9);
+        transform: scale(0.9);
         filter: blur(3px) brightness(80%);
       }
     }
   }
 
-  &--text {
+  &__text-nav-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     transform: skewX(12deg);
-    
-    &-title {
-      margin-top: 1.5rem;
-    }
     @include respond(mobile) {
       transform: skewX(0);
+      text-align: center;
     }
   }
 
-  &--caption {
-   @include absCenter;
-    // color: white;
-    // text-transform: uppercase;
-    font-size: 1rem;
+  &__text {
+    // will-change: transform; // to avoid glitches on the text while hovering over the whole frame
+    // @include respond(desktop) {
+    //   &:hover .product-frame__caption {
+    //     opacity: 1;
+    //     transform: translate(-50%, -50%);
+    //   }
+    // }
+
+    // @include respond(desktop) {
+    //   &:hover .product-frame__img {
+    //     transform: scale(0.9);
+    //     filter: blur(3px) brightness(80%);
+    // }
+    // }
+
+    &-title {
+      // margin-top: 1.5rem;
+    }
+  }
+
+  &__navigation-link {
+    // transform: skewX(12deg);
+    will-change: transform; // to avoid glitches on the text while hovering over the whole frame
     // text-align: center;
+    color: $link-color;
+    text-decoration: none;
+    transition: all 1s;
+    box-sizing: border-box;
+    width: fit-content;
+    font-weight: 500;
+    font-size: 2.5rem;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    @include respond(mobile) {
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  &__caption {
+    @include absCenter;
+    font-size: 1rem;
     opacity: 0;
     transition: all 0.5s;
     backface-visibility: hidden;
-    // display: flex;
-    // flex-direction: column;
     color: white;
 
     &-active {
@@ -91,17 +139,16 @@
   }
 
   @include respond(desktop) {
-    &:hover &--caption {
+    &:hover &__caption {
       opacity: 1;
       transform: translate(-50%, -50%);
     }
   }
 
   @include respond(desktop) {
-    &:hover &--img {
-      transform: translateX(-4rem) scale(0.9);
+    &:hover &__img {
+      transform: scale(0.9);
       filter: blur(3px) brightness(80%);
     }
   }
-
 }

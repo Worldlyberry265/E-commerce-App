@@ -131,12 +131,19 @@
 
   &__total-price {
     &--container {
-      box-sizing: border-box;
+      display: flex;
+      width: 50%;
+      margin: 0 auto;
       font-size: 2rem;
       font-weight: 500;
-      display: flex;
-      justify-content: space-around;
       padding-top: 1rem;
+    }
+
+    &--label {
+      margin-right: auto;
+    }
+
+    &--value {
     }
   }
 }

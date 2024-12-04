@@ -16,13 +16,13 @@
     opacity: 0.5;
   }
   100% {
-    left: 10%;
+    left: 0%;
     opacity: 1;
   }
 }
 @keyframes easetoRight {
   0% {
-    left: 90%;
+    left: 80%;
     opacity: 1;
   }
   100% {
@@ -428,14 +428,16 @@ body ::selection {
   font-size: 2rem !important;
 }
 .preview__total-price--container {
-  box-sizing: border-box;
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
   font-size: 2rem;
   font-weight: 500;
-  display: flex;
-  justify-content: space-around;
   padding-top: 1rem;
 }
-
+.preview__total-price--label {
+  margin-right: auto;
+}
 .product-cards__container {
   padding: 5rem 0 0 0;
   display: flex;
@@ -556,8 +558,7 @@ body ::selection {
   justify-content: center;
 }
 
-.product__frame {
-  cursor: pointer;
+.product-frame {
   width: 50%;
   box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.6);
@@ -567,54 +568,86 @@ body ::selection {
   transform: skewX(-12deg);
 }
 @media (max-width: 28.125em) {
-  .product__frame {
+  .product-frame {
+    flex: 1;
     transform: skewX(0);
     padding: 3rem 6rem;
     font-size: 1.7rem;
   }
+  .product-frame:first-of-type {
+    margin-top: 2rem;
+  }
+  .product-frame:last-of-type {
+    margin-bottom: 2rem;
+  }
 }
-.product__frame--figure {
+.product-frame__figure {
   width: 15rem;
   height: 15rem;
   float: left;
-  transform: translateX(-3rem) skewX(12deg);
+  transform: skewX(12deg);
   position: relative;
   overflow: hidden;
   border-radius: 50%;
+  margin-right: 2rem;
 }
 @media (max-width: 28.125em) {
-  .product__frame--figure {
+  .product-frame__figure {
+    float: none;
     transform: skewX(0);
     width: 10rem;
     height: 10rem;
-    margin-right: 2rem;
+    margin: 0 auto;
   }
 }
-.product__frame--img {
+.product-frame__img {
   height: 100%;
-  transform: translateX(-4rem) scale(1.1);
+  width: 100%;
+  transform: scale(1.1);
   backface-visibility: hidden;
   transition: all 0.8s;
   object-fit: contain;
+  border-radius: 50%;
 }
 @media (max-width: 28.125em) {
-  .product__frame--img-active {
-    transform: translateX(-4rem) scale(0.9);
+  .product-frame__img-active {
+    transform: scale(0.9);
     filter: blur(3px) brightness(80%);
   }
 }
-.product__frame--text {
+.product-frame__text-nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   transform: skewX(12deg);
 }
-.product__frame--text-title {
-  margin-top: 1.5rem;
-}
 @media (max-width: 28.125em) {
-  .product__frame--text {
+  .product-frame__text-nav-wrapper {
     transform: skewX(0);
+    text-align: center;
   }
 }
-.product__frame--caption {
+.product-frame__navigation-link {
+  will-change: transform;
+  color: #006ce4;
+  text-decoration: none;
+  transition: all 1s;
+  box-sizing: border-box;
+  width: fit-content;
+  font-weight: 500;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+.product-frame__navigation-link:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 28.125em) {
+  .product-frame__navigation-link {
+    text-align: center;
+    width: 100%;
+  }
+}
+.product-frame__caption {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -626,20 +659,20 @@ body ::selection {
   color: white;
 }
 @media (max-width: 28.125em) {
-  .product__frame--caption-active {
+  .product-frame__caption-active {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
 }
 @media (min-width: 37.5em) {
-  .product__frame:hover .product__frame--caption {
+  .product-frame:hover .product-frame__caption {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
 }
 @media (min-width: 37.5em) {
-  .product__frame:hover .product__frame--img {
-    transform: translateX(-4rem) scale(0.9);
+  .product-frame:hover .product-frame__img {
+    transform: scale(0.9);
     filter: blur(3px) brightness(80%);
   }
 }
@@ -834,11 +867,12 @@ body ::selection {
   }
 }
 .product__related--title {
+  text-transform: capitalize;
   font-size: 3rem;
   text-align: center;
   font-weight: 500;
   position: relative;
-  width: fit-content;
+  width: 90vw;
   margin: 0 auto;
   margin-bottom: 5rem;
 }
@@ -854,30 +888,32 @@ body ::selection {
 }
 .product__related--item {
   position: absolute;
+  text-decoration: none;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   transition: left 0.5s;
 }
-.product__related--item--title {
+.product__related--item--price {
   font-size: 2rem;
+  color: goldenrod;
 }
 .product__related--item--img {
-  width: 10rem;
-  height: 10rem;
+  width: 15rem;
+  height: 15rem;
   object-fit: contain;
 }
 @media (max-width: 28.125em) {
-  .product__related--item {
-    object-fit: scale-down;
+  .product__related--item--img {
+    width: 10rem;
     max-height: 9rem;
   }
 }
 .product__related--item-0 {
-  left: 10%;
+  left: 0%;
   animation: easefromLeft 0.5s;
-  margin-right: 3rem;
   width: calc(20% - 2.4rem);
 }
 @media (max-width: 28.125em) {
@@ -890,8 +926,7 @@ body ::selection {
   }
 }
 .product__related--item-1 {
-  left: 30%;
-  margin-right: 3rem;
+  left: 20%;
   width: calc(20% - 2.4rem);
 }
 @media (max-width: 28.125em) {
@@ -903,8 +938,7 @@ body ::selection {
   }
 }
 .product__related--item-2 {
-  left: 50%;
-  margin-right: 3rem;
+  left: 40%;
   width: calc(20% - 2.4rem);
 }
 @media (max-width: 28.125em) {
@@ -915,8 +949,7 @@ body ::selection {
   }
 }
 .product__related--item-3 {
-  left: 70%;
-  margin-right: 3rem;
+  left: 60%;
   width: calc(20% - 2.4rem);
 }
 @media (max-width: 28.125em) {
@@ -929,7 +962,7 @@ body ::selection {
   }
 }
 .product__related--item-4 {
-  left: 90%;
+  left: 80%;
   animation: easetoRight 0.4s;
   animation-delay: 1.9s;
   width: calc(20% - 2.4rem);
@@ -1484,27 +1517,24 @@ body ::selection {
 }
 
 .section-product-info {
-  min-height: 100vh;
-  position: relative;
   margin-top: 5rem;
+  min-height: calc(100vh - 10.2rem);
+  position: relative;
 }
 @media (max-width: 28.125em) {
   .section-product-info {
     margin-top: 0;
+    min-height: calc(100vh - 5.2rem);
   }
 }
 
 .section-related-products {
   position: relative;
-  padding: 0rem 0 10rem 0;
-  width: 90vw;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 15vh;
+  padding: 5rem 0 20rem 0;
 }
 @media (max-width: 28.125em) {
   .section-related-products {
-    padding-top: 5rem;
+    padding: 5rem 0 10rem 0;
   }
 }
 

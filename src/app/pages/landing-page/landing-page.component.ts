@@ -23,7 +23,7 @@ import { WeatherStore } from "../../store/weather.store";
 export class LandingPageComponent implements OnInit, AfterViewInit {
 
   protected readonly productStore = inject(ProductStore);
-  private readonly weatherStore = inject(WeatherStore);
+  protected readonly weatherStore = inject(WeatherStore);
 
   weather = signal(-1);
   weatherType = signal<('sunny' | 'cloudy' | 'foggy' | 'rainy' | 'snowy' | 'thunders' | '')>('');
@@ -86,15 +86,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
             this.weatherType.set('thunders');
             this.weatherStore.GetFramedProducts({ menProducId: 3, womenProductId: 15 });
           }
-
-
         }
-        console.log("from landng");
-        console.log(this.weather());
-
-
       }
-
     }, { allowSignalWrites: true });
 
 

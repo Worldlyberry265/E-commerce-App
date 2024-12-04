@@ -32,6 +32,8 @@ export const WeatherStore = signalStore(
                             RequestWeatherCodes({ latitude: position.coords.latitude, longitude: position.coords.longitude })
                         },
                         (error) => {
+                            // If the user didn't allow us to get his location, we advertise any 2 products
+                            GetFramedProducts({ menProducId: 1, womenProductId: 20 });
                             alert(error.message);
                         }
 
@@ -40,6 +42,7 @@ export const WeatherStore = signalStore(
             )
         );
 
+        // private method
         const RequestWeatherCodes = rxMethod<{ latitude: number, longitude: number }>(
             pipe(
                 exhaustMap((coordinates: { latitude: number, longitude: number }) => {
@@ -78,13 +81,7 @@ export const WeatherStore = signalStore(
                 })
             )
         );
-
-
-
-
-
         return { GetWeatherCodes, GetFramedProducts }
-
     }),
 
 );

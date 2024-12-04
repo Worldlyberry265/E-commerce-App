@@ -1,27 +1,23 @@
-<figure class="product__frame--figure">
-  <img src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg" alt="Product Frame Img" class="product__frame--img"
-    [ngClass]="{'product__frame--img-active': triggeredCaption}" />
-  <figcaption appReview [stars]="4.5" [reviewsCount]="200" class="product__frame--caption"
-    [ngClass]="{'product__frame--caption-active': triggeredCaption}">
-
-    <!-- <span class="product__frame--caption-stars"> 4.5 ★★★★★ </span>
-      <span class="product__frame--caption-review-count">
-        200+ reviews
-      </span> -->
+@if (product()) {
+<figure class="product-frame__figure">
+  <img [src]="product().image" [alt]="product().title" class="product-frame__img"
+    [ngClass]="{'product-frame__img-active': triggeredCaption()}" />
+  <figcaption appReview [stars]="product().rating.rate" [reviewsCount]="product().rating.count"
+    class="product-frame__caption" [ngClass]="{'product-frame__caption-active': triggeredCaption()}">
   </figcaption>
 </figure>
-<div class="product__frame--text">
-  <h3 class="product__frame--text-title u-margin-bottom-small">
-    I had the best week ever with my family
-  </h3>
-  <div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis ex sit
-    quasi unde dolore quos temporibus provident aperiam inventore sint
-    dicta nesciunt quo, accusantium repudiandae fuga, commodi, magni et.
-    Aliquid..
 
-    <!-- <nav [appProductNav]="'Frame-' + Id()" class="product-card__nav"> -->
+<div class="product-frame__text-nav-wrapper">
+  <div class="product-frame__text">
+    <h3 class="product-frame__text-title u-margin-bottom-small">
+      {{ product().title }}
+    </h3>
+    <span>
+      {{ product().description}}
+    </span>
 
-    <!-- </nav> -->
   </div>
+  <a target="_blank" [routerLink]="['/product/' + product().id]" class="product-frame__navigation-link">Check The
+    Product!</a>
 </div>
+}

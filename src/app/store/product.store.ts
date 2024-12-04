@@ -11,6 +11,7 @@ type ProductsState = {
     searchedProducts: Product[] | null; // For the searched products using id or product name
     selectedProduct: Product | null; // For the single selected product for product page
     selectedCategory: string;
+    relatedProducts: Product[] | null; // The related products for the product page
     loading: boolean;
 }
 
@@ -19,6 +20,7 @@ const initialState: ProductsState = {
     searchedProducts: null,
     selectedProduct: null,
     selectedCategory: '',
+    relatedProducts: null,
     loading: false,
 };
 
@@ -38,8 +40,7 @@ export const ProductStore = signalStore(
                 switchMap(() =>
                     httpClient.getAllProducts().pipe(
                         tap((products: Product[]) => {
-                            patchState(store, { products: products, searchedProducts: null, selectedCategory: '', loading: false });
-                            // patchState(store, (State) => ({ products: products, loading: false })); //CHECK THISSSSSSSSSSSSSSSSSSSSSSS
+                            patchState(store, { products: products, relatedProducts: products, searchedProducts: null, selectedCategory: '', loading: false });
                         },
 
                         )

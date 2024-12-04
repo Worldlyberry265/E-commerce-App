@@ -111,10 +111,8 @@
   </div>
 
   <div class="product-frames__container">
-    <!-- <div [appProductFrame]="1" class="product__frame"></div>
-    <div [appProductFrame]="2" class="product__frame"></div> -->
-    <div appProductFrame class="product__frame"></div>
-    <div appProductFrame class="product__frame"></div>
+    <div [appProductFrame]="weatherStore.menFramedProduct()!" class="product-frame"></div>
+    <div [appProductFrame]="weatherStore.womenFramedProduct()!" class="product-frame"></div>
   </div>
 </section>
 

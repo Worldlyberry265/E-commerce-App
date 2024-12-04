@@ -5,9 +5,7 @@
 
   <div class="product-card__ratings" appReview [reviewsCount]="product().rating.count" [stars]="product().rating.rate">
   </div>
-  <span style="font-size: 10rem;">{{product().id}}</span>
   <span class="product-card__caption">{{ product().title }}</span>
-
   <span class="product-card__price">$ {{ product().price }}</span>
 </a>
 <nav [appProductNav]="product()" class="product-card__nav u-margin-bottom-small"></nav>
