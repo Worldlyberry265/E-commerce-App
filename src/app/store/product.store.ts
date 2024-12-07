@@ -27,9 +27,9 @@ const initialState: ProductsState = {
 export const ProductStore = signalStore(
     { providedIn: 'root' },
     withState(initialState),
-    withMethods((store, httpClient = inject(HttpClientService),) => {
+    withMethods((store, httpClient = inject(HttpClientService),) => ({
 
-        const FetchAllProducts = rxMethod<void>(
+        FetchAllProducts: rxMethod<void>(
             pipe(
                 tap(() => {
                     patchState(store, { loading: true });
@@ -47,9 +47,9 @@ export const ProductStore = signalStore(
                     )
                 )
             )
-        );
+        ),
 
-        const FetchCategoryProducts = rxMethod<string>(
+        FetchCategoryProducts: rxMethod<string>(
             pipe(
                 tap(() => {
                     patchState(store, { loading: true });
@@ -65,9 +65,9 @@ export const ProductStore = signalStore(
                     )
                 )
             )
-        );
+        ),
 
-        const SearchForProducts = rxMethod<number | string>(
+        SearchForProducts: rxMethod<number | string>(
             pipe(
                 tap(() => {
                     patchState(store, { loading: true });
@@ -116,20 +116,8 @@ export const ProductStore = signalStore(
                     }
                 })
             )
-        );
+        ),
+    }),
 
-        const SelectProduct = rxMethod<number>(
-            pipe(
-                switchMap((productId: number) => {
-                    return of(SearchForProducts(productId));
-                },
-                )
-            )
-        );
-
-        // All are public bcz they are all called from outside the store.
-        // SearchForProducts is also called from SelectProduct to avoid redundant code
-        return { FetchAllProducts, FetchCategoryProducts, SelectProduct, SearchForProducts };
-    })
-
+    ),
 );

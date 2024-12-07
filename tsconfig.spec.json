@@ -8,6 +8,9 @@
       "jasmine"
     ]
   },
+  "files": [
+    "src/app/unit-tests-config.ts"
+  ],
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"

@@ -20,7 +20,7 @@ export const UserItemsStore = signalStore(
     withState(initialState),
     withMethods((store) => {
 
-        function getCart() {
+        function GetCart() {
             const cart = localStorage.getItem('products-cart');
             if (cart) {
                 patchState(store, { cartItems: JSON.parse(cart) })
@@ -56,18 +56,18 @@ export const UserItemsStore = signalStore(
         function IsItemSaved(productId: number) {
             return store.savedItems().find(product => product.id === productId) === undefined ? false : true;
         }
-        // !!! METHODS FOR MOBILE DISPLAY ONLY
+        //  METHODS FOR MOBILE DISPLAY ONLY
         function CloseMobileNavigation() {
             patchState(store, { isPreviewDisplayed: true });
         }
         function OpenMobileNavigation() {
             patchState(store, { isPreviewDisplayed: false });
         }
-        // METHODS FOR MOBILE DISPLAY ONLY !!!
+        // METHODS FOR MOBILE DISPLAY ONLY 
 
 
         return {
-            SaveItem, AddItemToCart, RemoveSavedItem, RemoveItemFromCart, UpdateCart, DeleteSavedItems, IsItemInCart, getCart, IsItemSaved,
+            SaveItem, AddItemToCart, RemoveSavedItem, RemoveItemFromCart, UpdateCart, DeleteSavedItems, IsItemInCart, GetCart, IsItemSaved,
             CloseMobileNavigation, OpenMobileNavigation
         };
     })
