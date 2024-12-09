@@ -98,7 +98,7 @@ export const ProductStore = signalStore(
                             return of(patchState(store, { loading: false, searchedProducts: [itemInStore] }));
                         } else {
                             return httpClient.getProduct(+productInfo).pipe(
-                                tap((product: Product) => {
+                                tap((product: any) => {
                                     // Im using an if statement instead of an error inside tapResponse bcz the fakestoreapi just doesn't return anything 
                                     // if the product wasn't found, hence null
                                     if (product === null) {
@@ -117,6 +117,10 @@ export const ProductStore = signalStore(
                 })
             )
         ),
+
+        TESTER_METHOD_Populate_Products(products: Product[]) {
+            patchState(store, { products: products });
+        },
     }),
 
     ),

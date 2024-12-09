@@ -32,7 +32,7 @@ export const WeatherStore = signalStore(
                             RequestWeatherCodes({ latitude: position.coords.latitude, longitude: position.coords.longitude })
                         },
                         (error) => {
-                            // If the user didn't allow us to get his location, we advertise any 2 products
+                            // If we didnt have the permission to get the location, we advertise any 2 products
                             GetFramedProducts({ menProducId: 1, womenProductId: 20 });
                             alert(error.message);
                         }
@@ -48,12 +48,10 @@ export const WeatherStore = signalStore(
                 exhaustMap((coordinates: { latitude: number, longitude: number }) => {
                     return httpClient.getWeatherCodes(coordinates).pipe(
                         tapResponse({
-
                             next: (weatherCodes: any) => {
                                 patchState(store, { weatherCodes: weatherCodes.daily.weather_code })
                             },
                             error: () => {
-
                             }
                         })
                     )
@@ -68,12 +66,12 @@ export const WeatherStore = signalStore(
                     // forkJoin allows both requests to run in parallel and ensures the state is updated when both are complete.
                     return forkJoin([
                         httpClient.getProduct(menProducId).pipe(
-                            tap((product: Product) => {
+                            tap((product: Product | null) => {
                                 patchState(store, { menFramedProduct: product });
                             })
                         ),
                         httpClient.getProduct(womenProductId).pipe(
-                            tap((product: Product) => {
+                            tap((product: Product | null) => {
                                 patchState(store, { womenFramedProduct: product });
                             })
                         ),

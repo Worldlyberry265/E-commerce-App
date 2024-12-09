@@ -28,8 +28,8 @@ export class HttpClientService {
     return this.http.get<Product[]>(this.endpointGetterService.getAllProductsUrl());
   }
 
-  getProduct(id: number) { // or null, take care
-    return this.http.get<Product>(this.endpointGetterService.getProductUrl(id));
+  getProduct(id: number) { // Product or null because fakestoreapi returns nothing/null if the product wasnt found
+    return this.http.get<Product | null>(this.endpointGetterService.getProductUrl(id));
   }
 
   getCategoryProducts(category: string) {

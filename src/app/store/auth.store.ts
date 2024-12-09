@@ -54,6 +54,7 @@ export const AuthStore = signalStore(
             //This is the EmailLogFail
             if (email.toLowerCase() === wrongEmail) {
                 patchState(store, { authError: "Please check if the email address you've entered is correct." });
+                // settimout to simulate sending an http request and waiting for its response
                 setTimeout(() => {
                     patchState(store, (state) => ({ loading: !state.loading }))
                 }, 1000);
