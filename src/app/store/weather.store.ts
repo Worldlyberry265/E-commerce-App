@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { Product } from '../models/Product';
-import { ProductStore } from './product.store';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, forkJoin, from, of, pipe, tap } from 'rxjs';
 import { HttpClientService } from '../services/http.client';
@@ -22,7 +21,7 @@ const initialState: WeatherState = {
 export const WeatherStore = signalStore(
     { providedIn: 'root' },
     withState(initialState),
-    withMethods((store, httpClient = inject(HttpClientService), productStore = inject(ProductStore)) => {
+    withMethods((store, httpClient = inject(HttpClientService)) => {
 
         const GetWeatherCodes = rxMethod<void>(
             pipe(

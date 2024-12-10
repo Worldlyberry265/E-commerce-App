@@ -3,7 +3,6 @@ import { delay, of } from 'rxjs';
 import { ProductStore } from '../product.store';
 import { HttpClientService } from '../../services/http.client';
 import { createTestProduct, Product } from '../../models/Product';
-import { createSignal } from '@angular/core/primitives/signals';
 
 describe('ProductStore', () => {
     let store: InstanceType<typeof ProductStore>;

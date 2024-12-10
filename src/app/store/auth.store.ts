@@ -61,8 +61,10 @@ export const AuthStore = signalStore(
             } else {
                 // This is the EmailLogSuccess
                 if (email.toLowerCase() === correctUser.email) {
+                    // proceed to login
                     patchState(store, (state) => ({ emailNotFound: false, loading: !state.loading, authError: null }));
                 } else {
+                    // proceed to sign up
                     patchState(store, (state) => ({ emailNotFound: true, loading: !state.loading, authError: null }));
                 }
             }
@@ -88,7 +90,7 @@ export const AuthStore = signalStore(
                         // We get the jwt to login the user automatically after signing up successfully.
                         return httpClient.postAddUser(user).pipe(
                             switchMap(({ id }) => {
-                                return of(SendLoginRequest({ usernameInputted: correctUser.username, passwordInputted: user.password }));
+                                return of(SendLoginRequest({ usernameInputted: correctUser.username, passwordInputted: correctUser.password }));
                                 // This is the catchError for the login endpoint
                                 // It wont trigger unless the request timeouted out or the server didnt respond because we are using the correct email and password
                                 // It won't trigger in my case unless i made the browser offline
@@ -99,13 +101,9 @@ export const AuthStore = signalStore(
                             // Because the fakestoreapi doesnt return an error at all for this endpoint except if i dont put a json object and i did already.
                             // It won't trigger in my case unless i made the browser offline
                             // That's why I'm putting a custom error
-                            tap({
-                                error() {
-                                    patchState(store, { loading: false })
-                                },
-                            }),
+
                             catchError(() => {
-                                return of(patchState(store, { authError: "Request Timed Out" }))
+                                return of(patchState(store, { loading: false, authError: "Request Timed Out" }))
                             })
                         )
 
@@ -116,18 +114,11 @@ export const AuthStore = signalStore(
             )
         );
 
-
-
         // Private Method
         const SendLoginRequest = rxMethod<{ usernameInputted: string, passwordInputted: string }>(
             pipe(
                 switchMap(({ usernameInputted, passwordInputted }) => {
                     return httpClient.postLogin({ username: usernameInputted, password: passwordInputted }).pipe(
-                        tap({
-                            error() {
-                                patchState(store, { loading: false })
-                            },
-                        }),
                         tapResponse({
                             //If the entered password is correct then fetch token
                             next: ({ token }) => {
@@ -141,7 +132,7 @@ export const AuthStore = signalStore(
                                 if (typeof (returnedError) != 'string') {
                                     returnedError = "Request Timed Out";
                                 }
-                                patchState(store, { authError: returnedError })
+                                patchState(store, { loading: false, authError: returnedError })
                             },
                         }),
                     );
@@ -149,8 +140,6 @@ export const AuthStore = signalStore(
             )
 
         );
-
-
 
         function FetchJwtFromLocalStorage() {
             const jwtToken = localStorage.getItem('jwt');
