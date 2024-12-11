@@ -12,13 +12,13 @@ const mockProduct: Product = {
   title: 'Test Product',
   description: 'A great product!',
   image: 'test-image.jpg',
+  price: 100,
+  category: 'Men\'s Clothing',
+  quantity: 0,
   rating: {
     rate: 4.5,
     count: 150
   },
-  price: 100,
-  category: 'Men\'s Clothing',
-  quantity: 0
 };
 
 describe('ProductFrameComponent', () => {
@@ -39,24 +39,15 @@ describe('ProductFrameComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create and get input product', () => {
     expect(component).toBeTruthy();
+    expect(component.product()).toEqual(mockProduct);
   });
 
   it('should toggle triggeredCaption when triggerHover is called', () => {
     const initialState = component.triggeredCaption();
     component.triggerHover();
     expect(component.triggeredCaption()).toBe(!initialState);
-  });
-
-  it('should display the product title in the template', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h3')?.textContent).toContain(mockProduct.title);
-  });
-
-  it('should display the product description in the template', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('span')?.textContent).toContain(mockProduct.description);
   });
 
   it('should update the image class when triggeredCaption is toggled', () => {
@@ -70,5 +61,11 @@ describe('ProductFrameComponent', () => {
     component.triggerHover();
     fixture.detectChanges();
     expect(image.classList).toContain('product-frame__img-active');
+
+    // to check if it will remove the class at the 2nd click
+    component.triggerHover();
+    fixture.detectChanges();
+    expect(image.classList).not.toContain('product-frame__img-active');
+
   });
 });

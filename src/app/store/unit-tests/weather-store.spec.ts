@@ -65,7 +65,7 @@ describe('WeatherStore', () => {
             spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success, error) => {
                 if (error) {
                     error({
-                        alert: 'User denied location permission',
+                        alert: "Please enable location to have the best experience",
                     } as any);
                 }
             });

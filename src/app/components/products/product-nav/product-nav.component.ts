@@ -1,10 +1,9 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { AuthStore } from '../../../store/auth.store';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewComponent } from '../../preview/preview.component';
 import { UserItemsStore } from '../../../store/user-items.store';
 import { Product } from '../../../models/Product';
-import { ProductStore } from '../../../store/product.store';
 
 @Component({
   selector: 'nav[appProductNav]',
@@ -28,7 +27,6 @@ export class ProductNavComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    // !!!! IMPORTANT !!!!!!!!!!!!!!!!!
     this.cart = document.getElementById('cart-svg-' + this.product().id);
     if (this.userItemsStore.IsItemInCart(this.product().id)) {
       this.cart?.classList.add('product-card__nav--item-active-cart')

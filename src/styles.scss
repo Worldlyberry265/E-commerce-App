@@ -985,6 +985,7 @@ body ::selection {
 .stars__rating--container {
   display: flex;
   align-items: center;
+  text-wrap: nowrap;
 }
 
 .shining-star {

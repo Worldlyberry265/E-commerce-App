@@ -132,12 +132,8 @@ describe('AuthStore', () => {
             authStore.PasswordLog({ email: correctUser.email, password: 'anyvalidPassword123' });
             // Assert loading is true immediately after calling the method
             expect(authStore.loading()).toBe(true);
-            console.log(authStore.loading());
-
 
             setTimeout(() => {
-                console.log(authStore.loading());
-
                 expect(authStore.authError()).toEqual(errorResponse.error);
                 expect(authStore.loading()).toBeFalse();
                 done();

@@ -23,7 +23,6 @@ export class PreviewComponent implements OnDestroy {
 
 
   dialogType = signal<'heart' | 'cart'>('cart');
-  RemainingStarCount = 0;
   stars = signal(5);
 
   Math = Math; // Expose Math for use in the template

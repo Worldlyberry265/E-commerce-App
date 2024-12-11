@@ -33,7 +33,7 @@ export const WeatherStore = signalStore(
                         (error) => {
                             // If we didnt have the permission to get the location, we advertise any 2 products
                             GetFramedProducts({ menProducId: 1, womenProductId: 20 });
-                            alert(error.message);
+                            alert("Please enable location to have the best experience");
                         }
 
                     );
