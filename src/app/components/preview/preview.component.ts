@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, inject, OnDestroy, signal } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
@@ -19,11 +19,10 @@ import { Product } from "../../models/Product";
   styleUrl: './preview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PreviewComponent implements OnDestroy {
+export class PreviewComponent implements OnInit, OnDestroy {
 
 
   dialogType = signal<'heart' | 'cart'>('cart');
-  stars = signal(5);
 
   Math = Math; // Expose Math for use in the template
   Array = Array; // Expose Array for use in the template
@@ -35,9 +34,15 @@ export class PreviewComponent implements OnDestroy {
   protected readonly authStore = inject(AuthStore);
   protected readonly userItemsStore = inject(UserItemsStore);
 
+
   // to fetch the data passed with the request to open the dialog
   constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: 'heart' | 'cart' }) {
     this.dialogType.set(data.DialogType);
+  }
+
+  // moved these to ngOnInIt from the constructor because in the spec file, the store state is being updated
+  // after the component is initiating, so the products weren't being updated
+  ngOnInit(): void {
     if (this.dialogType() === 'cart') {
       // We start the product with quantity = 1
       this.products.set(this.userItemsStore.cartItems().map(product => ({ ...product, quantity: product.quantity ?? 1 })));
@@ -143,6 +148,7 @@ export class PreviewComponent implements OnDestroy {
     this.userItemsStore.UpdateCart([]);
   }
 
+  // This method will remove the active class on the icons of the products that were removed from cart/saved items
   private toggleIcon(productId: number, iconType: 'heart' | 'cart') {
     if (iconType === 'heart') {
       const heartIcon = document.getElementById('heart-svg-' + productId)

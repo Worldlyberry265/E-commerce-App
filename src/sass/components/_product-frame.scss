@@ -15,12 +15,23 @@
   padding: 6rem 6rem 6rem 9rem;
   font-size: 2rem;
   transform: skewX(-12deg);
+  flex: 1; // to make them have same size
+
+  &:first-of-type {
+    margin-top: 10rem;
+  }
+  &:last-of-type {
+    margin-bottom: 10rem;
+  }
 
   @include respond(mobile) {
-    flex: 1; // to make them have same size
     transform: skewX(0);
     padding: 3rem 6rem;
     font-size: 1.7rem;
+    box-sizing: border-box;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
 
     &:first-of-type {
       margin-top: 2rem;
@@ -45,7 +56,6 @@
       transform: skewX(0);
       width: 10rem;
       height: 10rem;
-      // margin-right: 2rem;
       margin: 0 auto;
     }
   }
@@ -72,30 +82,39 @@
     flex-direction: column;
     gap: 2rem;
     transform: skewX(12deg);
+    height: 100%;
+
     @include respond(mobile) {
       transform: skewX(0);
       text-align: center;
+      flex-grow: 1;
+      height: auto;
     }
   }
 
   &__text {
-    // will-change: transform; // to avoid glitches on the text while hovering over the whole frame
-    // @include respond(desktop) {
-    //   &:hover .product-frame__caption {
-    //     opacity: 1;
-    //     transform: translate(-50%, -50%);
-    //   }
-    // }
-
-    // @include respond(desktop) {
-    //   &:hover .product-frame__img {
-    //     transform: scale(0.9);
-    //     filter: blur(3px) brightness(80%);
-    // }
-    // }
-
     &-title {
-      // margin-top: 1.5rem;
+      display: -webkit-box; /* Enable multi-line truncation */
+      line-clamp: 1;
+      -webkit-line-clamp: 1; /* Number of lines to show */
+      -webkit-box-orient: vertical;
+      overflow-y: scroll;
+
+      @include respond(mobile) {
+        display: block;
+      }
+    }
+
+    &-description {
+      display: -webkit-box; /* Enable multi-line truncation */
+      line-clamp: 4;
+      -webkit-line-clamp: 4; /* Number of lines to show */
+      -webkit-box-orient: vertical;
+      overflow-y: scroll;
+
+      @include respond(mobile) {
+        display: block;
+      }
     }
   }
 
@@ -111,6 +130,8 @@
     font-weight: 500;
     font-size: 2.5rem;
     cursor: pointer;
+
+    margin-top: auto;
 
     &:hover {
       transform: scale(1.1);

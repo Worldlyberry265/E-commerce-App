@@ -3,7 +3,7 @@ import { ProductNavComponent } from './product-nav.component';
 import { MatDialog } from '@angular/material/dialog';
 import { createTestProduct, Product } from '../../../models/Product';
 import { ComponentRef } from '@angular/core';
-import { HttpClientModule, } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptorsFromDi, } from '@angular/common/http';
 import { UserItemsStore } from '../../../store/user-items.store';
 import { AuthStore } from '../../../store/auth.store';
 import { PreviewComponent } from '../../preview/preview.component';
@@ -27,9 +27,10 @@ describe('ProductNavComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [ProductNavComponent, HttpClientModule],
+      imports: [ProductNavComponent],
       providers: [
-        { provide: MatDialog, useValue: mockDialog },
+        { provide: MatDialog, useValue: mockDialog, },
+        provideHttpClient(withInterceptorsFromDi())
       ],
     }).compileComponents();
 
@@ -51,9 +52,6 @@ describe('ProductNavComponent', () => {
   it('should initialize cart and heart elements after view init', () => {
     userItemsStore.TESTER_METHOD_Populate_CartItems([productMock]);
     userItemsStore.TESTER_METHOD_Populate_SavedItems([productMock]);
-
-    spyOn(userItemsStore, 'cartItems').and.returnValue([productMock]);
-    spyOn(userItemsStore, 'savedItems').and.returnValue([productMock]);
 
     fixture.detectChanges();
 

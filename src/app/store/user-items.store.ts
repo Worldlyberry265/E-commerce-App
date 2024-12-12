@@ -1,7 +1,5 @@
-import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { Product } from '../models/Product';
-import { ProductStore } from './product.store';
 
 type UserItemsState = {
     cartItems: Product[],
