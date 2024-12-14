@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { Product } from '../models/Product';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { exhaustMap, forkJoin, from, of, pipe, tap } from 'rxjs';
+import { exhaustMap, forkJoin, pipe, tap } from 'rxjs';
 import { HttpClientService } from '../services/http.client';
 import { tapResponse } from '@ngrx/operators';
 
@@ -49,6 +49,10 @@ export const WeatherStore = signalStore(
                         tapResponse({
                             next: (weatherCodes: any) => {
                                 patchState(store, { weatherCodes: weatherCodes.daily.weather_code })
+                                console.log("from weather");
+                                console.log(weatherCodes);
+
+
                             },
                             error: () => {
                             }

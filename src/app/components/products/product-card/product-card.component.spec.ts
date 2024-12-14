@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductCardComponent } from './product-card.component';
 import { createTestProduct, Product } from '../../../models/Product';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ComponentRef } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
@@ -21,7 +21,6 @@ describe('ProductCardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ProductCardComponent, RouterModule.forRoot([])], // Include required modules
       providers: [
-        { provide: ActivatedRoute, useValue: {} }, // Mock ActivatedRoute
         provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();

@@ -1,13 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PreviewComponent } from './preview.component';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
-import { of } from 'rxjs';
 import { createTestProduct, Product } from '../../models/Product';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { signal } from '@angular/core';
 
 describe('PreviewComponent', () => {
   let component: PreviewComponent;
@@ -18,12 +16,12 @@ describe('PreviewComponent', () => {
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<PreviewComponent>>;
 
   const mockCartItems: Product[] = [
-    createTestProduct({ id: 1, title: 'Product 1', price: 10, image: '', category: '', quantity: 0 }),
+    createTestProduct({ id: 1, title: 'Product 1', price: 10, image: '', category: '', quantity: undefined }),
     createTestProduct({ id: 2, title: 'Product 2', price: 20, image: '', category: '', quantity: 2 }),
   ];
 
   const mockSavedItems: Product[] = [
-    createTestProduct({ id: 3, title: 'Product 3', price: 10, image: '', category: '', quantity: 0 }),
+    createTestProduct({ id: 3, title: 'Product 3', price: 10, image: '', category: '', quantity: undefined }),
     createTestProduct({ id: 4, title: 'Product 4', price: 20, image: '', category: '', quantity: 20 }),
   ];
 
@@ -57,96 +55,138 @@ describe('PreviewComponent', () => {
     fixture.detectChanges();
   }
 
-  it('should create the component', () => {
-    setupTest('cart'); // any value
-    expect(component).toBeTruthy();
-    expect(component.products()).toEqual(mockCartItems.map(product => ({ ...product, quantity: product.quantity ?? 1 })));
+  const testRemoveItem = (methodName: 'onRemoveItemFromCart' | 'onDecrementQuantity', itemIndex: number) => {
+    setupTest('cart');
+    spyOn(userItemsStore, 'RemoveItemFromCart');
+
+    component[methodName](itemIndex);
+
+    expect(component.products()).toEqual([mockCartItems[1]]); // First product should be removed
+    const validmockCartItem = (mockCartItems[0]);
+    validmockCartItem.quantity = 1;
+    expect(userItemsStore.RemoveItemFromCart).toHaveBeenCalledWith(validmockCartItem);
+
+    const cartIcon = document.getElementById('cart-svg-' + mockCartItems[0].id)
+    expect(cartIcon?.classList).not.toContain('product-card__nav--item-active-cart');
+  };
+
+  describe('constructing the component', () => {
+    it('should initialize products correctly when dialog type is "cart"', () => {
+      setupTest('cart');
+      expect(component.products()).toEqual(mockCartItems.map(product => ({ ...product, quantity: product.quantity ?? 1 })));
+    });
+
+    it('should initialize products correctly when dialog type is "heart"', () => {
+      setupTest('heart');
+      expect(component.products()).toEqual(mockSavedItems);
+    });
   });
 
-  // describe('constructing the component', () => {
-  //   // it('should initialize products correctly when dialog type is "cart"', () => {
-  //   //   setupTest('cart');
-  //   //   // spyOn(userItemsStore, 'cartItems').and.returnValue(mockCartItems);
-  //   //   // spyOn(userItemsStore, 'savedItems').and.returnValue(mockCartItems);
+  it('should calculate remainingStar correctly', () => {
+    setupTest('heart');
+    expect(component.remainingStar(4.5)).toBeGreaterThanOrEqual(0.4);
+  });
 
-  //   //   console.log(component.dialogType());
+  it('should calculate total price correctly', () => {
+    setupTest('cart');
+    expect(component.TotalPrice).toBe('50.00'); // 10 * 1 + 20 * 2
+  });
 
-  //   //   console.log(userItemsStore.cartItems());
-  //   //   console.log(userItemsStore.cartItems());
+  it('should increment the quantity of a product', () => {
+    setupTest('cart');
+    component.onIncrementQuantity(0); // IncreonUpdateCartment first product
+    expect(component.products()[0].quantity).toBe(2);
+    component.onIncrementQuantity(1); // Increment 2nd product
+    expect(component.products()[1].quantity).toBe(3);
+  });
 
-  //   //   console.log(component.products());
-  //   //   fixture.detectChanges();
-  //   //   console.log(component.products());
+  describe('onDecremenet', () => {
 
-  //   //   // expect()
-  //   //   expect(component.products()).toEqual(mockCartItems.map(product => ({ ...product, quantity: product.quantity ?? 1 })));
-  //   // });
+    it('should decrement the quantity of a product', () => {
+      setupTest('cart');
+      component.onDecrementQuantity(1); // Decrement 2nd product
+      expect(component.products()[1].quantity).toBe(1);
+    });
 
-  //   // it('should initialize products correctly when dialog type is "heart"', () => {
-  //   //   component.dialogType.set('heart');
-  //   //   // component.ngOnInit();
-  //   //   expect(component.products()).toEqual(mockSavedItems);
-  //   // });
-  // });
+    it('should remove the item instead of decrementing the quantity to 0', () => {
+      testRemoveItem('onDecrementQuantity', 0)
+    });
+  });
 
-  // it('should calculate total price correctly', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   fixture.detectChanges();
-  //   expect(component.TotalPrice).toBe('50.00'); // 10 * 1 + 20 * 2
-  // });
+  it('should remove item from cart', () => {
+    testRemoveItem('onRemoveItemFromCart', 0)
+  });
 
-  // it('should increment the quantity of a product', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   component.onIncrementQuantity(0); // Increment first product
-  //   expect(component.products()[0].quantity).toBe(2); // First product quantity should be 2
-  // });
+  describe('onNaviagte', () => {
 
-  // it('should decrement the quantity of a product', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   component.onDecrementQuantity(0); // Decrement first product
-  //   expect(component.products()[0].quantity).toBe(0); // First product quantity should be 0
-  // });
+    it('should close the dialog and navigate', fakeAsync(() => {
+      setupTest('cart');
 
-  // it('should remove item from cart', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   component.onRemoveItemFromCart(0);
-  //   expect(component.products()).toEqual([mockCartItems[1]]); // First product should be removed
-  //   expect(mockUserItemsStore.RemoveItemFromCart).toHaveBeenCalledWith(mockCartItems[0]);
-  // });
+      component.onNavigate();
+      expect(dialogRefSpy.close).toHaveBeenCalled();
 
-  // it('should navigate on Pay', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   component.onPay();
-  //   expect(mockRouter.navigate).toHaveBeenCalledWith(['homepage']);
-  //   expect(mockUserItemsStore.UpdateCart).toHaveBeenCalledWith([]);
-  // });
+      tick(100); // Simulate the timeout
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['login'], { fragment: 'logContainer' });
+    }));
 
-  // it('should close the dialog when navigating', () => {
-  //   component.onNavigate('login');
-  //   expect(dialogRefSpy.close).toHaveBeenCalled();
-  // });
+    it('should close the dialog and navigate to specified route', fakeAsync(() => {
+      setupTest('cart');
 
-  // it('should update cart when onUpdateCart is called', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   component.onUpdateCart();
-  //   expect(mockUserItemsStore.UpdateCart).toHaveBeenCalledWith(mockCartItems);
-  // });
+      component.onNavigate('some-route');
+      expect(dialogRefSpy.close).toHaveBeenCalled();
 
-  // it('should clear the cart when onClearCart is called', () => {
-  //   component.dialogType.set('cart');
-  //   component.products.set(mockCartItems);
-  //   component.onClearCart();
-  //   expect(mockUserItemsStore.UpdateCart).toHaveBeenCalledWith([]);
-  // });
+      tick(100); // Simulate the timeout
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['some-route']);
+    }));
 
-  // to rest the state after each test
-  // afterEach(() => {
-  //   fixture.destroy();
-  // });
+    it('should close the dialog and navigate to specified route in a new tab', fakeAsync(() => {
+      setupTest('cart');
+
+      const route = '/product/1'
+      const url = 'http://some-url' + route;
+      mockRouter.serializeUrl.and.returnValue(url);
+      mockRouter.createUrlTree.and.returnValue({} as any);
+      spyOn(window, 'open');
+
+      component.onNavigate(route, true);
+      expect(dialogRefSpy.close).toHaveBeenCalled();
+
+      tick(100); // Simulate the timeout
+
+      expect(mockRouter.createUrlTree).toHaveBeenCalledWith([route]);
+      expect(mockRouter.serializeUrl).toHaveBeenCalled();
+      expect(window.open).toHaveBeenCalledWith(url, '_blank');
+    }));
+
+  });
+
+  it('should remove item from savedItems', () => {
+    setupTest('heart');
+    spyOn(userItemsStore, 'RemoveSavedItem');
+
+    component.onRemoveSavedItem(0);
+
+    expect(component.products()).toEqual([mockSavedItems[1]]); // First product should be removed
+    expect(userItemsStore.RemoveSavedItem).toHaveBeenCalledWith(mockSavedItems[0]);
+
+    const heartIcon = document.getElementById('heart-svg-' + mockCartItems[0].id)
+    expect(heartIcon?.classList).not.toContain('product-card__nav--item-active-cart');
+  });
+
+  it('should clear the cart and remove the active class when onClearCart is called', () => {
+    setupTest('cart');
+    spyOn(userItemsStore, 'UpdateCart');
+
+    component.onClearCart();
+
+    const cartIcon1 = document.getElementById('cart-svg-' + mockCartItems[0].id)
+    expect(cartIcon1?.classList).not.toContain('product-card__nav--item-active-cart');
+
+    const cartIcon2 = document.getElementById('cart-svg-' + mockCartItems[1].id)
+    expect(cartIcon2?.classList).not.toContain('product-card__nav--item-active-cart');
+
+    expect(component.products()).toEqual([]);
+    expect(userItemsStore.UpdateCart).toHaveBeenCalledWith([]);
+  });
+
 });

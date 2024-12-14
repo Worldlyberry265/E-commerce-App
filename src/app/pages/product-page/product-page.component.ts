@@ -52,8 +52,10 @@ export class ProductPageComponent implements OnInit {
 
   constructor() {
     effect(() => {
+      console.log("effect 11111111");
+
+      // we only want to fetch the product the once the component initialize, not everytime product updates
       if (this.product()?.quantity === undefined) {
-        // we only want to fetch the product the once the component initialize, not everytime product updates
         this.product.set(this.productStore.selectedProduct() ?? null);
       }
 
@@ -75,6 +77,8 @@ export class ProductPageComponent implements OnInit {
     }, { allowSignalWrites: true });
 
     effect(() => {
+      console.log("effect 2222222222222");
+
       if (this.productStore.relatedProducts()) {
         this.Allimgs.set(
           this.productStore.relatedProducts()!.map((product) => {
@@ -86,6 +90,20 @@ export class ProductPageComponent implements OnInit {
         this.productStore.FetchAllProducts();
       }
     }, { allowSignalWrites: true });
+
+    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
+    effect(() => {
+      console.log("effect 333333333");
+
+      if (this.product()) {
+        const productInCart = this.userItemsStore.cartItems().find(product => product.id === this.product()!.id);
+        if (this.userItemsStore.IsItemInCart(this.product()!.id) && this.product()?.quantity != productInCart?.quantity) {
+          console.log("effect 333333333 +++++++++++");
+          this.product.set(productInCart!);
+        }
+      }
+    }, { allowSignalWrites: true });
+    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
 
   }
 
@@ -99,7 +117,6 @@ export class ProductPageComponent implements OnInit {
 
 
   onNextClick() {
-
     if (this.ImageIndex() === this.Allimgs().length - 1) {
       this.ImageIndex.set(0);
     } else {
@@ -160,6 +177,12 @@ export class ProductPageComponent implements OnInit {
         ...state,
         quantity: --state!.quantity  // The 1st decncrement the quantity will be undefined
       }) as Product);
+
+      //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
+      this.userItemsStore.UpdateItemInCart(this.product()!);
+
+      //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
+
     }
   }
 
@@ -168,6 +191,11 @@ export class ProductPageComponent implements OnInit {
       ...state,
       quantity: state!.quantity === undefined ? 2 : ++state!.quantity  // The 1st increment the quantity will be undefined
     }) as Product);
+
+    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
+    this.userItemsStore.UpdateItemInCart(this.product()!);
+
+    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
   }
 
 
