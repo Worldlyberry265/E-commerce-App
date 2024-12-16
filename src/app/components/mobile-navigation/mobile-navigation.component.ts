@@ -1,12 +1,10 @@
-import { Component, ElementRef, inject, signal, ViewChild } from "@angular/core";
+import { Component, ElementRef, inject, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { Router, RouterModule } from "@angular/router";
 import { PreviewComponent } from "../preview/preview.component";
 import { AuthStore } from "../../store/auth.store";
 import { UserItemsStore } from "../../store/user-items.store";
-
-
 
 @Component({
   selector: 'div[mobileNavigation]',
@@ -42,7 +40,7 @@ export class MobileNavigationComponent {
 
   onCloseNavAndSaveRoute() {
     this.authStore.SaveCurrentRoute(this.router.url)
-    this.onCloseNav()
+    this.onCloseNav();
   }
 
   onCloseNav() {

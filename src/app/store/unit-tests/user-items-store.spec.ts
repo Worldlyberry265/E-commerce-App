@@ -116,6 +116,24 @@ describe('UserItemsStore', () => {
     });
   });
 
+  describe('UpdateItemInCart', () => {
+    it('should update the cart to have the item altered', () => {
+      const products: Product[] = [
+        createTestProduct({ id: 1, title: 'Product A', price: 20 }),
+        createTestProduct({ id: 2, title: 'Product B', price: 40 }),
+      ];
+      store.TESTER_METHOD_Populate_CartItems(products);
+      spyOn(localStorage, 'setItem'); // To not alter the real localStorage on the browser
+
+      const changedProduct = { ...products[0], quantity: 3 };
+      store.UpdateItemInCart(changedProduct);
+
+      expect(store.cartItems()).toEqual([products[1], changedProduct]);
+      expect(localStorage.setItem).toHaveBeenCalledWith('products-cart', JSON.stringify([products[1], changedProduct])
+      );
+    });
+  });
+
   describe('DeleteSavedItems', () => {
     it('should delete all saved items', () => {
       const product1: Product = createTestProduct({ id: 1, title: 'Product A', price: 20 });

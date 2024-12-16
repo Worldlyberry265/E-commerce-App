@@ -31,7 +31,7 @@
             <nav class="product__main-content--navigation">
                 <div class="product__main-content--navigation--quantity">
                     <i (click)="onDecrementQuantity()" class="fa-solid fa-circle-minus"></i>
-                    <span>{{ product()!.quantity === undefined ? 1 : product()!.quantity }}</span>
+                    <span>{{ product()!.quantity }}</span>
                     <i (click)="onIncrementQuantity()" class="fa-solid fa-circle-plus"></i>
                 </div>
 

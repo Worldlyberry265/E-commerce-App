@@ -34,32 +34,9 @@ export class PreviewComponent implements OnInit, OnDestroy {
   protected readonly authStore = inject(AuthStore);
   protected readonly userItemsStore = inject(UserItemsStore);
 
-
   // to fetch the data passed with the request to open the dialog
   constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: 'heart' | 'cart' }) {
     this.dialogType.set(data.DialogType);
-
-
-    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
-
-    effect(() => {
-      // TRY TO COMBINE THIS AND THE 1ST EFFECT!!!!!!!!
-      console.log("PREVIEW EFFECT")
-      if (this.dialogType() === 'cart') {
-        // We start the product with quantity = 1 becuase the products come with no quantity from the fakestoreapi
-        this.products.set(this.userItemsStore.cartItems().map(product => {
-          // console.log("fom MAP");
-          // console.log(product.quantity);
-          // console.log(product.quantity == null ? 1 : product.quantity);
-
-
-
-          return ({ ...product, quantity: product.quantity == null ? 1 : product.quantity })
-        }));
-      }
-    }, { allowSignalWrites: true });
-    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
-
   }
 
   // moved these to ngOnInIt from the constructor because in the spec file, the store state is being updated
@@ -67,20 +44,10 @@ export class PreviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.dialogType() === 'cart') {
       // We start the product with quantity = 1 becuase the products come with no quantity from the fakestoreapi
+      // but we also may return the same quantity since it can be already in cart and already have valid quantity
       this.products.set(this.userItemsStore.cartItems().map(product => {
-        // console.log("fom MAP");
-        // console.log(product.quantity);
-        // console.log(product.quantity == null ? 1 : product.quantity);
-
-
-
         return ({ ...product, quantity: product.quantity == null ? 1 : product.quantity })
       }));
-
-      // console.log(this.userItemsStore.cartItems());
-      // console.log(this.products());
-      // console.log("from COMPONETNT");
-
     } else {
       this.products.set(this.userItemsStore.savedItems());
     }
@@ -110,7 +77,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
     if (product!.quantity > 1) {
       --product!.quantity;
     } else { // else we remove the item
-      console.log("ondecrement is called");
       this.onRemoveItemFromCart(itemIndex);
     }
   }
@@ -161,9 +127,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
   onUpdateCart() {
     this.userItemsStore.UpdateCart(this.products());
-    // console.log("from UPDATE");
-    // console.log(this.products());
-    // console.log(this.userItemsStore.cartItems());
   }
 
   onClearCart() {
@@ -196,8 +159,5 @@ export class PreviewComponent implements OnInit, OnDestroy {
     // check wouldn't make any difference in performance for desktop screens
     this.userItemsStore.OpenMobileNavigation();
     this.onUpdateCart();
-    // console.log("from destroy");
-    // console.log(this.products());
-    // console.log(this.userItemsStore.cartItems());
   }
 }

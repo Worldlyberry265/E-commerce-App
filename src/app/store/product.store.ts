@@ -104,7 +104,8 @@ export const ProductStore = signalStore(
                                     if (product === null) {
                                         patchState(store, { searchedProducts: null, loading: false, selectedProduct: null });
                                     } else {
-                                        patchState(store, { searchedProducts: [product], loading: false, selectedProduct: product });
+                                        const validProduct: Product = { ...product, quantity: 1 }
+                                        patchState(store, { searchedProducts: [product], loading: false, selectedProduct: validProduct });
                                     }
                                 },
 

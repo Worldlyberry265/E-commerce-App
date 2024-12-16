@@ -37,9 +37,6 @@ export const UserItemsStore = signalStore(
                 ({ savedItems: state.savedItems.filter(productItem => productItem.id != product.id) }));
         };
         function RemoveItemFromCart(product: Product) {
-            console.log("THE STORE IS CALLED");
-            console.log(product);
-
             patchState(store, (state) =>
                 ({ cartItems: state.cartItems.filter(productItem => productItem.id != product.id) }));
             localStorage.setItem('products-cart', JSON.stringify(store.cartItems()));
@@ -48,16 +45,11 @@ export const UserItemsStore = signalStore(
             patchState(store, { cartItems: products });
             localStorage.setItem('products-cart', JSON.stringify(store.cartItems()));
         };
-
-        //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
         function UpdateItemInCart(product: Product) {
             const newCart = store.cartItems().filter(cartProduct => product.id != cartProduct.id);
             newCart.push(product);
             UpdateCart(newCart);
         };
-
-        //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
-
         function DeleteSavedItems() {
             patchState(store, { savedItems: [] });
         };

@@ -133,7 +133,7 @@ describe('ProductStore', () => {
 
             store.SearchForProducts(1);
 
-            expect(store.searchedProducts()).toEqual([{ ...products[0] }]);
+            expect(store.searchedProducts()).toEqual([{ ...products[0], quantity: 1 }]);
             expect(store.loading()).toBe(false);
         });
 

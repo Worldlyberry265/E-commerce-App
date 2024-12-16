@@ -49,10 +49,6 @@ export const WeatherStore = signalStore(
                         tapResponse({
                             next: (weatherCodes: any) => {
                                 patchState(store, { weatherCodes: weatherCodes.daily.weather_code })
-                                console.log("from weather");
-                                console.log(weatherCodes);
-
-
                             },
                             error: () => {
                             }

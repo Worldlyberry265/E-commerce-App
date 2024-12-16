@@ -51,14 +51,20 @@ export class ProductPageComponent implements OnInit {
 
 
   constructor() {
-    effect(() => {
-      console.log("effect 11111111");
 
+    // This is the main effect which fetches the product
+    effect(() => {
       // we only want to fetch the product the once the component initialize, not everytime product updates
-      if (this.product()?.quantity === undefined) {
-        this.product.set(this.productStore.selectedProduct() ?? null);
+      // if (this.product()?.quantity === undefined) {
+      if (this.product() === null && this.productStore.selectedProduct() != null) {
+        this.product.set(this.productStore.selectedProduct());
+      } else {
       }
 
+    }, { allowSignalWrites: true });
+
+    // This effect is for updating the display of the save and add buttons
+    effect(() => {
       // To toggle the cart button
       if (this.product() != null) {
         if (this.userItemsStore.IsItemInCart(this.product()!.id)) {
@@ -74,11 +80,13 @@ export class ProductPageComponent implements OnInit {
           this.isItemSaved.set(false);
         }
       }
+
     }, { allowSignalWrites: true });
 
+    // This effect will only be triggered twice, the 1st to fetch and the 2nd to display the related products
+    // Im fetching all products insted of showing real related products because the products are limited.
+    // There is only 20 products in total in the fakestoreapi
     effect(() => {
-      console.log("effect 2222222222222");
-
       if (this.productStore.relatedProducts()) {
         this.Allimgs.set(
           this.productStore.relatedProducts()!.map((product) => {
@@ -91,19 +99,19 @@ export class ProductPageComponent implements OnInit {
       }
     }, { allowSignalWrites: true });
 
-    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
+    // This effect is for updating the quantity to make the product page and the preview cart have the same product quantity
     effect(() => {
-      console.log("effect 333333333");
-
       if (this.product()) {
         const productInCart = this.userItemsStore.cartItems().find(product => product.id === this.product()!.id);
         if (this.userItemsStore.IsItemInCart(this.product()!.id) && this.product()?.quantity != productInCart?.quantity) {
-          console.log("effect 333333333 +++++++++++");
-          this.product.set(productInCart!);
+
+          this.product.update((state) => ({
+            ...state,
+            quantity: productInCart?.quantity
+          }) as Product)
         }
       }
     }, { allowSignalWrites: true });
-    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
 
   }
 
@@ -165,24 +173,18 @@ export class ProductPageComponent implements OnInit {
         data: { DialogType: 'heart' }
       });
     }
-
-
-
-
   }
 
   onDecrementQuantity() {
     if (this.product()!.quantity > 1) {
       this.product.update(state => ({
         ...state,
-        quantity: --state!.quantity  // The 1st decncrement the quantity will be undefined
+        quantity: --state!.quantity
       }) as Product);
 
-      //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
-      this.userItemsStore.UpdateItemInCart(this.product()!);
-
-      //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
-
+      if (this.isItemAdded()) {
+        this.userItemsStore.UpdateItemInCart(this.product()!);
+      }
     }
   }
 
@@ -191,12 +193,8 @@ export class ProductPageComponent implements OnInit {
       ...state,
       quantity: state!.quantity === undefined ? 2 : ++state!.quantity  // The 1st increment the quantity will be undefined
     }) as Product);
-
-    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
-    this.userItemsStore.UpdateItemInCart(this.product()!);
-
-    //!!!!!!!!!!!!!! TESTING !!!!!!!!!!!!!!!!!
+    if (this.isItemAdded()) {
+      this.userItemsStore.UpdateItemInCart(this.product()!);
+    }
   }
-
-
 }
