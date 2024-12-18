@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, effect, Inject, inject, OnDestroy, OnInit, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Inject, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
@@ -7,14 +7,13 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { Router, RouterModule } from "@angular/router";
 import { AuthStore } from "../../store/auth.store";
-import { ProductRatingComponent } from "../products/product-rating/product-rating.component";
 import { UserItemsStore } from "../../store/user-items.store";
 import { Product } from "../../models/Product";
 
 @Component({
   selector: 'app-preview',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule, RouterModule, ProductRatingComponent],
+  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule, RouterModule],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

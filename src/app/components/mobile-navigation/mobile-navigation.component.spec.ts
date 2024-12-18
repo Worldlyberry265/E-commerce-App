@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MobileNavigationComponent } from './mobile-navigation.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
-import { of } from 'rxjs';
 import { PreviewComponent } from '../preview/preview.component';
 import { ElementRef } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';

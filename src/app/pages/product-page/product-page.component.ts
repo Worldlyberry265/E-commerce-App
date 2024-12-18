@@ -14,7 +14,7 @@ import { RouterLink } from '@angular/router';
 
 type relatedProduct = {
   id: number,
-  img: string,
+  image: string,
   price: number
 };
 
@@ -28,7 +28,7 @@ type relatedProduct = {
 })
 export class ProductPageComponent implements OnInit {
 
-  Allimgs = signal<relatedProduct[]>([]);
+  allImgs = signal<relatedProduct[]>([]);
   displayedProducts = signal<relatedProduct[]>([]);
 
   numb = signal(0);
@@ -55,7 +55,6 @@ export class ProductPageComponent implements OnInit {
     // This is the main effect which fetches the product
     effect(() => {
       // we only want to fetch the product the once the component initialize, not everytime product updates
-      // if (this.product()?.quantity === undefined) {
       if (this.product() === null && this.productStore.selectedProduct() != null) {
         this.product.set(this.productStore.selectedProduct());
       } else {
@@ -67,6 +66,7 @@ export class ProductPageComponent implements OnInit {
     effect(() => {
       // To toggle the cart button
       if (this.product() != null) {
+
         if (this.userItemsStore.IsItemInCart(this.product()!.id)) {
           this.isItemAdded.set(true);
         } else {
@@ -88,12 +88,12 @@ export class ProductPageComponent implements OnInit {
     // There is only 20 products in total in the fakestoreapi
     effect(() => {
       if (this.productStore.relatedProducts()) {
-        this.Allimgs.set(
+        this.allImgs.set(
           this.productStore.relatedProducts()!.map((product) => {
-            return { id: product.id, img: product.image, price: product.price }
+            return { id: product.id, image: product.image, price: product.price }
           })
         );
-        this.displayedProducts.set(this.Allimgs().slice(0, 5).reverse());
+        this.displayedProducts.set(this.allImgs().slice(0, 5).reverse());
       } else {
         this.productStore.FetchAllProducts();
       }
@@ -125,13 +125,13 @@ export class ProductPageComponent implements OnInit {
 
 
   onNextClick() {
-    if (this.ImageIndex() === this.Allimgs().length - 1) {
+    if (this.ImageIndex() === this.allImgs().length - 1) {
       this.ImageIndex.set(0);
     } else {
       this.ImageIndex.update(state => ++state);
     }
     this.displayedProducts().pop();
-    this.displayedProducts().unshift(this.Allimgs()[this.ImageIndex()]);
+    this.displayedProducts().unshift(this.allImgs()[this.ImageIndex()]);
     this.changeRef.detectChanges();
   }
 
@@ -191,7 +191,7 @@ export class ProductPageComponent implements OnInit {
   onIncrementQuantity() {
     this.product.update(state => ({
       ...state,
-      quantity: state!.quantity === undefined ? 2 : ++state!.quantity  // The 1st increment the quantity will be undefined
+      quantity: ++state!.quantity
     }) as Product);
     if (this.isItemAdded()) {
       this.userItemsStore.UpdateItemInCart(this.product()!);

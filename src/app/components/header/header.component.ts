@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, input, Input, output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, input, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { ActivatedRoute, Router, RouterModule, } from "@angular/router";
+import { Router, RouterModule, } from "@angular/router";
 import { PreviewComponent } from "../preview/preview.component";
 import { AuthStore } from "../../store/auth.store";
 import { ProductStore } from "../../store/product.store";
@@ -43,6 +43,7 @@ export class HeaderComponent {
     this.authStore.SignOut();
   }
 
+  // This is for returning the user to the page where he left to log in/ or to create an account
   onSaveRoute() {
     this.authStore.SaveCurrentRoute(this.router.url);
   }

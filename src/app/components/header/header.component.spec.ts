@@ -1,113 +1,113 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { HeaderComponent } from './header.component';
-// import { MatDialog } from '@angular/material/dialog';
-// import { Router } from '@angular/router';
-// import { AuthStore } from '../../store/auth.store';
-// import { ProductStore } from '../../store/product.store';
-// import { UserItemsStore } from '../../store/user-items.store';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatDialogModule } from '@angular/material/dialog';
-// import { RouterModule } from '@angular/router';
-// import { of } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HeaderComponent } from './header.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthStore } from '../../store/auth.store';
+import { ProductStore } from '../../store/product.store';
+import { UserItemsStore } from '../../store/user-items.store';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { ComponentRef } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-// describe('HeaderComponent', () => {
-//   let component: HeaderComponent;
-//   let fixture: ComponentFixture<HeaderComponent>;
-//   let authStoreSpy: jasmine.SpyObj<AuthStore>;
-//   let productStoreSpy: jasmine.SpyObj<ProductStore>;
-//   let userItemsStoreSpy: jasmine.SpyObj<UserItemsStore>;
-//   let matDialogSpy: jasmine.SpyObj<MatDialog>;
-//   let routerSpy: jasmine.SpyObj<Router>;
+describe('HeaderComponent', () => {
+    let component: HeaderComponent;
+    let fixture: ComponentFixture<HeaderComponent>;
+    let componentRef: ComponentRef<HeaderComponent>;
 
-//   beforeEach(() => {
-//     authStoreSpy = jasmine.createSpyObj('AuthStore', ['SignOut', 'SaveCurrentRoute', 'jwt', 'username']);
-//     productStoreSpy = jasmine.createSpyObj('ProductStore', ['SearchForProducts']);
-//     userItemsStoreSpy = jasmine.createSpyObj('UserItemsStore', ['savedItems', 'cartItems']);
-//     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-//     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl', 'url']);
+    let mockUserItemsStore: InstanceType<typeof UserItemsStore>;
+    let mockAuthStore: InstanceType<typeof AuthStore>;
+    let mockProductStore: InstanceType<typeof ProductStore>;
 
-//     TestBed.configureTestingModule({
-//       declarations: [HeaderComponent],
-//       imports: [MatButtonModule, MatDialogModule, RouterModule],
-//       providers: [
-//         { provide: AuthStore, useValue: authStoreSpy },
-//         { provide: ProductStore, useValue: productStoreSpy },
-//         { provide: UserItemsStore, useValue: userItemsStoreSpy },
-//         { provide: MatDialog, useValue: matDialogSpy },
-//         { provide: Router, useValue: routerSpy },
-//       ],
-//     }).compileComponents();
+    let matDialogSpy: jasmine.SpyObj<MatDialog>;
+    let router: Router;
 
-//     fixture = TestBed.createComponent(HeaderComponent);
-//     component = fixture.componentInstance;
+    const mockRoute = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
 
-//     authStoreSpy.jwt.and.returnValue('fake-jwt');
-//     authStoreSpy.username.and.returnValue('Test User');
-//     userItemsStoreSpy.savedItems.and.returnValue(of([]));
-//     userItemsStoreSpy.cartItems.and.returnValue(of([]));
-//     routerSpy.url = '/test-route';
+    beforeEach(() => {
+        matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
-//     fixture.detectChanges();
-//   });
+        TestBed.configureTestingModule({
+            imports: [HeaderComponent, MatButtonModule, MatDialogModule, RouterModule],
+            providers: [
+                { provide: MatDialog, useValue: matDialogSpy },
+                { provide: Router, useValue: router },
+                { provide: ActivatedRoute, useValue: mockRoute },
+                provideHttpClient(withInterceptorsFromDi()),
+                Router
+            ],
+        }).compileComponents();
 
-//   it('should create the component', () => {
-//     expect(component).toBeTruthy();
-//   });
+        fixture = TestBed.createComponent(HeaderComponent);
+        component = fixture.componentInstance;
+        componentRef = fixture.componentRef;
 
-//   it('should sign out the user when onSignOut is called', () => {
-//     component.onSignOut();
-//     expect(authStoreSpy.SignOut).toHaveBeenCalled();
-//   });
+        router = TestBed.inject(Router);
 
-//   it('should save the current route when onSaveRoute is called', () => {
-//     component.onSaveRoute();
-//     expect(authStoreSpy.SaveCurrentRoute).toHaveBeenCalledWith('/test-route');
-//   });
+        mockAuthStore = TestBed.inject(AuthStore);
+        mockUserItemsStore = TestBed.inject(UserItemsStore);
+        mockProductStore = TestBed.inject(ProductStore);
 
-//   it('should open the dialog when onOpenDialog is called', () => {
-//     component.onOpenDialog('cart');
-//     expect(matDialogSpy.open).toHaveBeenCalledWith(jasmine.any(Function), {
-//       panelClass: 'preview',
-//       data: { DialogType: 'cart' },
-//     });
-//   });
+        componentRef.setInput('appHeader', true); // Set input
 
-//   it('should search for products by id when input is a valid number', () => {
-//     const event = { target: { value: '123' } } as unknown as Event;
-//     component.onSearchForProduct(event);
-//     expect(productStoreSpy.SearchForProducts).toHaveBeenCalledWith(123);
-//   });
+        fixture.detectChanges();
+    });
 
-//   it('should search for products by name when input is a valid string', () => {
-//     const event = { target: { value: 'Test Product' } } as unknown as Event;
-//     component.onSearchForProduct(event);
-//     expect(productStoreSpy.SearchForProducts).toHaveBeenCalledWith('Test Product');
-//   });
+    it('should create the component and get the input', () => {
+        expect(component).toBeTruthy();
+        expect(component.displaySearchInput()).toBeTrue();
+    });
 
-//   it('should not search for products when input is invalid', () => {
-//     const event = { target: { value: '--Invalid!' } } as unknown as Event;
-//     component.onSearchForProduct(event);
-//     expect(productStoreSpy.SearchForProducts).not.toHaveBeenCalled();
-//   });
+    it('should sign out the user when onSignOut is called', () => {
+        spyOn(mockAuthStore, 'SignOut');
+        component.onSignOut();
+        expect(mockAuthStore.SignOut).toHaveBeenCalled();
+    });
 
-//   it('should emit navigateToProducts event with valid input', () => {
-//     spyOn(component.navigateToProducts, 'emit');
-//     const event = { target: { value: 'Test Product' } } as unknown as Event;
-//     component.onSearchForProduct(event);
-//     expect(component.navigateToProducts.emit).toHaveBeenCalledWith('Test Product');
-//   });
+    it('should save the current route when onSaveRoute is called', () => {
+        component.onSaveRoute();
+        expect(mockAuthStore.lastRoute()).toEqual(router.url);
+    });
 
-//   it('should render search input when displaySearchInput is true', () => {
-//     component.displaySearchInput = true;
-//     fixture.detectChanges();
-//     const searchInput = fixture.nativeElement.querySelector('.main-header__search');
-//     expect(searchInput).toBeTruthy();
-//   });
+    describe('onSearchForProduct', () => {
 
-//   it('should not render search input when displaySearchInput is false', () => {
-//     component.displaySearchInput = false;
-//     fixture.detectChanges();
-//     const searchInput = fixture.nativeElement.querySelector('.main-header__search');
-//     expect(searchInput).toBeFalsy();
-//   });
-// });
+        it('should not search for products when input is invalid', () => {
+            const event = { target: { value: '--Invalid!' } } as unknown as Event;
+            spyOn(mockProductStore, 'SearchForProducts');
+
+            component.onSearchForProduct(event);
+
+            expect(mockProductStore.SearchForProducts).not.toHaveBeenCalled();
+        });
+
+        it('should search for products by id when input is a valid number', () => {
+            const event = { target: { value: '123' } } as unknown as Event;
+            spyOn(mockProductStore, 'SearchForProducts');
+
+            component.onSearchForProduct(event);
+
+            expect(mockProductStore.SearchForProducts).toHaveBeenCalledWith(123);
+        });
+
+        it('should search for products by name when input is a valid string', () => {
+            const event = { target: { value: 'Test Product' } } as unknown as Event;
+            spyOn(mockProductStore, 'SearchForProducts');
+
+            component.onSearchForProduct(event);
+            expect(mockProductStore.SearchForProducts).toHaveBeenCalledWith('Test Product');
+        });
+
+        it('should emit navigateToProducts event with valid input', () => {
+            const event = { target: { value: '1' } } as unknown as Event;
+
+            spyOn(component.navigateToProducts, 'emit');
+            spyOn(mockProductStore, 'SearchForProducts');
+
+            component.onSearchForProduct(event);
+            expect(mockProductStore.SearchForProducts).toHaveBeenCalledWith(1);
+            expect(component.navigateToProducts.emit).toHaveBeenCalledWith('1');
+        });
+    });
+
+});
