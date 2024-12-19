@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ProductRatingComponent } from '../product-rating/product-rating.component';
 import { ProductNavComponent } from '../product-nav/product-nav.component';

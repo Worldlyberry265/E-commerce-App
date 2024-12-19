@@ -1,15 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { AuthStore } from '../../store/auth.store';
 import { ProductStore } from '../../store/product.store';
 import { UserItemsStore } from '../../store/user-items.store';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { RouterModule } from '@angular/router';
 import { ComponentRef } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClientService } from '../../services/http.client';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
@@ -23,19 +20,19 @@ describe('HeaderComponent', () => {
     let matDialogSpy: jasmine.SpyObj<MatDialog>;
     let router: Router;
 
-    const mockRoute = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
+    let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
+
 
     beforeEach(() => {
         matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
+        httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
+
         TestBed.configureTestingModule({
-            imports: [HeaderComponent, MatButtonModule, MatDialogModule, RouterModule],
             providers: [
                 { provide: MatDialog, useValue: matDialogSpy },
-                { provide: Router, useValue: router },
-                { provide: ActivatedRoute, useValue: mockRoute },
-                provideHttpClient(withInterceptorsFromDi()),
-                Router
+                { provide: HttpClientService, useValue: httpClientServiceMock },
+                provideRouter([]),
             ],
         }).compileComponents();
 

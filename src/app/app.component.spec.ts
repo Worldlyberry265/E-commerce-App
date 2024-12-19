@@ -1,13 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter, RouterModule } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthStore } from './store/auth.store';
 import { UserItemsStore } from './store/user-items.store';
 import { FooterComponent } from './components/footer/footer.component';
 import { MobileNavigationComponent } from './components/mobile-navigation/mobile-navigation.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { JwtDecodeService } from './services/jwt-decode.service';
+import { HttpClientService } from './services/http.client';
 
 
 describe('AppComponent', () => {
@@ -16,13 +14,17 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
+  let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
+
   beforeEach(async () => {
+
+    httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
 
     await TestBed.configureTestingModule({
       imports: [AppComponent, FooterComponent, MobileNavigationComponent,],
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptorsFromDi()),
+        { provide: HttpClientService, useValue: httpClientServiceMock },
       ],
     }).compileComponents();
 

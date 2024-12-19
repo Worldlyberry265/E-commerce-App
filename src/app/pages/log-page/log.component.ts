@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -95,7 +95,7 @@ import { containsMixedCharacters, passwordMatchValidator } from '../../services/
 })
 export class LogComponent implements AfterViewInit {
 
-  // didnt use email validator because i implemented a more restricted ones
+  // didnt use email validator because I implemented more restricted ones
   emailFormControl = new FormControl('', [
     Validators.required,
     startsWithLetter(),
@@ -116,17 +116,11 @@ export class LogComponent implements AfterViewInit {
     passwordMatchValidator(this.passwordFormControl)
   ]);
 
-
-
   // starts with letter then at least 5 letters/numbers/._- then @ then letters then  one or more of(. then at least 2 letters) for domains like lau.edu.lb
   // It also cant have -- double hyphens in the whole string to prevent the chances of sql injections
   EmailRegex = /^[a-zA-Z](?!.*--)[a-zA-Z0-9._-]{5,}@[a-zA-Z]+(\.[a-zA-Z]{2,})+$/; // add an if to check length < 50
   // should be at least 8 characters and have at least 1 capital and small letter, 1 number and 1  special character from the mentioned ones only
   Passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^*])[A-Za-z\d!@#$%^*]{8,}$/;
-
-
-  // errorMessage = signal<string | null>('');
-
 
   formType: '1' | '2' = '1'; // TO move from 1st to to 2nd form 
   resetPassword: '1' | '2' = '1'; // To move from 2nd password form to 3rd reset form
@@ -151,10 +145,15 @@ export class LogComponent implements AfterViewInit {
 
   }
 
+  getWindowInnerWidth(): number {
+    return window.innerWidth;
+  }
+
   ngAfterViewInit(): void {
     // Added this bcz the navigating to the fragment logContainer using the routerlink is disabling the autofocus on it
     // I don't want to autofocus on mobile because the focus together with the mobile navigation is making an unpleaseant animation
-    if (window.innerWidth > 450) {
+    const windowWidth = this.getWindowInnerWidth();
+    if (windowWidth > 450) {
       this.input.nativeElement.focus();
     }
   }
@@ -163,6 +162,7 @@ export class LogComponent implements AfterViewInit {
     // To not let the user to make another request if he/she got an error untill he matches the passwords again
     this.passwordConfirmationFormControl.updateValueAndValidity();
     if (!this.passwordConfirmationFormControl.getError('passwordMismatch') || this.passwordConfirmationFormControl.value === '') {
+      // It won't process the request unless the password matches or there is no need for a confirmed password(at sign up)
       const user: User = {
         email: this.emailFormControl.value ?? 'anything since its for sure not null',
         password: this.passwordFormControl.value ?? 'anything since its for sure not null',
@@ -173,7 +173,7 @@ export class LogComponent implements AfterViewInit {
 
   onSigningWithEmail() {
     // ?? To avoid the it may be null error
-    this.authStore.EmailLog(this.emailFormControl.value ?? 'anything since its for sure not null');
+    this.authStore.EmailLog(this.emailFormControl.value ?? 'anything since its for sure not null due to the validators');
     if (this.authStore.authError()) {
       // 1001 just the enough time to pass the simulated time for the response.
       setTimeout(() => {
@@ -256,6 +256,7 @@ export class LogComponent implements AfterViewInit {
       return '2';
     }
   }
+
   get getForm3Animation2(): '1' | '2' {
     if (this.formType === '1' && this.resetPassword === '1' && this.resetting == '1') {
       return '2';

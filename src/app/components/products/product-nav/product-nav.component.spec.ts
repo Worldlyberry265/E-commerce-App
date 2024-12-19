@@ -3,10 +3,10 @@ import { ProductNavComponent } from './product-nav.component';
 import { MatDialog } from '@angular/material/dialog';
 import { createTestProduct, Product } from '../../../models/Product';
 import { ComponentRef } from '@angular/core';
-import { HttpClientModule, provideHttpClient, withInterceptorsFromDi, } from '@angular/common/http';
 import { UserItemsStore } from '../../../store/user-items.store';
 import { AuthStore } from '../../../store/auth.store';
 import { PreviewComponent } from '../../preview/preview.component';
+import { HttpClientService } from '../../../services/http.client';
 
 describe('ProductNavComponent', () => {
   let userItemsStore: InstanceType<typeof UserItemsStore>;
@@ -20,17 +20,20 @@ describe('ProductNavComponent', () => {
 
   const productMock: Product = createTestProduct({ id: 123, title: 'Test Product', price: 100 });
 
+  let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
+
   beforeEach(async () => {
+
+    httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
 
     mockDialog = {
       open: jasmine.createSpy('open'),
     };
 
     await TestBed.configureTestingModule({
-      imports: [ProductNavComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog, },
-        provideHttpClient(withInterceptorsFromDi())
+        { provide: HttpClientService, useValue: httpClientServiceMock },
       ],
     }).compileComponents();
 

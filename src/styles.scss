@@ -115,11 +115,12 @@ body ::selection {
   outline: none;
   border: none;
   font-size: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   background-color: #007BFF;
   color: #FFFFFF;
   border-radius: 0.5rem;
   cursor: pointer;
+  flex: 1;
 }
 
 .categories__menu {
@@ -1222,6 +1223,7 @@ body ::selection {
   color: #161215;
   font-size: 1.5rem;
   letter-spacing: 0.3em;
+  width: 50rem;
   padding: 0.7rem 2rem;
   outline: none;
   border: none;
@@ -1233,6 +1235,11 @@ body ::selection {
   color: #161215;
   opacity: 0.8;
 }
+@media (max-width: 28.125em) {
+  .main-header__search {
+    width: auto;
+  }
+}
 
 .section-introduction {
   height: 100vh;
@@ -1241,6 +1248,7 @@ body ::selection {
 @media (max-width: 28.125em) {
   .section-introduction {
     height: auto;
+    padding-top: 1rem;
   }
 }
 
@@ -1290,8 +1298,8 @@ body ::selection {
 .introduction__text {
   position: absolute;
   left: 50%;
-  top: 30%;
-  padding: 0 10rem;
+  top: 33%;
+  padding: 0 8rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnInit, signal, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HeaderComponent } from "../../components/header/header.component";
 import { ProductCardComponent } from "../../components/products/product-card/product-card.component";
@@ -6,7 +6,6 @@ import { ProductFrameComponent } from "../../components/products/product-frame/p
 import { ProductStore } from "../../store/product.store";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { Product } from "../../models/Product";
-import { UserItemsStore } from "../../store/user-items.store";
 import { WeatherStore } from "../../store/weather.store";
 
 @Component({
@@ -25,7 +24,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   protected readonly productStore = inject(ProductStore);
   protected readonly weatherStore = inject(WeatherStore);
 
-  weather = signal(-1);
+  mainWeatherCode = signal(-1);
   weatherType = signal<('sunny' | 'cloudy' | 'foggy' | 'rainy' | 'snowy' | 'thunders' | '')>('');
   searchedProduct = ''; // I NEED TO MANUALLY TRIGGER CHANGE DETECTION !!!!!!!!!!!
 
@@ -53,42 +52,46 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
         // We start from 2, assuming the delivery needs 2 days, so the user wont be interested in the weather for the next 2 days
         for (let i = 2; i < weatherCodes.length; i++) {
           // Check if the weather has something special like rain,snow,fog, etc.
-          if (weatherCodes[i] >= 50) {
-            this.weather.set(weatherCodes[i]);
+          if (weatherCodes[i] >= 50 && weatherCodes[i] > this.mainWeatherCode()) {
+            this.mainWeatherCode.set(weatherCodes[i]);
           }
         }
         // else we pick the 4th date as its in the middle of the week and assuming the delivery will take up to 2 days to deliver the product
-        if (this.weather() === -1 && weatherCodes.length != 0) {
+        if (this.mainWeatherCode() === -1 && weatherCodes.length != 0) {
           // -1 means the for loop didnt change the initial value of the weather
           // weatherCodes.length != 0 to not enter an infinite loop
-          this.weather.set(weatherCodes[2]);
+          this.mainWeatherCode.set(weatherCodes[2]);
         }
-
         // I'm picking the Ids according to the most suitable option out there, so there is some redundancy bcz there isn't much products 
         // found in fakeStoreApi
-        if (this.weather() != -1) {
-          if (this.weather() === 0 || this.weather() === 1) {
+        if (this.mainWeatherCode() != -1) {
+          if (this.mainWeatherCode() === 0 || this.mainWeatherCode() === 1) {
             this.weatherType.set('sunny');
             this.weatherStore.GetFramedProducts({ menProducId: 2, womenProductId: 20 });
-          } else if (this.weather() === 2 || this.weather() === 3) {
+          } else if (this.mainWeatherCode() === 2 || this.mainWeatherCode() === 3) {
             this.weatherType.set('cloudy');
             this.weatherStore.GetFramedProducts({ menProducId: 2, womenProductId: 19 });
-          } else if (this.weather() >= 4 && this.weather() <= 47) {
+          } else if (this.mainWeatherCode() >= 4 && this.mainWeatherCode() <= 47) {
             this.weatherType.set('foggy');
             this.weatherStore.GetFramedProducts({ menProducId: 4, womenProductId: 17 });
-          } else if ((this.weather() >= 50 && this.weather() <= 69) || (this.weather() >= 80 && this.weather() <= 82)) {
+          } else if ((this.mainWeatherCode() >= 50 && this.mainWeatherCode() <= 69) || (this.mainWeatherCode() >= 80 && this.mainWeatherCode() <= 82)) {
             this.weatherType.set('rainy');
             this.weatherStore.GetFramedProducts({ menProducId: 4, womenProductId: 16 });
-          } else if (this.weather() >= 70 && this.weather() <= 79) {
+          } else if (this.mainWeatherCode() >= 70 && this.mainWeatherCode() <= 79) {
             this.weatherType.set('snowy');
             this.weatherStore.GetFramedProducts({ menProducId: 3, womenProductId: 15 });
-          } else if (this.weather() >= 83 && this.weather() <= 89) {
+          } else if (this.mainWeatherCode() >= 83 && this.mainWeatherCode() <= 89) {
             this.weatherType.set('thunders');
             this.weatherStore.GetFramedProducts({ menProducId: 3, womenProductId: 15 });
           }
         }
+
       }
     }, { allowSignalWrites: true });
+
+    // effect(() => {
+
+    // }, { allowSignalWrites: true }); // to allow updating signals in effects
 
 
     effect(() => {
@@ -103,6 +106,18 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
       }
 
     }, { allowSignalWrites: true }); // to allow updating signals in effects
+  }
+
+  // To confirm if we scroll through the products horizontally, or normally/vertically
+  private confirmProductsScroll(productsLength: number) {
+    const scrollContainer = document.querySelector('.product-cards__container') as HTMLElement;
+    // If we have only few products the user wont be able to scroll the page over them, instead the browser will try
+    // to scroll horizentally between the products, so we stop the horizental scroll then
+    if (productsLength > 5) {
+      scrollContainer!.addEventListener('wheel', this.handleWheelEvent);
+    } else {
+      scrollContainer!.removeEventListener('wheel', this.handleWheelEvent); // Return back normal scroll behavior
+    }
   }
 
   ngOnInit(): void {
@@ -122,32 +137,20 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     this.productsSection = document.getElementById('productsSection') as HTMLUListElement;
   }
 
-  // To confirm if we scroll through the products horizontally, or normally/vertically
-  private confirmProductsScroll(productsLength: number) {
-    const scrollContainer = document.querySelector('.product-cards__container') as HTMLElement;
-    // If we have only few products the user wont be able to scroll the page over them, instead the browser will try
-    // to scroll horizentally between the products, so we stop the horizental scroll then
-    if (productsLength > 5) {
-      scrollContainer!.addEventListener('wheel', this.handleWheelEvent);
-    } else {
-      scrollContainer!.removeEventListener('wheel', this.handleWheelEvent); // Return back normal scroll behavior
-    }
-  }
-
-
   onSearchProduct(event: Event) {
 
     const productName = (event.target as HTMLInputElement).value;
 
-    // To not send a request of empty and malicious input 
+    // To prevent sending a request of malicious input 
     if (this.inputRegex.test(productName)) {
 
       // To stop displaying the searched products and to display nothing when there isn't a product found
       this.searchedProductInfo.set(productName === '' ? null : productName);
       // If its an id then its greater than 0
-      if (+productName > 0) { // the ids start from 0
+      if (+productName > 0) { // the ids start from 
         this.productStore.SearchForProducts(+productName);
-        // else it will be a string
+        // else it will be a string 
+        // or empty which will remove the previous displayed searchedProducts
       } else {
         this.productStore.SearchForProducts(productName);
       }
@@ -168,7 +171,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onFetchAndScrollCategoryProducts(category: string, categoryId: number) {
+  onFetchAndScrollToCategoryProducts(category: string, categoryId: number) {
     this.productsSection.scrollIntoView({ behavior: 'smooth' });
     this.onFetchCategoryProducts(category, categoryId);
   }

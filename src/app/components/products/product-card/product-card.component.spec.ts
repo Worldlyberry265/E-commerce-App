@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductCardComponent } from './product-card.component';
 import { createTestProduct, Product } from '../../../models/Product';
-import { Router, RouterModule } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { ComponentRef } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
-// import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientService } from '../../../services/http.client';
 
 
 describe('ProductCardComponent', () => {
@@ -14,14 +13,18 @@ describe('ProductCardComponent', () => {
   let fixture: ComponentFixture<ProductCardComponent>;
   let componentRef: ComponentRef<ProductCardComponent>;
 
+  let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
 
   const mockProduct: Product = createTestProduct({ id: 1, title: 'Test Product', price: 100 });
 
   beforeEach(async () => {
+
+    httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
+
     await TestBed.configureTestingModule({
-      imports: [ProductCardComponent, RouterModule.forRoot([])], // Include required modules
       providers: [
-        provideHttpClient(withInterceptorsFromDi()),
+        { provide: HttpClientService, useValue: httpClientServiceMock },
+        provideRouter([])
       ],
     }).compileComponents();
 

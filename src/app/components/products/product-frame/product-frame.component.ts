@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { ProductRatingComponent } from '../product-rating/product-rating.component';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../../models/Product';

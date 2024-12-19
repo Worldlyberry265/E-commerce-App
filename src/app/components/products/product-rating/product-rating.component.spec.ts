@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductRatingComponent } from './product-rating.component';
-import { AddDecimalPipe } from './add-decimal-pipe/add-decimal.pipe';
 import { By } from '@angular/platform-browser';
 import { ComponentRef } from '@angular/core';
 
@@ -11,7 +10,6 @@ describe('ProductRatingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductRatingComponent, AddDecimalPipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductRatingComponent);

@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { inject } from '@angular/core';
 import { delay, of, switchMap, throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthStore } from '../auth.store';

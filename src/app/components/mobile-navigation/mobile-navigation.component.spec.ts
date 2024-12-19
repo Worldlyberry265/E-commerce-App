@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MobileNavigationComponent } from './mobile-navigation.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
 import { PreviewComponent } from '../preview/preview.component';
 import { ElementRef } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClientService } from '../../services/http.client';
 
 describe('MobileNavigationComponent', () => {
   let component: MobileNavigationComponent;
@@ -16,22 +16,22 @@ describe('MobileNavigationComponent', () => {
   let mockAuthStore: InstanceType<typeof AuthStore>;
 
   let router: Router;
-  const mockRoute = jasmine.createSpyObj('ActivatedRoute', ['snapshot']);
 
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<PreviewComponent>>;
+
+  let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
 
   beforeEach(() => {
 
     dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['open']);
 
+    httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
 
     TestBed.configureTestingModule({
-      imports: [MobileNavigationComponent, PreviewComponent],
       providers: [
         { provide: MatDialogRef, useValue: dialogRefSpy },
-        { provide: ActivatedRoute, useValue: mockRoute },
-        provideHttpClient(withInterceptorsFromDi()),
-        Router
+        { provide: HttpClientService, useValue: httpClientServiceMock },
+        provideRouter([]),
       ],
     });
 

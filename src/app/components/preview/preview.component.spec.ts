@@ -1,11 +1,11 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PreviewComponent } from './preview.component';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
 import { createTestProduct, Product } from '../../models/Product';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClientService } from '../../services/http.client';
 
 describe('PreviewComponent', () => {
   let component: PreviewComponent;
@@ -14,6 +14,8 @@ describe('PreviewComponent', () => {
   let authStore: InstanceType<typeof AuthStore>;
   let mockRouter: jasmine.SpyObj<Router>;
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<PreviewComponent>>;
+
+  let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
 
   const mockCartItems: Product[] = [
     createTestProduct({ id: 1, title: 'Product 1', price: 10, image: '', category: '', quantity: undefined }),
@@ -31,13 +33,14 @@ describe('PreviewComponent', () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate', 'serializeUrl', 'createUrlTree']);
     dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
 
+    httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
+
     TestBed.configureTestingModule({
-      imports: [MatDialogModule, PreviewComponent],
       providers: [
         { provide: MatDialogRef, useValue: dialogRefSpy },
         { provide: Router, useValue: mockRouter },
         { provide: MAT_DIALOG_DATA, useValue: { DialogType: dialogType } },
-        provideHttpClient(withInterceptorsFromDi()),
+        { provide: HttpClientService, useValue: httpClientServiceMock },
       ]
     }).compileComponents();
 

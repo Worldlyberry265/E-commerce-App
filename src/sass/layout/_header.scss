@@ -102,7 +102,7 @@
         height: 3rem;
         cursor: pointer;
         transition: all 0.5s;
-        
+
         stroke: transparent;
         stroke-width: 1.5rem;
         &:hover {
@@ -112,18 +112,17 @@
       }
 
       span {
-        z-index: 3; // to stay above the svg 
+        z-index: 3; // to stay above the svg
         position: absolute;
-        top: -.5rem;
+        top: -0.5rem;
         right: -1rem;
         text-align: center;
         background-color: $accent-color;
         font-size: 1.5rem;
         color: white;
         border-radius: 50%;
-        padding: .2rem .5rem;
+        padding: 0.2rem 0.5rem;
       }
-      
     }
 
     @include respond(mobile) {
@@ -136,17 +135,21 @@
     color: $secondary-on-color;
     font-size: 1.5rem;
     letter-spacing: 0.3em;
+    width: 50rem;
     padding: 0.7rem 2rem;
     outline: none;
     border: none;
     background-color: $divider;
     border-radius: 10rem;
     text-align: center;
-    // transition: all 0.2s;
 
     &::placeholder {
       color: $secondary-on-color;
       opacity: 0.8;
+    }
+
+    @include respond(mobile) {
+      width: auto;
     }
   }
 }

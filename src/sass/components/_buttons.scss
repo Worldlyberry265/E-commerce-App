@@ -1,10 +1,11 @@
 .btn-nav {
-    outline: none;
-    border: none;
-    font-size: 1.5rem;
-    padding: 1.5rem;
-    background-color: $primary;
-    color: $primary-on-color;
-    border-radius: .5rem;
-    cursor: pointer;
+  outline: none;
+  border: none;
+  font-size: 1.5rem;
+  padding: 1.5rem 0; // 0 since flex will adjust the width
+  background-color: $primary;
+  color: $primary-on-color;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  flex: 1;
 }

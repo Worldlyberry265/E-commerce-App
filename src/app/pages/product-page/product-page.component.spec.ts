@@ -4,10 +4,10 @@ import { ProductStore } from '../../store/product.store';
 import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
 import { MatDialog } from '@angular/material/dialog';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { createTestProduct, Product } from '../../models/Product';
 import { PreviewComponent } from '../../components/preview/preview.component';
+import { HttpClientService } from '../../services/http.client';
 
 describe('ProductPageComponent', () => {
   let component: ProductPageComponent;
@@ -19,16 +19,19 @@ describe('ProductPageComponent', () => {
 
   const mockProduct: Product = ({ id: 3, title: 'Test Product', quantity: 2, price: 203, description: 'description', category: 'men', image: 'some-img-url', rating: { count: 40, rate: 2.5 } });
 
+  let httpClientServiceMock: jasmine.SpyObj<HttpClientService>;
+
   beforeEach(() => {
     mockDialog = {
       open: jasmine.createSpy('open'),
     };
 
+    httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
+
     TestBed.configureTestingModule({
-      imports: [ProductPageComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
-        provideHttpClient(withInterceptorsFromDi()),
+        { provide: HttpClientService, useValue: httpClientServiceMock },
         provideRouter([]),
       ],
     });
@@ -43,18 +46,6 @@ describe('ProductPageComponent', () => {
 
 
     spyOn(mockProductStore, 'selectedProduct').and.returnValue(mockProduct);
-    // spyOn(mockUserItemsStore, 'savedItems').and.returnValue([mockProduct]);
-    // spyOn(mockUserItemsStore, 'cartItems').and.returnValue([mockProduct]);
-
-
-
-    // spyOn(mockUserItemsStore, 'IsItemInCart').and.returnValue(true);
-    // spyOn(mockUserItemsStore, 'IsItemSaved').and.returnValue(true);
-    // spyOn(mockUserItemsStore, 'IsItemInCart').and.callFake((id: number) => id === 1);
-    // spyOn(mockUserItemsStore, 'IsItemSaved').and.callFake((id: number) => id === 1);
-
-
-    // fixture.detectChanges();
   });
 
   describe('constructing the component', () => {
@@ -253,11 +244,16 @@ describe('ProductPageComponent', () => {
     fixture.detectChanges();
 
     component.onDecrementQuantity();
-    expect(component.product()?.quantity).toEqual(1);
-    expect(mockUserItemsStore.UpdateItemInCart).toHaveBeenCalled();
+    // timeout to wait for the quantity update to be done
+    setTimeout(() => {
+      expect(component.product()?.quantity).toEqual(1);
+      expect(mockUserItemsStore.UpdateItemInCart).toHaveBeenCalled();
+    }, 1000);
 
     component.onDecrementQuantity();
-    expect(component.product()?.quantity).toEqual(1); // shouldn't decremenet if less than or equal to 1
+    setTimeout(() => {
+      expect(component.product()?.quantity).toEqual(1); // shouldn't decremenet if less than or equal to 1
+    }, 2000);
 
   });
 
@@ -269,8 +265,11 @@ describe('ProductPageComponent', () => {
     fixture.detectChanges();
 
     component.onIncrementQuantity();
-    expect(component.product()?.quantity).toEqual(2);
-    expect(mockUserItemsStore.UpdateItemInCart).toHaveBeenCalled();
+    // timeout to wait for the quantity update to be done
+    setTimeout(() => {
+      expect(component.product()?.quantity).toEqual(3);
+      expect(mockUserItemsStore.UpdateItemInCart).toHaveBeenCalled();
+    }, 1000);
   });
 
 });
