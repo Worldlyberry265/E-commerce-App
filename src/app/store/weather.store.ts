@@ -3,7 +3,7 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { Product } from '../models/Product';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, forkJoin, pipe, tap } from 'rxjs';
-import { HttpClientService } from '../services/http.client';
+import { HttpClientService } from '../services/http/http.client.service';
 import { tapResponse } from '@ngrx/operators';
 
 type WeatherState = {

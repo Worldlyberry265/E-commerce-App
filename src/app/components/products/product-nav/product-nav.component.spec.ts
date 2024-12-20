@@ -6,7 +6,7 @@ import { ComponentRef } from '@angular/core';
 import { UserItemsStore } from '../../../store/user-items.store';
 import { AuthStore } from '../../../store/auth.store';
 import { PreviewComponent } from '../../preview/preview.component';
-import { HttpClientService } from '../../../services/http.client';
+import { HttpClientService } from '../../../services/http/http.client.service';
 
 describe('ProductNavComponent', () => {
   let userItemsStore: InstanceType<typeof UserItemsStore>;
@@ -45,6 +45,10 @@ describe('ProductNavComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
     componentRef.setInput('appProductNav', productMock);
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
   it('should create the component and have an input', () => {

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 import { WeatherStore } from '../weather.store'
 import { createTestProduct, Product } from '../../models/Product';
 
@@ -22,6 +22,10 @@ describe('WeatherStore', () => {
         });
 
         store = TestBed.inject(WeatherStore);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     // Testing Initial State

@@ -58,7 +58,7 @@ body {
   font-family: "Roboto", sans-serif;
 }
 body ::selection {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
 }
 
@@ -116,8 +116,8 @@ body ::selection {
   border: none;
   font-size: 1.5rem;
   padding: 1.5rem 0;
-  background-color: #007BFF;
-  color: #FFFFFF;
+  background-color: #007bff;
+  color: white;
   border-radius: 0.5rem;
   cursor: pointer;
   flex: 1;
@@ -146,7 +146,7 @@ body ::selection {
   flex: calc(25% - 3rem);
   text-align: center;
   height: 30rem;
-  background-color: #007BFF;
+  background-color: #007bff;
   box-sizing: border-box;
   border-radius: 1rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
@@ -159,13 +159,13 @@ body ::selection {
 }
 .categories__item--icon {
   fill: white;
-  color: #F8F9FA;
+  color: #f8f9fa;
   font-size: 5rem;
 }
 .categories__item--name {
   font-size: 2rem;
   text-transform: uppercase;
-  color: #A0D8E6;
+  color: #a0d8e6;
 }
 @media (max-width: 28.125em) {
   .categories__item--name {
@@ -224,7 +224,7 @@ body ::selection {
   position: fixed;
   top: 4.5rem;
   right: 4.5rem;
-  background-image: radial-gradient(#007BFF, #0056b3);
+  background-image: radial-gradient(#007bff, #0056b3);
   z-index: 1000;
   transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
 }
@@ -288,7 +288,7 @@ body ::selection {
 .mobile-navigation__icon, .mobile-navigation__icon::before, .mobile-navigation__icon::after {
   width: 3rem;
   height: 2px;
-  background-color: #343A40;
+  background-color: #343a40;
   display: inline-block;
 }
 .mobile-navigation__icon::before, .mobile-navigation__icon::after {
@@ -390,7 +390,7 @@ body ::selection {
 }
 .preview__content--item--quantity-wrapper i {
   cursor: pointer;
-  color: #007BFF;
+  color: #007bff;
 }
 .preview__content--item--price {
   color: goldenrod;
@@ -417,7 +417,7 @@ body ::selection {
 }
 .preview__content--item--border {
   grid-column: 1/-1;
-  border-bottom: 2px dashed #CED4DA;
+  border-bottom: 2px dashed #ced4da;
 }
 .preview__content--warning-icon {
   font-size: 5rem;
@@ -458,7 +458,7 @@ body ::selection {
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  border: 5px solid #CED4DA;
+  border: 5px solid #ced4da;
   border-radius: 3rem;
   box-shadow: 0 0 35px rgba(140, 152, 164, 0.25);
   transition: all 0.4s;
@@ -532,7 +532,7 @@ body ::selection {
   fill: red;
 }
 .product-card__nav--item-active-cart {
-  fill: #4CAF50;
+  fill: #4caf50;
 }
 @media (min-width: 37.5em) {
   .product-card__nav--item:hover {
@@ -546,7 +546,7 @@ body ::selection {
   .product-card__nav--item-cart:active {
     transition: all 0.1s;
     transform: scale(0.8);
-    fill: #4CAF50;
+    fill: #4caf50;
   }
 }
 
@@ -846,7 +846,7 @@ body ::selection {
 }
 .product__main-content--navigation--quantity i {
   cursor: pointer;
-  color: #007BFF;
+  color: #007bff;
 }
 @media (max-width: 28.125em) {
   .product__main-content--navigation--quantity {
@@ -873,7 +873,7 @@ body ::selection {
   width: 21.6rem;
 }
 .product__main-content--navigation--button-added {
-  background-color: #4CAF50 !important;
+  background-color: #4caf50 !important;
 }
 .product__main-content--navigation--button-saved {
   background-color: red !important;
@@ -1052,8 +1052,8 @@ body ::selection {
   grid-gap: 3rem;
 }
 .main-footer-container {
-  background-color: #007BFF;
-  color: #A0D8E6;
+  background-color: #007bff;
+  color: #a0d8e6;
   padding-top: 3rem;
   padding-bottom: 5rem;
   box-shadow: 0 -35px 35px rgba(140, 152, 164, 0.25);
@@ -1110,7 +1110,7 @@ body ::selection {
 .main-header {
   display: flex;
   justify-content: space-between;
-  background-color: #F8F9FA;
+  background-color: #f8f9fa;
   position: sticky;
   top: 0;
   width: 100vw;
@@ -1144,8 +1144,8 @@ body ::selection {
 .main-header__menu {
   list-style-type: none;
   position: absolute;
-  background-color: #CED4DA;
-  color: #F8F9FA;
+  background-color: #ced4da;
+  color: #f8f9fa;
   padding: 1rem 2rem;
   visibility: hidden;
   transform: scale(0.8);
@@ -1207,7 +1207,7 @@ body ::selection {
   top: -0.5rem;
   right: -1rem;
   text-align: center;
-  background-color: #FF4081;
+  background-color: #ff4081;
   font-size: 1.5rem;
   color: white;
   border-radius: 50%;
@@ -1227,7 +1227,7 @@ body ::selection {
   padding: 0.7rem 2rem;
   outline: none;
   border: none;
-  background-color: #CED4DA;
+  background-color: #ced4da;
   border-radius: 10rem;
   text-align: center;
 }
@@ -1513,7 +1513,7 @@ body ::selection {
   color: black;
   padding: 2rem;
   box-sizing: border-box;
-  border: 1px solid #CED4DA;
+  border: 1px solid #ced4da;
 }
 .log__links--nav span svg {
   width: 2.5rem;
@@ -1526,7 +1526,7 @@ body ::selection {
   box-shadow: 0 0 3.5rem rgba(140, 152, 164, 0.25) inset;
 }
 .log__divider {
-  border: 1px dotted #CED4DA;
+  border: 1px dotted #ced4da;
   height: 40%;
 }
 @media (max-width: 28.125em) {
@@ -1543,7 +1543,7 @@ body ::selection {
   }
 }
 .log__phrase i {
-  color: #007BFF;
+  color: #007bff;
   width: 100%;
   text-align: center;
   margin-bottom: 4rem;

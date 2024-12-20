@@ -18,6 +18,7 @@ describe('UserItemsStore', () => {
 
   afterEach(() => {
     localStorage.clear();  // Ensures no state persists between tests
+    TestBed.resetTestingModule();
   });
 
   // Testing Initial State

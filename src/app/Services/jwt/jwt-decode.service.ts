@@ -8,13 +8,18 @@ export interface CustomJwtPayload {
   iat: number;
 }
 
+// Added this to solve the errr "jwtDecode is not declared writable or has no setter" at testing
+export const JwtDecodeWrapper = {
+  jwtDecode: jwt_decode.jwtDecode,
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class JwtDecodeService {
 
   fetchSubject(jwtToken: string) {
-    const username = jwt_decode.jwtDecode<CustomJwtPayload>(jwtToken).user;
+    const username = JwtDecodeWrapper.jwtDecode<CustomJwtPayload>(jwtToken).user;
     return username;
   }
 }

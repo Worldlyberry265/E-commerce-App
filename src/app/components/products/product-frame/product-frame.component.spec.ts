@@ -39,6 +39,10 @@ describe('ProductFrameComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  
   it('should create and get input product', () => {
     expect(component).toBeTruthy();
     expect(component.product()).toEqual(mockProduct);

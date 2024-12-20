@@ -4,7 +4,7 @@ import { createTestProduct, Product } from '../../../models/Product';
 import { provideRouter, Router } from '@angular/router';
 import { ComponentRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { HttpClientService } from '../../../services/http.client';
+import { HttpClientService } from '../../../services/http/http.client.service';
 
 
 describe('ProductCardComponent', () => {
@@ -33,6 +33,10 @@ describe('ProductCardComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
     componentRef.setInput('appProductCard', mockProduct); // Set input
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
   it('should create the component and get input product', () => {

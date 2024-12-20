@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { delay, of } from 'rxjs';
 import { ProductStore } from '../product.store';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 import { createTestProduct, Product } from '../../models/Product';
 
 describe('ProductStore', () => {
@@ -21,6 +21,10 @@ describe('ProductStore', () => {
             ]
         });
         store = TestBed.inject(ProductStore);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     // Testing Initial State

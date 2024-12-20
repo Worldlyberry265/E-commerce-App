@@ -1,66 +1,30 @@
 //  Primary Colors
-$primary-backgound-color: #861b85; // Main magenta-violet primary color
-$primary-on-color: #FFFFFF; // Color for text/icons on primary color
-// $primary-on-color: #161215;
-$link-color:  #006ce4;
+$primary: #007bff; // Primary color
+$primary-dark: #0056b3; // Primary color (dark)
+$accent: #118ea1; // Accent color
+$secondary-accent: #3f97cd;
+$warn: #b73a3a; // Warn color
 
-$box-shadow-light:  0 0 3.5rem rgba(140, 152, 164, 0.25);
+//shadows
+$box-shadow-light: 0 0 3.5rem rgba(140, 152, 164, 0.25);
 $box-shadow-strong: 0 0 0.5rem rgba(0, 0, 0, 0.5);
 
-$secondary-hover-text-lavender: #D9C2DB;
-$secondary-hover-text-pastel-pink: #f198d9;
-$secondary-hover-text-bright-aqua: #A0F4F1;
-$secondary-hover-text-light-goldenrod: #FFE484;
-$secondary-hover-text-mint-green: #B3FFB3;
-
-// $selected-color: #f26fcf;
-$selected-color: #ffabf3;
-
-
-
-
-$secondary-background-color: #161215; // (Dark Gray)
-// $secondary-on-color: #e9e0e4; // (Light Gray)
-$secondary-on-color: #161215;
-
-$accent-color: #FF4081; // Bright Pink
-$neutral-light: #F5F5F5; // Light Gray
-$neutral-dark: #212121; // Dark Gray
-$success-color: #4CAF50; // Green
-$warning-color: #FFC107; // Yellow
+//objects colors
+$icon-color: #ff4081; // Bright Pink
+$success-color: #4caf50; // Green
 $error-color: #b84f4f; // Red
-$error-color-dark: #662222; // Red
 $currency-color: goldenrod;
 
-
-
-
-
-
-
-
-
-$primary: #007BFF;           // Primary color
-$primary-dark: #0056b3;     // Primary color (dark)
-$accent: #118ea1;            // Accent color
-$secondary-accent: #177ab8;
-$tertiary-accent: #3f97cd;
-$warn: #dc3545;              // Warn color
-$warn-2: #b73a3a;              // Warn color
-
 // Background Colors
-$background: #F8F9FA;       // Background color
-$card-background: #FFFFFF;   // Card background color
-$divider: #CED4DA;           // Divider color
+$background: #f8f9fa; // Background color
+$divider: #ced4da; // Divider color
 
 // Text Colors
-$text-default: #212529;      // Default text color
-$text-secondary: #6C757D; 
-// $color-grey-dark: #333; 
+$text-default: #212529; // Default text color
+$text-primary: #343a40; // Dark Gray
+$text-secondary: #f8f9fa; // Light Gray
+$text-soft-cyan: #a0d8e6; // Soft Cyan
+$text-black: #161215;
 
-$text-primary: #343A40;   // Dark Gray
-$text-secondary: #F8F9FA; // Light Gray
-$text-on-primary: #FFFFFF; // White for primary background
-$text-muted: #0056b3;      // Muted Blue
-$text-soft-cyan: #A0D8E6;  // Soft Cyan
-$text-light-cyan: #d7e3ff;  // Soft Cyan
+// Navigation colors
+$link-color: #006ce4;

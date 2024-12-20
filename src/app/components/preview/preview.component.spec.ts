@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
 import { createTestProduct, Product } from '../../models/Product';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 
 describe('PreviewComponent', () => {
   let component: PreviewComponent;
@@ -57,6 +57,10 @@ describe('PreviewComponent', () => {
 
     fixture.detectChanges();
   }
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 
   const testRemoveItem = (methodName: 'onRemoveItemFromCart' | 'onDecrementQuantity', itemIndex: number) => {
     setupTest('cart');

@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { delay, of, switchMap, throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthStore } from '../auth.store';
-import { HttpClientService } from '../../services/http.client';
-import { JwtDecodeService } from '../../services/jwt-decode.service';
+import { HttpClientService } from '../../services/http/http.client.service';
+import { JwtDecodeService } from '../../services/jwt/jwt-decode.service';
 import { UserItemsStore } from '../user-items.store';
 
 describe('AuthStore', () => {
@@ -43,6 +43,10 @@ describe('AuthStore', () => {
         });
 
         authStore = TestBed.inject(AuthStore);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
 

@@ -1,4 +1,4 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 import { Product } from '../models/Product';
 
 type UserItemsState = {
@@ -84,6 +84,11 @@ export const UserItemsStore = signalStore(
             GetCart, IsItemSaved, CloseMobileNavigation, OpenMobileNavigation, TESTER_METHOD_Populate_CartItems,
             TESTER_METHOD_Populate_SavedItems, TESTER_METHOD_Toggle_IsPreviewDisplayed, UpdateItemInCart
         };
-    })
+    }),
+    // withHooks({
+    //     onInit({ GetCart }) {
+    //         GetCart();
+    //     }
+    // }),
 
 );

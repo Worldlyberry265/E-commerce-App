@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
 import { createTestProduct, Product } from '../../models/Product';
 import { PreviewComponent } from '../../components/preview/preview.component';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 
 describe('ProductPageComponent', () => {
   let component: ProductPageComponent;
@@ -46,6 +46,10 @@ describe('ProductPageComponent', () => {
 
 
     spyOn(mockProductStore, 'selectedProduct').and.returnValue(mockProduct);
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
   describe('constructing the component', () => {

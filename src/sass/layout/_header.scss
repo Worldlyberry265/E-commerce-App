@@ -117,7 +117,7 @@
         top: -0.5rem;
         right: -1rem;
         text-align: center;
-        background-color: $accent-color;
+        background-color: $icon-color;
         font-size: 1.5rem;
         color: white;
         border-radius: 50%;
@@ -132,7 +132,7 @@
 
   &__search {
     align-self: center;
-    color: $secondary-on-color;
+    color: $text-black;
     font-size: 1.5rem;
     letter-spacing: 0.3em;
     width: 50rem;
@@ -144,7 +144,7 @@
     text-align: center;
 
     &::placeholder {
-      color: $secondary-on-color;
+      color: $text-black;
       opacity: 0.8;
     }
 

@@ -3,9 +3,7 @@ import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthStore } from './store/auth.store';
 import { UserItemsStore } from './store/user-items.store';
-import { FooterComponent } from './components/footer/footer.component';
-import { MobileNavigationComponent } from './components/mobile-navigation/mobile-navigation.component';
-import { HttpClientService } from './services/http.client';
+import { HttpClientService } from './services/http/http.client.service';
 
 
 describe('AppComponent', () => {
@@ -21,7 +19,6 @@ describe('AppComponent', () => {
     httpClientServiceMock = {} as jasmine.SpyObj<HttpClientService>;
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent, FooterComponent, MobileNavigationComponent,],
       providers: [
         provideRouter([]),
         { provide: HttpClientService, useValue: httpClientServiceMock },

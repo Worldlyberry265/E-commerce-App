@@ -26,7 +26,7 @@
                 } @else if (emailFormControl.hasError('noSpecialCharacters')) {
                 <mat-error class="log__form--error">The email can have only these types of special characters
                     !&#64;#$%^*-_.</mat-error>
-                } @else if (emailFormControl.hasError('noConsecutiveHyphens')) {
+                } @else if (emailFormControl.hasError('consecutiveHyphens')) {
                 <mat-error class="log__form--error">The email can't have consecutive hyphens as such -- .</mat-error>
                 } @else if (emailFormControl.hasError('minLengthBeforeAt')) {
                 <mat-error class="log__form--error">The email should be between 6 and 30 characters before the
@@ -111,16 +111,16 @@
 
                 @if (passwordFormControl.hasError('required')) {
                 <mat-error class="log__form--error">Please enter a password</mat-error>
+                } @else if (passwordFormControl.hasError('hasDesiredLength')) {
+                <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
                 } @else if (passwordFormControl.hasError('noSpecialCharacters')) {
                 <mat-error class="log__form--error">The password can have only these types of special characters
                     !&#64;#$%^*-_.</mat-error>
-                } @else if (passwordFormControl.hasError('noConsecutiveHyphens')) {
-                <mat-error class="log__form--error">The password can't have consecutive hyphens as such -- .</mat-error>
+                } @else if (passwordFormControl.hasError('consecutiveHyphens')) {
+                <mat-error class="log__form--error">The email can't have consecutive hyphens as such -- .</mat-error>
                 } @else if (passwordFormControl.hasError('containsMixedCharacters')) {
                 <mat-error class="log__form--error">It should at least have 1 small letter, 1 capital letter, 1 special
                     character, and 1 number</mat-error>
-                } @else if (passwordFormControl.hasError('hasDesiredLength')) {
-                <mat-error class="log__form--error">It should be between 8 and 40 characters long</mat-error>
                 } @else if (passwordFormControl.hasError('authError')) {
                 <mat-error class="log__form--error">{{ authStore.authError() }}</mat-error>
                 }
@@ -185,7 +185,7 @@
                 } @else if (emailFormControl.hasError('noSpecialCharacters')) {
                 <mat-error class="log__form--error">The email can have only these types of special characters
                     !&#64;#$%^*-_.</mat-error>
-                } @else if (emailFormControl.hasError('noConsecutiveHyphens')) {
+                } @else if (emailFormControl.hasError('consecutiveHyphens')) {
                 <mat-error class="log__form--error">The email can't have consecutive hyphens as such -- .</mat-error>
                 } @else if (emailFormControl.hasError('minLengthBeforeAt')) {
                 <mat-error class="log__form--error">The email should be between 6 and 30 characters before the

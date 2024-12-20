@@ -6,7 +6,7 @@ import { AuthStore } from '../../store/auth.store';
 import { UserItemsStore } from '../../store/user-items.store';
 import { PreviewComponent } from '../preview/preview.component';
 import { ElementRef } from '@angular/core';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 
 describe('MobileNavigationComponent', () => {
   let component: MobileNavigationComponent;
@@ -47,6 +47,10 @@ describe('MobileNavigationComponent', () => {
     component.mobileCheckbox = {
       nativeElement: { checked: false },
     } as ElementRef;
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

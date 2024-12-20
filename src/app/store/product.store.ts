@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { HttpClientService } from '../services/http.client';
+import { HttpClientService } from '../services/http/http.client.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, of, pipe, switchMap, tap } from 'rxjs';
 import { Product } from '../models/Product';

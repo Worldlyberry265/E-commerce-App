@@ -20,6 +20,10 @@ describe('ProductRatingComponent', () => {
 
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('should create the component and have the inputs', () => {
     expect(fixture.componentInstance).toBeTruthy();
     componentRef.setInput('stars', 4);

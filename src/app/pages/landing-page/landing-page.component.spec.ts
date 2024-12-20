@@ -3,7 +3,7 @@ import { LandingPageComponent } from './landing-page.component';
 import { ProductStore } from '../../store/product.store';
 import { WeatherStore } from '../../store/weather.store';
 import { ComponentFixture } from '@angular/core/testing';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 import { provideRouter } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { createTestProduct } from '../../models/Product';
@@ -37,6 +37,10 @@ describe('LandingPageComponent', () => {
 
     fixture.detectChanges();
 
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
   it('should create the component', () => {

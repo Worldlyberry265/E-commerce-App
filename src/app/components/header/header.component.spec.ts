@@ -6,7 +6,7 @@ import { AuthStore } from '../../store/auth.store';
 import { ProductStore } from '../../store/product.store';
 import { UserItemsStore } from '../../store/user-items.store';
 import { ComponentRef } from '@angular/core';
-import { HttpClientService } from '../../services/http.client';
+import { HttpClientService } from '../../services/http/http.client.service';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
@@ -49,6 +49,10 @@ describe('HeaderComponent', () => {
         componentRef.setInput('appHeader', true); // Set input
 
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create the component and get the input', () => {

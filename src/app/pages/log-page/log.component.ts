@@ -11,8 +11,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { User } from '../../models/User';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AuthStore } from '../../store/auth.store';
-import { minLengthBeforeAt, noConsecutiveHyphens, startsWithLetter, validDomainStructure } from '../../services/log-validators/email-validators';
-import { hasDesiredLength, noSpecialCharacters } from '../../services/log-validators/combined-validators';
+import { minLengthBeforeAt, startsWithLetter, validDomainStructure } from '../../services/log-validators/email-validators';
+import { hasDesiredLength, noConsecutiveHyphens, noSpecialCharacters } from '../../services/log-validators/combined-validators';
 import { containsMixedCharacters, passwordMatchValidator } from '../../services/log-validators/password-validators';
 
 
@@ -115,12 +115,6 @@ export class LogComponent implements AfterViewInit {
   passwordConfirmationFormControl = new FormControl('', [
     passwordMatchValidator(this.passwordFormControl)
   ]);
-
-  // starts with letter then at least 5 letters/numbers/._- then @ then letters then  one or more of(. then at least 2 letters) for domains like lau.edu.lb
-  // It also cant have -- double hyphens in the whole string to prevent the chances of sql injections
-  EmailRegex = /^[a-zA-Z](?!.*--)[a-zA-Z0-9._-]{5,}@[a-zA-Z]+(\.[a-zA-Z]{2,})+$/; // add an if to check length < 50
-  // should be at least 8 characters and have at least 1 capital and small letter, 1 number and 1  special character from the mentioned ones only
-  Passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^*])[A-Za-z\d!@#$%^*]{8,}$/;
 
   formType: '1' | '2' = '1'; // TO move from 1st to to 2nd form 
   resetPassword: '1' | '2' = '1'; // To move from 2nd password form to 3rd reset form

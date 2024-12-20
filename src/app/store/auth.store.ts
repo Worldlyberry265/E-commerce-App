@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 import { User } from '../models/User';
-import { HttpClientService } from '../services/http.client';
+import { HttpClientService } from '../services/http/http.client.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, exhaustMap, of, pipe, switchMap, tap } from 'rxjs';
-import { JwtDecodeService } from '../services/jwt-decode.service';
+import { JwtDecodeService } from '../services/jwt/jwt-decode.service';
 import { tapResponse } from '@ngrx/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -164,5 +164,10 @@ export const AuthStore = signalStore(
 
         return { EmailLog, PasswordLog, FetchJwtFromLocalStorage, SignOut, SaveCurrentRoute }
     }),
+    // withHooks({
+    //     onInit({ FetchJwtFromLocalStorage }) {
+    //         FetchJwtFromLocalStorage();
+    //     }
+    // }),
 );
 
