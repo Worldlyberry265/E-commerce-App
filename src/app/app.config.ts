@@ -10,9 +10,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideRouter(routes, withInMemoryScrolling({
-        anchorScrolling: 'enabled',
-        scrollPositionRestoration: 'enabled', // lets the user go back to where he left from the navigated page
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'enabled', // lets the user go back to where he left from the navigated page
     })),
     provideAnimationsAsync(),
-]
+  ]
 };

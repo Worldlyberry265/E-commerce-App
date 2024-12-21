@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, inject, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { Router, RouterModule } from "@angular/router";
@@ -11,7 +11,8 @@ import { UserItemsStore } from "../../store/user-items.store";
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, RouterModule],
   templateUrl: './mobile-navigation.component.html',
-  styleUrl: './mobile-navigation.component.scss'
+  styleUrl: './mobile-navigation.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MobileNavigationComponent {
 

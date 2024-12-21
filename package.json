@@ -7,11 +7,11 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "watch:sass": "sass src/sass/main.scss src/styles.scss -w",
-    "compile:sass": "sass src/sass/main.scss src/css/style.comp.css",
-    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/css/style.comp.css -o src/css/style.prefix.css",
-    "compress:css": "sass src/css/style.prefix.css src/css/style.css --style=compressed",
-    "build:css": "npm-run-all compile:sass prefix:css compress:css"
+    "watch:sass": "sass src/sass/main.scss src/styles.scss -w --no-source-map",
+    "compile:sass": "sass src/sass/main.scss src/styles.comp.scss --no-source-map",
+    "prefix:sass": "postcss --use autoprefixer -b 'last 10 versions' src/styles.comp.scss -o src/styles.prefix.scss --no-map",
+    "compress:sass": "sass src/styles.prefix.scss src/styles.scss --style=compressed --no-source-map",
+    "build:sass": "npm-run-all compile:sass prefix:sass compress:sass"
   },
   "private": true,
   "dependencies": {
@@ -37,12 +37,17 @@
     "@angular/cli": "^18.2.10",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
+    "autoprefixer": "^10.4.20",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.83.0",
     "typescript": "~5.5.2"
   }
 }

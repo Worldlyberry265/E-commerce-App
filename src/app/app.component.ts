@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { MobileNavigationComponent } from './components/mobile-navigation/mobile-navigation.component';
@@ -10,7 +10,8 @@ import { UserItemsStore } from './store/user-items.store';
   standalone: true,
   imports: [RouterOutlet, FooterComponent, MobileNavigationComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   private readonly authStore = inject(AuthStore);

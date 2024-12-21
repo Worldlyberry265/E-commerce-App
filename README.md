@@ -6,6 +6,16 @@ unless it was https instead of http, and I'm using the navigator for the Weather
 If it gave you an error, just turn airplane mode on then off to refresh your location, that will fix it
 
 ## To run the app on all platforms (desktop or mobile) and with the SSL certificate
+
 ng serve --ssl true --ssl-key "C:\path\to\localhost.key" --ssl-cert "C:\path\to\localhost.crt" --host 0.0.0.0 --port 4200
 Which is the below in my case:
 ng serve --ssl true --ssl-key "C:\Users\Baraa Asus\Desktop\University\Submitted Work\Itxi\Itxi\Localhost SSL\localhost.key" --ssl-cert "C:\Users\Baraa Asus\Desktop\University\Submitted Work\Itxi\Itxi\Localhost SSL\localhost.crt" --host 0.0.0.0 --port 4200
+
+
+## To compile and compress the scss files we install the following packages and npm-run-all to run them all togethor:
+
+npm install sass npm-run-all postcss autoprefixer postcss-cli --save-dev
+
+## Then, execute the build command to run all the sass commands:
+
+npm run build:sass
