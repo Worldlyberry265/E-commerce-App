@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -14,5 +14,6 @@ export const appConfig: ApplicationConfig = {
       scrollPositionRestoration: 'enabled', // lets the user go back to where he left from the navigated page
     })),
     provideAnimationsAsync(),
+    provideExperimentalZonelessChangeDetection()
   ]
 };

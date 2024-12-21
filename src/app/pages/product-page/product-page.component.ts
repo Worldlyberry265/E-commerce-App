@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -26,7 +26,7 @@ type relatedProduct = {
   styleUrl: './product-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductPageComponent implements OnInit {
+export class ProductPageComponent implements OnInit, OnDestroy {
 
   allImgs = signal<relatedProduct[]>([]);
   displayedProducts = signal<relatedProduct[]>([]);
@@ -196,5 +196,9 @@ export class ProductPageComponent implements OnInit {
     if (this.isItemAdded()) {
       this.userItemsStore.UpdateItemInCart(this.product()!);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.productStore.DeleteSelectedProduct();
   }
 }

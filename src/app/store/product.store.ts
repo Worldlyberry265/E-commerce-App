@@ -119,6 +119,11 @@ export const ProductStore = signalStore(
             )
         ),
 
+        DeleteSelectedProduct() {
+            patchState(store, { searchedProducts: null })
+        }
+        ,
+
         TESTER_METHOD_Populate_Products(products: Product[]) {
             patchState(store, { products: products });
         },

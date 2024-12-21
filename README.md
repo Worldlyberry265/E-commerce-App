@@ -19,3 +19,7 @@ npm install sass npm-run-all postcss autoprefixer postcss-cli --save-dev
 ## Then, execute the build command to run all the sass commands:
 
 npm run build:sass
+
+## I went complete zoneless!
+
+Since I'm utilising signals, I removed zoneJs and went full zoneless. However, I added the package back for the unit tests because I got error "in this configuration angular requires zone.js" and it seems I need to change all my unit tests to apply the transformation. Aa a conclusion, I added back zoneJs to the spec files, but the real angular app is completely zoneless!
