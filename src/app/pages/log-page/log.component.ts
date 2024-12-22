@@ -2,7 +2,6 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, effect, ElementRef, 
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -20,7 +19,7 @@ import { containsMixedCharacters, passwordMatchValidator } from '../../services/
 @Component({
   selector: 'app-log',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, HeaderComponent, MatButtonModule, MatIconModule, CommonModule, RouterModule, MatProgressSpinnerModule],
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, HeaderComponent, MatButtonModule, MatIconModule, CommonModule, MatProgressSpinnerModule],
   templateUrl: './log.component.html',
   styleUrl: './log.component.scss',
   animations: [

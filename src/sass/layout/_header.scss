@@ -29,7 +29,7 @@
       height: 4rem;
     }
 
-    &:hover .main-header__menu {
+    &:hover .main-header__nav {
       visibility: visible;
       transform: scale(1);
     }
@@ -40,7 +40,7 @@
     }
   }
 
-  &__menu {
+  &__nav {
     list-style-type: none;
     position: absolute;
     background-color: $divider;
@@ -87,7 +87,7 @@
     }
   }
 
-  &__nav {
+  &__menu {
     padding: 1rem 4rem;
     gap: 2rem;
     display: flex;
