@@ -183,6 +183,10 @@ export class LogComponent implements AfterViewInit {
     this.triggerAnimation();
     // To remove the confirmed password if the user chose to login instead of signing up
     this.passwordConfirmationFormControl.setValue('');
+
+    // This is to prevent the login btn to be disabled if we had an authError in the previous login attempt
+    this.passwordFormControl.setErrors({ authError: false });
+    this.passwordFormControl.updateValueAndValidity();
   }
 
 
@@ -197,6 +201,10 @@ export class LogComponent implements AfterViewInit {
 
   onResetPassword() {
     this.resetPassword = this.resetPassword === '1' ? '2' : '1';
+
+    // This is to prevent the login btn to be disabled if we had an authError in the previous login attempt
+    this.passwordFormControl.setErrors({ authError: false });
+    this.passwordFormControl.updateValueAndValidity();
   }
 
   onToLogin() {

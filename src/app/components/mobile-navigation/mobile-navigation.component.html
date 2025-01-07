@@ -36,6 +36,13 @@
                 </svg>
             </span>Saved Items
         </li>
+        <li class="mobile-navigation__item" routerLink="/password-change" fragment="logContainer"
+            (click)="onCloseNavAndSaveRoute()" routerLinkActive="mobile-navigation__item-active">
+            <span>
+                <i class="fa-solid fa-right-to-bracket"></i>
+
+            </span> Change Password
+        </li>
         <li class="mobile-navigation__item" (click)="onSignOut()">
             <span>
                 <i class="fa-solid fa-right-from-bracket"></i>

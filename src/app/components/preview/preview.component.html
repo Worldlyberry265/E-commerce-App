@@ -112,3 +112,18 @@
   </button>
 </mat-dialog-actions>
 } }
+
+@if (dialogType() === 'Expired Jwt') {
+
+<h2 class="preview__title--expired-jwt"> To update your password, kindly sign in again,
+  you may have been logged in for more than 10 mins straight </h2>
+<mat-dialog-content class="mat-typography">
+  <i class="fa-solid fa-circle-exclamation preview__content--warning-icon"></i>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button class="preview__button" mat-button mat-dialog-close>Close</button>
+  <button class="preview__button" (click)="onNavigate()" mat-button cdkFocusInitial>
+    Go To Sign In
+  </button>
+</mat-dialog-actions>
+}

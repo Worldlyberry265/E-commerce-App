@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClientTesting, HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClientService } from '../http.client.service';
 import { ApiEndpointsService } from '../api-endpoints.service';
 import { User } from '../../../models/User';
 import { createTestProduct, Product } from '../../../models/Product';
-import { of } from 'rxjs';
-import { inject } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 
 describe('HttpClientService', () => {
@@ -67,6 +65,26 @@ describe('HttpClientService', () => {
         // simulates the backend by returning the mockResponse
         req.flush(mockResponse);
     });
+
+    it('should send a PATCH request to update user password', () => {
+        const password = 'Newpassword123!';
+        const userId = 1;
+        const mockResponse = { password: 'Newpassword123!' }; // fakestoreapi returns the updated fields as a response
+
+        httpClientService.patchUpdateUser(password, userId).subscribe((response) => {
+            expect(response).toEqual(mockResponse);
+        });
+
+        const req = httpTestingController.expectOne(apiEndpointsService.getUpdateUserUrl(userId));
+        expect(req.request.method).toBe('PATCH');
+        expect(req.request.body).toEqual({ password: password });
+        expect(req.request.headers.has('Authorization')).toBeTrue();
+        expect(req.request.headers.get('Authorization')).toBe('Bearer ');
+
+        // Simulate the backend response
+        req.flush(mockResponse);
+    });
+
 
     it('should get all products', () => {
         const mockProducts: Product[] = [

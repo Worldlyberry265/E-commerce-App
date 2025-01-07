@@ -23,6 +23,10 @@ export class ApiEndpointsService {
     return `${this.fakeStoreApiUrl_Users}`;
   }
 
+  getUpdateUserUrl(id: number): string {
+    return `${this.fakeStoreApiUrl_Users}/${id}`;
+  }
+
   getAllProductsUrl(): string {
     return `${this.fakeStoreApiUrl_Products}`
   }

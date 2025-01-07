@@ -29,6 +29,13 @@
     </li>
     }
     @if (authStore.jwt()) {
+    <li class="main-header__nav--item" routerLink="/password-change" fragment="logContainer" (click)="onSaveRoute()"
+      routerLinkActive="main-header__nav--item-active">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <span>
+        Change Password
+      </span>
+    </li>
     <li class="main-header__nav--item" (click)="onSignOut()">
       <i class="fa-solid fa-right-from-bracket"></i>
       <span>

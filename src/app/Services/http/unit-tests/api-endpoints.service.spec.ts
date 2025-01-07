@@ -29,6 +29,11 @@ describe('ApiEndpointsService', () => {
         expect(service.getAddUserUrl()).toBe(expectedUrl);
     });
 
+    it('should return the correct UpdateUser URL', () => {
+        const expectedUrl = 'https://fakestoreapi.com/users/5';
+        expect(service.getUpdateUserUrl(5)).toBe(expectedUrl);
+    });
+
     it('should return the correct URL for fetching all products', () => {
         const expectedUrl = 'https://fakestoreapi.com/products';
         expect(service.getAllProductsUrl()).toBe(expectedUrl);

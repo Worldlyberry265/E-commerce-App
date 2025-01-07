@@ -21,7 +21,7 @@ import { Product } from "../../models/Product";
 export class PreviewComponent implements OnInit, OnDestroy {
 
 
-  dialogType = signal<'heart' | 'cart'>('cart');
+  dialogType = signal<'heart' | 'cart' | 'Expired Jwt'>('cart');
 
   Math = Math; // Expose Math for use in the template
   Array = Array; // Expose Array for use in the template
@@ -34,7 +34,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
   protected readonly userItemsStore = inject(UserItemsStore);
 
   // to fetch the data passed with the request to open the dialog
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: 'heart' | 'cart' }) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { DialogType: 'heart' | 'cart' | 'Expired Jwt' }) {
     this.dialogType.set(data.DialogType);
   }
 
@@ -47,7 +47,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
       this.products.set(this.userItemsStore.cartItems().map(product => {
         return ({ ...product, quantity: product.quantity == null ? 1 : product.quantity })
       }));
-    } else {
+    } else if (this.dialogType() === 'heart') {
       this.products.set(this.userItemsStore.savedItems());
     }
   }
@@ -107,6 +107,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
           this.router.navigate([route]);
         }
       } else {
+        // To save the route if the user is asked to sign in after invalid jwt
+        this.authStore.SaveCurrentRoute(this.router.url);
         this.router.navigate(['login'], { fragment: 'logContainer' });
       }
     }, 100);

@@ -1,4 +1,4 @@
-## How to install app:
+## How to install app
 
 Install Npm, then install angular by :
 npm install -g @angular/cli
@@ -50,6 +50,10 @@ Since I'm utilising signals, I removed zoneJs and went full zoneless. However, I
 ---
 
 ## Navigating the App: Step-by-Step Guide
+
+### The User Flow
+
+The user selects the products he/she liked from either the landing-page or the product-page, then he/she opens the cart, either alter the cart or leave as it is and pay for his products. The pay button in the cart will then take him to the homepage, as the user successfully purchased his items. (I didn't do a payment page as that won't add any value to the app since I'm not really using a backend and fakestoreapi doesn't support such one)
 
 ### Landing-page
 

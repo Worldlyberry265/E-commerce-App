@@ -137,15 +137,17 @@
                 <i matSuffix [class.fa-eye]="!showPass()" [class.fa-eye-slash]="showPass()" class="fa-solid"
                     (click)="onTogglePasswordVisibility()"></i>
 
-                @if (passwordConfirmationFormControl.hasError('passwordMismatch')) {
+
+                @if (passwordConfirmationFormControl.hasError('required')) {
+                <mat-error class="log__form--error">Please confirm your password</mat-error>
+                } @else if (passwordConfirmationFormControl.hasError('passwordMismatch')) {
                 <mat-error class="log__form--error">Please match the password</mat-error>
                 }
             </mat-form-field>
             }
 
-
             <button
-                [disabled]="(passwordConfirmationFormControl.invalid && authStore.emailNotFound()) || (passwordFormControl.invalid)"
+                [disabled]="(passwordConfirmationFormControl.invalid && authStore.emailNotFound() || (passwordFormControl.invalid && (authStore.authError() === null || authStore.authError() != 'Request Timed Out')) )"
                 mat-flat-button type="submit" class="log__button"> Login
             </button>
 

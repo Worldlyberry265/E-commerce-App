@@ -3,7 +3,7 @@ import { delay, of, switchMap, throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthStore } from '../auth.store';
 import { HttpClientService } from '../../services/http/http.client.service';
-import { JwtDecodeService } from '../../services/jwt/jwt-decode.service';
+import { JwtDecodeService } from '../../services/auth/jwt-decode.service';
 import { UserItemsStore } from '../user-items.store';
 
 describe('AuthStore', () => {
@@ -28,7 +28,7 @@ describe('AuthStore', () => {
     };
 
     beforeEach(() => {
-        httpClientMock = jasmine.createSpyObj('HttpClientService', ['postLogin', 'postAddUser']);
+        httpClientMock = jasmine.createSpyObj('HttpClientService', ['postLogin', 'postAddUser', 'patchUpdateUser']);
         jwtDecoderMock = jasmine.createSpyObj('JwtDecodeService', ['fetchSubject']);
         userItemsStoreMock = jasmine.createSpyObj('UserItemsStore', ['DeleteSavedItems']);
         routerMock = jasmine.createSpyObj('Router', ['navigate']);
@@ -169,6 +169,78 @@ describe('AuthStore', () => {
                 expect(authStore.loading()).toBeFalse();
                 expect(authStore.authError()).toBeNull();
                 expect(routerMock.navigate).toHaveBeenCalledWith([authStore.lastRoute()]);
+                done();
+            }, 20); // Slightly longer than the delay in the mocked observable
+        });
+    });
+
+    describe('ChangePassword', () => {
+        it('should change password successfully and navigate to last route', (done) => {
+            const mockPassword = 'newpassword';
+            const mockUserId = 1;
+
+            httpClientMock.patchUpdateUser.and.returnValue(of({}).pipe(delay(10))); // Delay to test the loading state
+            routerMock.navigate = jasmine.createSpy('navigate');
+
+            // Assert loading is initially false
+            expect(authStore.loading()).toBe(false);
+
+            // Call the method
+            authStore.ChangePassword({ password: mockPassword, userId: mockUserId });
+
+            // Assert loading is true immediately after calling the method
+            expect(authStore.loading()).toBe(true);
+
+            setTimeout(() => {
+                expect(authStore.loading()).toBeFalse();
+                expect(authStore.authError()).toBeNull();
+                expect(routerMock.navigate).toHaveBeenCalledWith([authStore.lastRoute()]);
+                done();
+            }, 20); // Slightly longer than the delay in the mocked observable
+        });
+
+        it('should set authError if request timed out', (done) => {
+            const mockPassword = 'newpassword';
+            const mockUserId = 1;
+            const errorResponse = { error: 'Request Timed Out' };
+
+            // Timer to test the loading state
+            httpClientMock.patchUpdateUser.and.returnValue(
+                timer(10).pipe(switchMap(() => throwError(() => errorResponse))) // Simulate error
+            );
+
+            expect(authStore.loading()).toBe(false);
+
+            authStore.ChangePassword({ password: mockPassword, userId: mockUserId });
+
+            expect(authStore.loading()).toBe(true);
+
+            setTimeout(() => {
+                expect(authStore.authError()).toEqual(errorResponse.error); // Error message should be set
+                expect(authStore.loading()).toBeFalse();
+                done();
+            }, 20); // Slightly longer than the delay in the mocked observable
+        });
+
+        it('should set authError if JWT is expired during password change', (done) => {
+            const mockPassword = 'newpassword';
+            const mockUserId = 1;
+            const errorResponse = new Error('JWT is expired.');
+
+            // Timer to test the loading state
+            httpClientMock.patchUpdateUser.and.returnValue(
+                timer(10).pipe(switchMap(() => throwError(() => errorResponse))) // Simulate error
+            );
+
+            expect(authStore.loading()).toBe(false);
+
+            authStore.ChangePassword({ password: mockPassword, userId: mockUserId });
+
+            expect(authStore.loading()).toBe(true);
+
+            setTimeout(() => {
+                expect(authStore.authError()).toEqual('Anything because then we have the the error hardcoded in the preview');
+                expect(authStore.loading()).toBeFalse();
                 done();
             }, 20); // Slightly longer than the delay in the mocked observable
         });

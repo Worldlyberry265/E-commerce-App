@@ -4,7 +4,7 @@ import { User } from '../models/User';
 import { HttpClientService } from '../services/http/http.client.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, exhaustMap, of, pipe, switchMap, tap } from 'rxjs';
-import { JwtDecodeService } from '../services/jwt/jwt-decode.service';
+import { JwtDecodeService } from '../services/auth/jwt-decode.service';
 import { tapResponse } from '@ngrx/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -125,7 +125,13 @@ export const AuthStore = signalStore(
                                 const userName = jwtDecoder.fetchSubject(token);
                                 localStorage.setItem('jwt', token);
                                 patchState(store, { jwt: token, username: userName, loading: false, authError: null })
-                                router.navigate([store.lastRoute()]);
+
+                                const [baseUrl, fragment] = store.lastRoute().split('#'); // Split into base URL and fragment
+                                if (fragment) {
+                                    router.navigate([baseUrl], { fragment: fragment });
+                                } else {
+                                    router.navigate([baseUrl]);
+                                }
                             },
                             error: (HttpError: HttpErrorResponse) => {
                                 let returnedError = HttpError.error;
@@ -138,7 +144,31 @@ export const AuthStore = signalStore(
                     );
                 }),
             )
+        );
 
+        const ChangePassword = rxMethod<{ password: string, userId: number }>(
+            pipe(
+                tap(() => {
+                    patchState(store, { loading: true });
+                }),
+                switchMap(({ password, userId }) => {
+                    return httpClient.patchUpdateUser(password, userId).pipe(
+                        tapResponse({
+                            next: () => {
+                                patchState(store, { loading: false, authError: null })
+                                router.navigate([store.lastRoute()]);
+                            },
+                            error: (error: Error | HttpErrorResponse) => {
+                                let errormsg = 'Request Timed Out';
+                                if (error.message && (error.message == 'JWT is expired.' || error.message == 'JWT is invalid.')) {
+                                    errormsg = 'Anything because then we have the the error hardcoded in the preview';
+                                }
+                                patchState(store, { loading: false, authError: errormsg });
+                            }
+                        }),
+                    );
+                }),
+            )
         );
 
         function FetchJwtFromLocalStorage() {
@@ -162,7 +192,7 @@ export const AuthStore = signalStore(
             patchState(store, { lastRoute: route });
         }
 
-        return { EmailLog, PasswordLog, FetchJwtFromLocalStorage, SignOut, SaveCurrentRoute }
+        return { EmailLog, PasswordLog, ChangePassword, FetchJwtFromLocalStorage, SignOut, SaveCurrentRoute }
     }),
     // withHooks({
     //     onInit({ FetchJwtFromLocalStorage }) {

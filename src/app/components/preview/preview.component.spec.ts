@@ -128,11 +128,13 @@ describe('PreviewComponent', () => {
 
     it('should close the dialog and navigate', fakeAsync(() => {
       setupTest('cart');
+      spyOn(authStore, 'SaveCurrentRoute');
 
       component.onNavigate();
       expect(dialogRefSpy.close).toHaveBeenCalled();
 
       tick(100); // Simulate the timeout
+      expect(authStore.SaveCurrentRoute).toHaveBeenCalledWith(mockRouter.url);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['login'], { fragment: 'logContainer' });
     }));
 
